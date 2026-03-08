@@ -28,6 +28,15 @@ AUDIO_DIR = DATA_DIR / "audio"
 WORDS_AUDIO_DIR = AUDIO_DIR / "words"
 SENTENCES_AUDIO_DIR = AUDIO_DIR / "sentences"
 STORY_AUDIO_DIR = AUDIO_DIR / "story"
+SPELLING_AUDIO_DIR = AUDIO_DIR / "spelling"
+
+LETTER_NAMES = {
+    'a':'ay','b':'bee','c':'see','d':'dee','e':'ee','f':'ef','g':'gee',
+    'h':'aitch','i':'eye','j':'jay','k':'kay','l':'el','m':'em',
+    'n':'en','o':'oh','p':'pee','q':'cue','r':'ar','s':'ess',
+    't':'tee','u':'you','v':'vee','w':'double-you','x':'ex','y':'why','z':'zee'
+}
+SPELLING_TEMPO = 1.7  # atempo倍率（速度調整）
 
 GEMINI_MODEL = "gemini-2.5-flash-preview-tts"
 VOICE_NAME = "Aoede"   # 女性英語音声（Kaya向け）
@@ -58,6 +67,72 @@ def pcm_to_mp3(pcm_bytes: bytes, output_path: Path) -> bool:
     ]
     result = subprocess.run(cmd, input=pcm_bytes, capture_output=True)
     return result.returncode == 0
+
+
+def pcm_to_mp3_with_tempo(pcm_bytes: bytes, output_path: Path, tempo: float) -> bool:
+    """raw PCM → MP3 + atempo速度調整"""
+    tmp = output_path.with_suffix('.raw.mp3')
+    if not pcm_to_mp3(pcm_bytes, tmp):
+        return False
+    cmd = ["ffmpeg", "-y", "-i", str(tmp), "-filter:a", f"atempo={tempo}", str(output_path)]
+    result = subprocess.run(cmd, capture_output=True)
+    tmp.unlink(missing_ok=True)
+    return result.returncode == 0
+
+
+def word_to_phonetic(word: str, sep: str = ", ") -> str:
+    """単語をフォネティック文字名に変換 (例: store → ess, tee, oh, ar, ee)"""
+    return sep.join(LETTER_NAMES.get(c, c) for c in word.lower())
+
+
+def generate_spelling_audio(client, word: str, output_path: Path, force: bool = False) -> bool:
+    """スペル読み上げMP3を生成（コンマ区切り → 失敗時はピリオド区切りで再試行）"""
+    if output_path.exists() and not force:
+        print(f"  SKIP (既存): {output_path.name}")
+        return True
+
+    for sep in [", ", ". "]:
+        text = word_to_phonetic(word, sep)
+        for attempt in range(MAX_RETRIES):
+            try:
+                response = client.models.generate_content(
+                    model=GEMINI_MODEL,
+                    contents=text,
+                    config=types.GenerateContentConfig(
+                        response_modalities=["AUDIO"],
+                        speech_config=types.SpeechConfig(
+                            voice_config=types.VoiceConfig(
+                                prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                                    voice_name=VOICE_NAME
+                                )
+                            )
+                        ),
+                    ),
+                )
+                pcm_data = response.candidates[0].content.parts[0].inline_data.data
+                if pcm_to_mp3_with_tempo(pcm_data, output_path, SPELLING_TEMPO):
+                    size_kb = output_path.stat().st_size // 1024
+                    print(f"  OK: {output_path.name} ({size_kb}KB) [{text}]")
+                    return True
+            except Exception as e:
+                msg = str(e)
+                if "429" in msg or "RESOURCE_EXHAUSTED" in msg:
+                    wait = 30
+                    import re
+                    m = re.search(r"retryDelay.*?(\d+)s", msg)
+                    if m:
+                        wait = int(m.group(1)) + 2
+                    print(f"  WAIT: {wait}秒待機")
+                    time.sleep(wait)
+                    continue
+                # INVALID_ARGUMENT (テキスト生成エラー) → 別セパレーターで再試行
+                if "INVALID_ARGUMENT" in msg:
+                    break
+                print(f"  ERROR: {output_path.name} → {e}")
+                return False
+
+    print(f"  FAILED: {output_path.name}")
+    return False
 
 
 def generate_audio(client, text: str, output_path: Path, force: bool = False) -> bool:
@@ -114,6 +189,7 @@ def generate_audio(client, text: str, output_path: Path, force: bool = False) ->
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--words-only", action="store_true", help="単語のみ生成")
+    parser.add_argument("--spelling-only", action="store_true", help="スペル音声のみ生成")
     parser.add_argument("--force", action="store_true", help="既存ファイルを上書き")
     args = parser.parse_args()
 
@@ -121,6 +197,7 @@ def main():
     WORDS_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
     SENTENCES_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
     STORY_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+    SPELLING_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
 
     # データ読み込み
     with open(WORDS_FILE, encoding="utf-8") as f:
@@ -132,8 +209,24 @@ def main():
 
     ok = err = 0
 
+    if args.spelling_only:
+        # --- スペル音声のみ ---
+        seen = set()
+        unique_words = [w for w in words if not (w.get('word', w['english']) in seen or seen.add(w.get('word', w['english'])))]
+        print(f"\n[スペル音声] 生成中... ({len(unique_words)}語)")
+        for word in unique_words:
+            base = word.get('word', word['english'])
+            out = SPELLING_AUDIO_DIR / f"{base}.mp3"
+            if generate_spelling_audio(client, base, out, args.force):
+                ok += 1
+            else:
+                err += 1
+            time.sleep(RATE_LIMIT_SLEEP)
+        print(f"\n完了: {ok}成功 / {err}失敗")
+        return
+
     # --- 単語の読み上げ ---
-    print(f"\n[1/3] 単語音声を生成中... ({len(words)}語)")
+    print(f"\n[1/4] 単語音声を生成中... ({len(words)}語)")
     for word in words:
         out = WORDS_AUDIO_DIR / f"{word['id']}.mp3"
         # 単語を自然に読み上げるため "The word is: store" 形式にする
@@ -149,7 +242,7 @@ def main():
         return
 
     # --- 例文の読み上げ ---
-    print(f"\n[2/3] 例文音声を生成中... ({len(words)}文)")
+    print(f"\n[2/4] 例文音声を生成中... ({len(words)}文)")
     for word in words:
         out = SENTENCES_AUDIO_DIR / f"{word['id']}.mp3"
         if generate_audio(client, word["sentence"], out, args.force):
@@ -160,10 +253,23 @@ def main():
 
     # --- ストーリーの読み上げ ---
     sentences = story.get("sentences", [])
-    print(f"\n[3/3] ストーリー音声を生成中... ({len(sentences)}文)")
+    print(f"\n[3/4] ストーリー音声を生成中... ({len(sentences)}文)")
     for i, sentence in enumerate(sentences):
         out = STORY_AUDIO_DIR / f"s{i+1:02d}.mp3"
         if generate_audio(client, sentence, out, args.force):
+            ok += 1
+        else:
+            err += 1
+        time.sleep(RATE_LIMIT_SLEEP)
+
+    # --- スペル読み上げ ---
+    seen = set()
+    unique_words = [w for w in words if not (w.get('word', w['english']) in seen or seen.add(w.get('word', w['english'])))]
+    print(f"\n[4/4] スペル音声を生成中... ({len(unique_words)}語)")
+    for word in unique_words:
+        base = word.get('word', word['english'])
+        out = SPELLING_AUDIO_DIR / f"{base}.mp3"
+        if generate_spelling_audio(client, base, out, args.force):
             ok += 1
         else:
             err += 1

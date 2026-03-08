@@ -80,8 +80,11 @@
     }
     .check-btn:hover { background:#5A52E0; }
 
-    .hint-btn { background:none; border:none; color:var(--text-sub); font-size:0.8rem; cursor:pointer; padding:4px 8px; border-radius:8px; }
-    .hint-btn:hover { background:var(--primary-light); color:var(--primary); }
+    .hint-row { display:flex; gap:8px; justify-content:center; }
+    .hint-btn { background:none; border:1px solid var(--border); color:var(--text-sub); font-size:0.8rem; cursor:pointer; padding:5px 12px; border-radius:20px; transition:all 0.2s; }
+    .hint-btn:hover:not(:disabled) { background:var(--primary-light); color:var(--primary); border-color:var(--primary); }
+    .hint-btn:disabled { opacity:0.4; cursor:default; }
+    .theme-reveal { font-size:0.8rem; color:var(--primary); background:var(--primary-light); padding:3px 12px; border-radius:10px; font-weight:700; min-height:1.6em; }
 
     /* Back face */
     .result-badge { font-size:1.4rem; font-weight:800; }
@@ -98,6 +101,12 @@
     .sent-ja { font-size:0.8rem; color:var(--text-sub); margin-top:3px; }
     .typed-wrong { font-size:0.8rem; color:var(--danger); }
 
+    /* Meanings list (back face) */
+    .meanings-list { width:100%; display:flex; flex-direction:column; gap:4px; }
+    .meaning-item { font-size:0.82rem; color:var(--text-sub); display:flex; gap:6px; align-items:baseline; }
+    .meaning-item.current { color:var(--text); font-weight:700; }
+    .meaning-num { flex-shrink:0; }
+
     .audio-row { display:flex; gap:8px; }
     .audio-btn { display:inline-flex; align-items:center; gap:5px; padding:7px 14px; border-radius:20px; border:none; cursor:pointer; font-size:0.8rem; font-weight:600; transition:opacity 0.2s; }
     .audio-btn.w { background:var(--primary-light); color:var(--primary); }
@@ -105,12 +114,38 @@
     .audio-btn:hover { opacity:0.75; }
 
     /* Result buttons */
-    .res-row { display:flex; gap:10px; width:100%; margin-top:4px; }
+    .res-row { display:flex; flex-direction:column; align-items:center; gap:8px; width:100%; margin-top:4px; }
+    .res-btns { display:flex; gap:10px; width:100%; }
     .rb { flex:1; padding:12px 8px; border:none; border-radius:12px; font-size:0.88rem; font-weight:700; cursor:pointer; transition:transform 0.15s; }
     .rb:hover { transform:translateY(-2px); }
-    .rb.hard { background:#FEF2F2; color:var(--danger); border:2px solid #FECACA; }
-    .rb.good { background:#F0FDF4; color:var(--success); border:2px solid #BBF7D0; }
-    .rb.easy { background:var(--primary-light); color:var(--primary); border:2px solid #C7D2FE; }
+    .rb.next   { background:var(--primary-light); color:var(--primary); border:2px solid #C7D2FE; }
+    .rb.review { background:#FEF2F2; color:var(--danger); border:2px solid #FECACA; }
+    .hint-note { font-size:0.78rem; color:var(--warning); font-weight:600; }
+
+    /* Input shake animation */
+    @keyframes shake {
+      0%,100% { transform:translateX(0); }
+      20%     { transform:translateX(-6px); }
+      40%     { transform:translateX(6px); }
+      60%     { transform:translateX(-4px); }
+      80%     { transform:translateX(4px); }
+    }
+    .answer-input.shake { animation:shake 0.4s ease; border-color:var(--danger); }
+
+    /* ===== Rotate overlay (phones in landscape) ===== */
+    .rotate-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; text-align: center; padding: 20px;
+    }
+    .rotate-overlay .r-icon { font-size: 3rem; }
+    .rotate-overlay p { font-size: 1rem; color: var(--text-sub); }
+
+    @media screen and (orientation: landscape) and (max-height: 600px) {
+      .rotate-overlay { display: flex; }
+    }
 
     /* Done state */
     .done { text-align:center; padding:50px 20px; background:var(--card-bg); border-radius:var(--radius); box-shadow:0 6px 28px rgba(108,99,255,0.13); }
@@ -146,6 +181,30 @@
     .dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
     .dg{background:var(--success);} .dy{background:var(--warning);} .dr{background:var(--danger);} .dn{background:#D1D5DB;}
     .wen { font-weight:700; flex:1; } .wja { color:var(--text-sub); font-size:0.82rem; } .wsc { font-size:0.77rem; color:var(--text-sub); }
+    .wi { cursor:pointer; }
+    .wi:hover { background:#F9FAFB; }
+
+    /* ===== Reference Modal ===== */
+    .ref-modal { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; padding:20px; }
+    .ref-modal.open { display:flex; }
+    .ref-panel { background:var(--card-bg); border-radius:var(--radius); box-shadow:0 12px 40px rgba(108,99,255,0.25); width:100%; max-width:420px; overflow:hidden; }
+    .ref-top { display:flex; align-items:center; justify-content:space-between; padding:13px 18px; border-bottom:1px solid var(--border); }
+    .ref-title { font-weight:700; color:var(--text); font-size:0.9rem; }
+    .ref-close { background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-sub); padding:2px 8px; border-radius:6px; line-height:1; }
+    .ref-close:hover { background:var(--border); }
+    .ref-body { padding:20px 22px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+    .ref-word { font-size:2rem; font-weight:800; color:var(--text); letter-spacing:-1px; }
+    .ref-meaning { font-size:0.95rem; color:var(--primary); font-weight:700; }
+    .ref-img { width:110px; height:110px; object-fit:contain; border-radius:12px; background:#F8F9FF; padding:6px; }
+    .ref-sent { font-size:0.88rem; line-height:1.7; background:#F8F9FF; padding:10px 14px; border-radius:10px; text-align:center; width:100%; }
+    .ref-sent .hl { color:var(--primary); font-weight:700; }
+    .ref-sent-ja { font-size:0.78rem; color:var(--text-sub); margin-top:3px; }
+    .ref-nav { display:none; align-items:center; justify-content:center; gap:10px; padding:10px 0 16px; }
+    .ref-nav-btn { background:var(--primary-light); color:var(--primary); border:none; border-radius:8px; padding:5px 14px; font-size:0.85rem; cursor:pointer; font-weight:700; }
+    .ref-nav-btn:disabled { opacity:0.3; cursor:default; }
+    .ref-nav-dots { display:flex; gap:6px; align-items:center; }
+    .ref-nav-dot { width:8px; height:8px; border-radius:50%; background:var(--border); }
+    .ref-nav-dot.on { background:var(--primary); }
   </style>
 </head>
 <body>
@@ -181,14 +240,17 @@
 
           <!-- FRONT -->
           <div class="face front" id="faceF">
-            <span class="theme-badge" id="fTheme"></span>
             <img class="card-illust" id="cardIllust" src="" alt="">
             <p class="sent-display" id="fSent"></p>
+            <span class="theme-reveal" id="fTheme" style="visibility:hidden"></span>
             <div class="input-row">
               <input class="answer-input" id="ansInput" type="text" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="英単語を入力…">
               <button class="check-btn" id="checkBtn">確認 →</button>
             </div>
-            <button class="hint-btn" id="hintBtn">🔊 ヒント（単語を聞く）</button>
+            <div class="hint-row">
+              <button class="hint-btn" id="hintTheme">🏷️ ヒント</button>
+              <button class="hint-btn" id="hintAudio">🔊 発音</button>
+            </div>
           </div>
 
           <!-- BACK -->
@@ -196,6 +258,7 @@
             <span class="result-badge" id="resBadge"></span>
             <div class="answer-word" id="ansWord"></div>
             <div class="answer-meaning" id="ansMeaning"></div>
+            <div class="meanings-list" id="meaningsList"></div>
             <div class="full-sentence">
               <p id="fullSent"></p>
               <p class="sent-ja" id="fullSentJa"></p>
@@ -246,6 +309,23 @@
 
 </main>
 
+<!-- Reference Modal -->
+<div class="ref-modal" id="refModal">
+  <div class="ref-panel">
+    <div class="ref-top">
+      <span class="ref-title" id="refTitle"></span>
+      <button class="ref-close" id="refClose">✕</button>
+    </div>
+    <div class="ref-body" id="refBody"></div>
+    <div class="ref-nav" id="refNav"></div>
+  </div>
+</div>
+
+<div class="rotate-overlay">
+  <div class="r-icon">🔄</div>
+  <p>縦向きでご使用ください</p>
+</div>
+
 <script>
 const BASE = location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') + '/';
 const AUDIO = BASE + 'data/audio/';
@@ -254,9 +334,13 @@ const VOCAB = ['store','well','dress','coat','hospital','always','pencil',
                'excited','clown','over','difficult'];
 const KEY = 'kaya_vocab_v1';
 
+const POS_MAP = {'名':'名詞','動':'動詞','副':'副詞','形':'形容詞','前':'前置詞','副・前':'副詞・前置詞'};
+
 let words = [], queue = [], qi = 0, storyData = null;
-let stats = {easy:0, good:0, hard:0};
+let stats = {correct:0, incorrect:0};
 let isFlipped = false;
+let hintUsed = false;
+let refCards = [], refIdx = 0;
 
 const $ = id => document.getElementById(id);
 const txt = (id, v) => $(id).textContent = v;
@@ -267,9 +351,26 @@ const today = () => new Date().toISOString().split('T')[0];
 
 // --- Audio ---
 const playAudio = src => new Audio(src).play().catch(()=>{});
-const playWord = () => playAudio(AUDIO + 'words/' + queue[qi].id + '.mp3');
+const playWord = () => playAudio(AUDIO + 'words/' + queue[qi].word + '.mp3');
 const playSent = () => playAudio(AUDIO + 'sentences/' + queue[qi].id + '.mp3');
 const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '.mp3');
+
+// Promise-based audio (for sequencing)
+function playAudioP(src) {
+  return new Promise(resolve => {
+    const a = new Audio(src);
+    a.onended = resolve;
+    a.onerror = resolve;
+    a.play().catch(resolve);
+  });
+}
+
+// Incorrect answer audio sequence: word → spelling → sentence
+async function playIncorrectSequence(w) {
+  await playAudioP(AUDIO + 'words/' + w.word + '.mp3');
+  await playAudioP(AUDIO + 'spelling/' + w.word + '.mp3');
+  await playAudioP(AUDIO + 'sentences/' + w.id + '.mp3');
+}
 
 // --- Story highlight (safe DOM, matchAll) ---
 function buildHighlight(sentence) {
@@ -318,10 +419,17 @@ async function init() {
 
   $('checkBtn').onclick = checkAnswer;
   $('ansInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); });
-  $('hintBtn').onclick = playWord;
+  $('hintTheme').onclick = () => {
+    $('fTheme').style.visibility = 'visible';
+    $('hintTheme').disabled = true;
+    hintUsed = true;
+  };
+  $('hintAudio').onclick = () => { playWord(); hintUsed = true; };
   $('btnWordAudio').onclick = playWord;
   $('btnSentAudio').onclick = playSent;
   $('restartBtn').onclick = restart;
+  $('refClose').onclick = () => $('refModal').classList.remove('open');
+  $('refModal').addEventListener('click', e => { if (e.target === $('refModal')) $('refModal').classList.remove('open'); });
   document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab, b)));
 }
 
@@ -340,15 +448,20 @@ function renderCard() {
 
   // Reset flip
   isFlipped = false;
+  hintUsed = false;
   $('card3d').classList.remove('flipped');
   $('faceB').classList.remove('correct', 'wrong');
   $('ansInput').value = '';
+  $('ansInput').classList.remove('shake');
   txt('typedWrong', '');
   clr('resRow');
 
   // Front
   txt('ctr', (qi+1) + ' / ' + queue.length);
-  txt('fTheme', w.theme);
+  const posLabel = POS_MAP[w.pos] || w.pos;
+  txt('fTheme', '(Hint: ' + w.theme + ' 【' + posLabel + '】)');
+  $('fTheme').style.visibility = 'hidden';
+  $('hintTheme').disabled = false;
   const img = $('cardIllust');
   if (w.image) { img.src = BASE + w.image; img.alt = w.english; img.style.display = 'block'; }
   else         { img.style.display = 'none'; }
@@ -358,7 +471,24 @@ function renderCard() {
 
   // Back (pre-populate)
   txt('ansWord', w.english);
-  txt('ansMeaning', w.japanese + '  (' + w.pos + ')');
+  txt('ansMeaning', w.japanese + '  (' + (POS_MAP[w.pos] || w.pos) + ')');
+
+  // Meanings list (only shown when multiple cards share same word)
+  clr('meaningsList');
+  const sameWord = words.filter(w2 => w2.word === w.word);
+  if (sameWord.length > 1) {
+    const nums = ['①','②','③','④','⑤'];
+    sameWord.forEach((m, i) => {
+      const item = document.createElement('div');
+      item.className = 'meaning-item' + (m.id === w.id ? ' current' : '');
+      const num = document.createElement('span');
+      num.className = 'meaning-num'; num.textContent = nums[i];
+      const lbl = document.createElement('span');
+      lbl.textContent = m.japanese + '【' + (POS_MAP[m.pos] || m.pos) + '】';
+      item.appendChild(num); item.appendChild(lbl);
+      $('meaningsList').appendChild(item);
+    });
+  }
 
   // Full sentence with highlight on back
   clr('fullSent');
@@ -386,36 +516,71 @@ function checkAnswer() {
   if (isFlipped) return;
   const w = queue[qi];
   const typed = $('ansInput').value.trim().toLowerCase();
-  if (!typed) return;
+  if (!typed) {
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    return;
+  }
 
   const correct = typed === w.english.toLowerCase();
+  const pluralMistake = !correct && w.plural && typed === w.plural.toLowerCase();
   isFlipped = true;
   $('card3d').classList.add('flipped');
   $('faceB').classList.add(correct ? 'correct' : 'wrong');
 
   txt('resBadge', correct ? '✅ Correct!' : '❌ Not quite…');
   $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
-  txt('typedWrong', correct ? '' : '入力: "' + typed + '"  →  正解: "' + w.english + '"');
+  const wrongMsg = correct ? '' :
+    (pluralMistake ? '惜しい！単数・複数の違いです: "' + typed + '" → "' + w.english + '"'
+                   : '入力: "' + typed + '"  →  正解: "' + w.english + '"');
+  txt('typedWrong', wrongMsg);
 
-  // Auto-play sentence audio
-  setTimeout(playSent, 350);
+  // Audio feedback: correct → sentence only, incorrect → word → spelling → sentence
+  if (correct) {
+    setTimeout(playSent, 350);
+  } else {
+    setTimeout(() => playIncorrectSequence(w), 350);
+  }
 
-  // Build result buttons
+  // Build result buttons based on correctness + hint usage
   clr('resRow');
-  const defs = [['hard','😓 Hard','red'],['good','🙂 Good','yellow'],['easy','😄 Easy','green']];
-  defs.forEach(([cls, lbl, st]) => {
+  const btns = document.createElement('div');
+  btns.className = 'res-btns';
+
+  if (!correct) {
+    // Incorrect → auto red
     const b = document.createElement('button');
-    b.className = 'rb ' + cls; b.textContent = lbl;
-    b.onclick = () => record(st);
-    $('resRow').appendChild(b);
-  });
+    b.className = 'rb next'; b.textContent = '次へ →';
+    b.onclick = () => record('red');
+    btns.appendChild(b);
+  } else if (hintUsed) {
+    // Correct + hint → auto yellow
+    const note = document.createElement('span');
+    note.className = 'hint-note'; note.textContent = '🏷️ ヒントあり → 要復習';
+    $('resRow').appendChild(note);
+    const b = document.createElement('button');
+    b.className = 'rb next'; b.textContent = '次へ →';
+    b.onclick = () => record('yellow');
+    btns.appendChild(b);
+  } else {
+    // Correct + no hint → green by default, can downgrade
+    const bReview = document.createElement('button');
+    bReview.className = 'rb review'; bReview.textContent = '要復習';
+    bReview.onclick = () => record('yellow');
+    btns.appendChild(bReview);
+    const bNext = document.createElement('button');
+    bNext.className = 'rb next'; bNext.textContent = '次へ →';
+    bNext.onclick = () => record('green');
+    btns.appendChild(bNext);
+  }
+  $('resRow').appendChild(btns);
 }
 
 function record(status) {
   const w = queue[qi];
   w.status = status; w.lastSeen = today();
-  if (status === 'red') { w.incorrect++; stats.hard++; }
-  else { w.correct++; status === 'green' ? stats.easy++ : stats.good++; }
+  if (status === 'red') { w.incorrect++; stats.incorrect++; }
+  else { w.correct++; stats.correct++; }
   const p = loadP();
   p[w.id] = { status:w.status, correct:w.correct, incorrect:w.incorrect, lastSeen:w.lastSeen };
   saveP(p);
@@ -425,10 +590,10 @@ function record(status) {
 function showDone() {
   $('cardWrap').style.display = 'none';
   $('doneWrap').style.display = 'block';
-  txt('doneMsg', queue.length + '語完了！ Easy:' + stats.easy + '  Good:' + stats.good + '  Hard:' + stats.hard);
+  txt('doneMsg', queue.length + '語完了！ ✅ ' + stats.correct + '  ❌ ' + stats.incorrect);
 }
 function restart() {
-  stats = {easy:0,good:0,hard:0};
+  stats = {correct:0, incorrect:0};
   buildQueue();
   $('doneWrap').style.display = 'none';
   $('cardWrap').style.display = 'block';
@@ -467,6 +632,7 @@ function renderResults() {
     const ja = document.createElement('span'); ja.className = 'wja'; ja.textContent = w.japanese;
     const sc = document.createElement('span'); sc.className = 'wsc'; sc.textContent = '✓'+w.correct+' ✗'+w.incorrect;
     item.appendChild(dot); item.appendChild(en); item.appendChild(ja); item.appendChild(sc);
+    item.onclick = () => openRef(w);
     $('wlistBody').appendChild(item);
   });
 }
@@ -489,6 +655,122 @@ function updateStreak() {
   if (p._lastDay===ys) s++; else if (p._lastDay!==t) s=1;
   p._streak=s; p._lastDay=t; saveP(p);
   txt('streakN', s);
+}
+
+// --- Reference Modal ---
+function openRef(w) {
+  refCards = words.filter(w2 => w2.word === w.word);
+  refIdx = refCards.findIndex(w2 => w2.id === w.id);
+  if (refIdx < 0) refIdx = 0;
+  renderRefSlide();
+  $('refModal').classList.add('open');
+}
+
+function renderRefSlide() {
+  const w = refCards[refIdx];
+  const body = $('refBody');
+  clr('refBody');
+
+  // Word
+  const wEl = document.createElement('div');
+  wEl.className = 'ref-word'; wEl.textContent = w.english;
+  body.appendChild(wEl);
+
+  // Meaning + pos
+  const mEl = document.createElement('div');
+  mEl.className = 'ref-meaning';
+  mEl.textContent = w.japanese + '  (' + (POS_MAP[w.pos] || w.pos) + ')';
+  body.appendChild(mEl);
+
+  // Meanings list (multi-meaning only)
+  if (refCards.length > 1) {
+    const mlEl = document.createElement('div');
+    mlEl.className = 'meanings-list';
+    const nums = ['①','②','③','④','⑤'];
+    refCards.forEach((m, i) => {
+      const item = document.createElement('div');
+      item.className = 'meaning-item' + (m.id === w.id ? ' current' : '');
+      const num = document.createElement('span'); num.className = 'meaning-num'; num.textContent = nums[i];
+      const lbl = document.createElement('span');
+      lbl.textContent = m.japanese + '【' + (POS_MAP[m.pos] || m.pos) + '】';
+      item.appendChild(num); item.appendChild(lbl);
+      mlEl.appendChild(item);
+    });
+    body.appendChild(mlEl);
+  }
+
+  // Image
+  if (w.image) {
+    const img = document.createElement('img');
+    img.className = 'ref-img'; img.src = BASE + w.image; img.alt = w.english;
+    body.appendChild(img);
+  }
+
+  // Sentence with highlight
+  const sentEl = document.createElement('div');
+  sentEl.className = 'ref-sent';
+  const sentP = document.createElement('p');
+  const re = new RegExp('\\b' + w.english + 's?\\b', 'gi');
+  const ms = [...w.sentence.matchAll(re)];
+  if (ms.length > 0) {
+    let pos = 0;
+    ms.forEach(m => {
+      if (m.index > pos) sentP.appendChild(document.createTextNode(w.sentence.slice(pos, m.index)));
+      const hl = document.createElement('span'); hl.className = 'hl'; hl.textContent = m[0];
+      sentP.appendChild(hl);
+      pos = m.index + m[0].length;
+    });
+    if (pos < w.sentence.length) sentP.appendChild(document.createTextNode(w.sentence.slice(pos)));
+  } else {
+    sentP.appendChild(document.createTextNode(w.sentence));
+  }
+  sentEl.appendChild(sentP);
+  const sentJa = document.createElement('p');
+  sentJa.className = 'ref-sent-ja'; sentJa.textContent = w.sentence_ja;
+  sentEl.appendChild(sentJa);
+  body.appendChild(sentEl);
+
+  // Audio buttons
+  const audioRow = document.createElement('div');
+  audioRow.className = 'audio-row';
+  const wBtn = document.createElement('button');
+  wBtn.className = 'audio-btn w'; wBtn.textContent = '🔊 単語';
+  wBtn.onclick = () => playAudio(AUDIO + 'words/' + w.word + '.mp3');
+  const sBtn = document.createElement('button');
+  sBtn.className = 'audio-btn s'; sBtn.textContent = '🔊 例文';
+  sBtn.onclick = () => playAudio(AUDIO + 'sentences/' + w.id + '.mp3');
+  audioRow.appendChild(wBtn); audioRow.appendChild(sBtn);
+  body.appendChild(audioRow);
+
+  // Nav for multi-meaning
+  const nav = $('refNav');
+  clr('refNav');
+  if (refCards.length > 1) {
+    nav.style.display = 'flex';
+    const prev = document.createElement('button');
+    prev.className = 'ref-nav-btn'; prev.textContent = '← 前';
+    prev.disabled = refIdx === 0;
+    prev.onclick = () => { refIdx--; renderRefSlide(); };
+
+    const dotsEl = document.createElement('div');
+    dotsEl.className = 'ref-nav-dots';
+    refCards.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'ref-nav-dot' + (i === refIdx ? ' on' : '');
+      dotsEl.appendChild(dot);
+    });
+
+    const next = document.createElement('button');
+    next.className = 'ref-nav-btn'; next.textContent = '次 →';
+    next.disabled = refIdx === refCards.length - 1;
+    next.onclick = () => { refIdx++; renderRefSlide(); };
+
+    nav.appendChild(prev); nav.appendChild(dotsEl); nav.appendChild(next);
+    txt('refTitle', w.word + '  ' + (refIdx + 1) + ' / ' + refCards.length);
+  } else {
+    nav.style.display = 'none';
+    txt('refTitle', w.word);
+  }
 }
 
 // --- Tab ---
