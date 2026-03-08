@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
+  <style>
+    :root {
+      --primary: #6C63FF; --primary-light: #EEF0FF;
+      --success: #22C55E; --warning: #F59E0B; --danger: #EF4444;
+      --bg: #F8F9FF; --card-bg: #FFFFFF;
+      --text: #1E1B4B; --text-sub: #6B7280; --border: #E5E7EB;
+      --radius: 16px; --shadow: 0 4px 24px rgba(108,99,255,0.10);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+    header { background:var(--primary); color:white; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 12px rgba(108,99,255,0.3); }
+    header h1 { font-size:1.2rem; font-weight:700; }
+    .subtitle { font-size:0.8rem; opacity:0.85; margin-top:2px; }
+    .streak { display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.2); padding:6px 12px; border-radius:20px; font-size:0.85rem; font-weight:600; }
+
+    .prog-wrap { background:white; padding:12px 24px; border-bottom:1px solid var(--border); }
+    .prog-lbl { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-sub); margin-bottom:6px; }
+    .prog-bar { height:8px; background:var(--border); border-radius:4px; overflow:hidden; }
+    .prog-fill { height:100%; background:linear-gradient(90deg,var(--primary),#A855F7); border-radius:4px; transition:width 0.5s; }
+
+    .tab-nav { display:flex; background:white; border-bottom:1px solid var(--border); padding:0 24px; }
+    .tab-btn { padding:12px 20px; border:none; background:none; font-size:0.9rem; font-weight:600; color:var(--text-sub); cursor:pointer; border-bottom:3px solid transparent; transition:all 0.2s; }
+    .tab-btn.active { color:var(--primary); border-bottom-color:var(--primary); }
+
+    main { padding:24px; max-width:680px; margin:0 auto; }
+    .tab-area { display:none; }
+    .tab-area.active { display:block; }
+
+    .card-ctr { text-align:center; font-size:0.85rem; color:var(--text-sub); margin-bottom:16px; }
+    .flashcard { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); padding:40px 32px; text-align:center; min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; border:2px solid var(--border); transition:border-color 0.3s; }
+    .flashcard.ok { border-color:var(--success); }
+    .card-theme { font-size:0.75rem; color:var(--primary); background:var(--primary-light); padding:3px 10px; border-radius:10px; font-weight:600; }
+    .word-row { display:flex; align-items:center; gap:12px; }
+    .card-word { font-size:2.8rem; font-weight:800; color:var(--text); letter-spacing:-0.5px; }
+    .card-pos { font-size:0.8rem; color:var(--text-sub); background:#F3F4F6; padding:2px 8px; border-radius:6px; }
+
+    .card-ans { display:none; flex-direction:column; align-items:center; gap:12px; width:100%; }
+    .card-ans.show { display:flex; }
+    .card-ja { font-size:1.6rem; font-weight:700; color:var(--primary); }
+    .sent-block { font-size:0.95rem; line-height:1.7; background:#F8F9FF; padding:12px 16px; border-radius:10px; width:100%; }
+    .sent-ja { font-size:0.82rem; color:var(--text-sub); margin-top:4px; }
+
+    .audio-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:20px; border:none; cursor:pointer; font-size:0.85rem; font-weight:600; transition:all 0.2s; }
+    .audio-btn.wa { background:var(--primary-light); color:var(--primary); }
+    .audio-btn.sa { background:#F0FDF4; color:#166534; }
+    .audio-btn:hover { opacity:0.8; }
+
+    .card-actions { margin-top:24px; display:flex; gap:12px; }
+    .show-btn { width:100%; padding:14px; background:var(--primary); color:white; border:none; border-radius:var(--radius); font-size:1rem; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(108,99,255,0.3); }
+    .res-btn { flex:1; padding:14px; border:none; border-radius:var(--radius); font-size:0.95rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .res-btn.hard { background:#FEF2F2; color:var(--danger); border:2px solid #FECACA; }
+    .res-btn.good { background:#F0FDF4; color:var(--success); border:2px solid #BBF7D0; }
+    .res-btn.easy { background:var(--primary-light); color:var(--primary); border:2px solid #C7D2FE; }
+    .res-btn:hover { transform:translateY(-2px); }
+
+    .story-card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+    .story-hdr { background:linear-gradient(135deg,var(--primary),#A855F7); color:white; padding:20px 24px; }
+    .story-hdr h2 { font-size:1.1rem; font-weight:700; }
+    .story-hdr p { font-size:0.8rem; opacity:0.85; margin-top:4px; }
+    .story-row { padding:16px 24px; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:12px; }
+    .story-row:last-child { border-bottom:none; }
+    .snum { font-size:0.75rem; font-weight:700; color:var(--primary); background:var(--primary-light); padding:3px 8px; border-radius:8px; flex-shrink:0; margin-top:3px; }
+    .stxt { font-size:0.95rem; line-height:1.7; flex:1; }
+    .stxt .hl { color:var(--primary); font-weight:700; border-bottom:2px solid var(--primary); }
+    .splay { background:none; border:none; cursor:pointer; color:var(--text-sub); padding:4px; border-radius:6px; transition:all 0.2s; flex-shrink:0; font-size:1.1rem; }
+    .splay:hover { color:var(--primary); background:var(--primary-light); }
+
+    .stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px; }
+    .stat-box { background:var(--card-bg); border-radius:var(--radius); padding:20px 16px; text-align:center; box-shadow:var(--shadow); }
+    .stat-box .num { font-size:2rem; font-weight:800; }
+    .stat-box .lbl { font-size:0.8rem; color:var(--text-sub); margin-top:4px; }
+    .sg .num { color:var(--success); } .sy .num { color:var(--warning); } .sr .num { color:var(--danger); }
+
+    .wlist { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+    .wlist-hdr { padding:14px 20px; font-weight:700; font-size:0.9rem; border-bottom:1px solid var(--border); color:var(--text-sub); background:#F9FAFB; }
+    .witem { padding:12px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; font-size:0.9rem; }
+    .witem:last-child { border-bottom:none; }
+    .dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .dg { background:var(--success); } .dy { background:var(--warning); } .dr { background:var(--danger); } .dn { background:#D1D5DB; }
+    .wen { font-weight:700; flex:1; }
+    .wja { color:var(--text-sub); font-size:0.85rem; }
+    .wscore { font-size:0.8rem; color:var(--text-sub); }
+
+    .done-wrap { text-align:center; padding:60px 20px; }
+    .done-icon { font-size:4rem; margin-bottom:16px; }
+    .done-title { font-size:1.4rem; font-weight:800; margin-bottom:8px; }
+    .done-sub { color:var(--text-sub); margin-bottom:24px; }
+    .restart-btn { padding:12px 28px; background:var(--primary); color:white; border:none; border-radius:var(--radius); font-size:0.95rem; font-weight:700; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Kaya's Vocab</h1>
+    <div class="subtitle">NEW TREASURE Stage 1</div>
+  </div>
+  <div class="streak">🔥 <span id="streakCount">0</span>日連続</div>
+</header>
+
+<div class="prog-wrap">
+  <div class="prog-lbl">
+    <span id="progLabel">0 / 16 語マスター</span>
+    <span id="progPct">0%</span>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="cards">カード学習</button>
+  <button class="tab-btn" data-tab="story">ストーリー</button>
+  <button class="tab-btn" data-tab="results">進捗</button>
+</div>
+
+<main>
+  <div class="tab-area active" id="tab-cards">
+    <div id="cardContent">
+      <p class="card-ctr" id="cardCtr">1 / 16</p>
+      <div class="flashcard" id="flashcard">
+        <span class="card-theme" id="cardTheme"></span>
+        <div class="word-row">
+          <span class="card-word" id="cardWord"></span>
+          <button class="audio-btn wa" id="btnWordAudio">🔊 単語</button>
+        </div>
+        <span class="card-pos" id="cardPos"></span>
+        <div class="card-ans" id="cardAns">
+          <span class="card-ja" id="cardJa"></span>
+          <div class="sent-block">
+            <p id="cardSent"></p>
+            <p class="sent-ja" id="cardSentJa"></p>
+          </div>
+          <button class="audio-btn sa" id="btnSentAudio">🔊 例文を聞く</button>
+        </div>
+      </div>
+      <div class="card-actions" id="cardActions">
+        <button class="show-btn" id="showBtn">答えを見る</button>
+      </div>
+    </div>
+    <div class="done-wrap" id="doneWrap" style="display:none">
+      <div class="done-icon">🎉</div>
+      <p class="done-title">今日のセッション完了！</p>
+      <p class="done-sub" id="doneMsg"></p>
+      <button class="restart-btn" id="restartBtn">もう一度練習する</button>
+    </div>
+  </div>
+
+  <div class="tab-area" id="tab-story">
+    <div class="story-card">
+      <div class="story-hdr">
+        <h2 id="storyTitle"></h2>
+        <p>今日の学習単語が全部入っています。音声で聞きながら読もう！</p>
+      </div>
+      <div id="storyBody"></div>
+    </div>
+  </div>
+
+  <div class="tab-area" id="tab-results">
+    <div class="stat-grid">
+      <div class="stat-box sg"><div class="num" id="cG">0</div><div class="lbl">🟢 マスター</div></div>
+      <div class="stat-box sy"><div class="num" id="cY">0</div><div class="lbl">🟡 練習中</div></div>
+      <div class="stat-box sr"><div class="num" id="cR">0</div><div class="lbl">🔴 要復習</div></div>
+    </div>
+    <div class="wlist">
+      <div class="wlist-hdr">単語一覧</div>
+      <div id="wlistBody"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const BASE = location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') + '/';
+const AUDIO = BASE + 'data/audio/';
+const VOCAB = ['store','well','dress','coat','hospital','always','pencil',
+               'calendar','pharmacy','tickets','station','awesome',
+               'excited','clown','over','difficult'];
+const KEY = 'kaya_vocab_v1';
+
+let words = [], queue = [], idx = 0, story = null;
+let stats = {easy:0, good:0, hard:0};
+
+const $ = id => document.getElementById(id);
+const setText = (id, v) => $(id).textContent = v;
+const clear = id => { const n=$(id); while(n.firstChild) n.removeChild(n.firstChild); };
+const loadP = () => { try { return JSON.parse(localStorage.getItem(KEY))||{}; } catch{return{};} };
+const saveP = d => localStorage.setItem(KEY, JSON.stringify(d));
+const today = () => new Date().toISOString().split('T')[0];
+
+function buildHighlight(sentence) {
+  const wrap = document.createElement('span');
+  wrap.className = 'stxt';
+  const pattern = new RegExp('\\b(' + VOCAB.join('|') + ')(s?)\\b', 'gi');
+  const matches = [...sentence.matchAll(pattern)];
+  let pos = 0;
+  matches.forEach(m => {
+    if (m.index > pos) wrap.appendChild(document.createTextNode(sentence.slice(pos, m.index)));
+    const hl = document.createElement('span');
+    hl.className = 'hl';
+    hl.textContent = m[0];
+    wrap.appendChild(hl);
+    pos = m.index + m[0].length;
+  });
+  if (pos < sentence.length) wrap.appendChild(document.createTextNode(sentence.slice(pos)));
+  return wrap;
+}
+
+function playAudio(src) { new Audio(src).play().catch(()=>{}); }
+const playWord = () => playAudio(AUDIO + 'words/' + queue[idx].id + '.mp3');
+const playSent = () => playAudio(AUDIO + 'sentences/' + queue[idx].id + '.mp3');
+const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '.mp3');
+
+async function init() {
+  const d = await (await fetch(BASE + 'data/words.json')).json();
+  words = d.words; story = d.story;
+  const p = loadP();
+  words.forEach(w => { if (p[w.id]) Object.assign(w, p[w.id]); });
+  updateStreak();
+  buildQueue(); renderCard(); renderStory(); renderResults(); updateProg();
+
+  $('showBtn').onclick = showAnswer;
+  $('btnWordAudio').onclick = playWord;
+  $('btnSentAudio').onclick = playSent;
+  $('restartBtn').onclick = restart;
+  document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab, b)));
+}
+
+function buildQueue() {
+  queue = [
+    ...words.filter(w => w.status==='red'),
+    ...words.filter(w => w.status==='yellow'),
+    ...words.filter(w => w.status==='new'),
+  ];
+  idx = 0;
+}
+
+function renderCard() {
+  if (idx >= queue.length) { showDone(); return; }
+  const w = queue[idx];
+  setText('cardCtr', (idx+1) + ' / ' + queue.length);
+  setText('cardTheme', w.theme);
+  setText('cardWord', w.english);
+  setText('cardPos', w.pos);
+  setText('cardJa', w.japanese);
+  setText('cardSent', w.sentence);
+  setText('cardSentJa', w.sentence_ja);
+  $('cardAns').classList.remove('show');
+  $('flashcard').classList.remove('ok');
+  clear('cardActions');
+  const btn = document.createElement('button');
+  btn.className = 'show-btn'; btn.id = 'showBtn'; btn.textContent = '答えを見る';
+  btn.onclick = showAnswer;
+  $('cardActions').appendChild(btn);
+}
+
+function showAnswer() {
+  $('cardAns').classList.add('show');
+  $('flashcard').classList.add('ok');
+  clear('cardActions');
+  [['hard','😓 Hard','red'],['good','🙂 Good','yellow'],['easy','😄 Easy','green']].forEach(([cls,lbl,st]) => {
+    const b = document.createElement('button');
+    b.className = 'res-btn ' + cls; b.textContent = lbl;
+    b.onclick = () => record(st);
+    $('cardActions').appendChild(b);
+  });
+  setTimeout(playSent, 400);
+}
+
+function record(status) {
+  const w = queue[idx];
+  w.status = status; w.lastSeen = today();
+  if (status==='red') { w.incorrect++; stats.hard++; }
+  else { w.correct++; status==='green' ? stats.easy++ : stats.good++; }
+  const p = loadP();
+  p[w.id] = {status:w.status, correct:w.correct, incorrect:w.incorrect, lastSeen:w.lastSeen};
+  saveP(p);
+  idx++; updateProg(); renderCard(); renderResults();
+}
+
+function showDone() {
+  $('cardContent').style.display = 'none';
+  $('doneWrap').style.display = 'block';
+  setText('doneMsg', queue.length+'語完了！ Easy:'+stats.easy+' Good:'+stats.good+' Hard:'+stats.hard);
+}
+
+function restart() {
+  stats = {easy:0,good:0,hard:0};
+  buildQueue();
+  $('doneWrap').style.display = 'none';
+  $('cardContent').style.display = 'block';
+  renderCard();
+}
+
+function renderStory() {
+  if (!story) return;
+  setText('storyTitle', 'Day ' + story.day + ': ' + story.title);
+  clear('storyBody');
+  story.sentences.forEach((s, i) => {
+    const row = document.createElement('div'); row.className = 'story-row';
+    const num = document.createElement('span'); num.className = 'snum'; num.textContent = i+1;
+    const btn = document.createElement('button'); btn.className = 'splay'; btn.textContent = '🔊';
+    btn.onclick = () => playStory(i+1);
+    row.appendChild(num);
+    row.appendChild(buildHighlight(s));
+    row.appendChild(btn);
+    $('storyBody').appendChild(row);
+  });
+}
+
+function renderResults() {
+  const g = words.filter(w=>w.status==='green').length;
+  const y = words.filter(w=>w.status==='yellow').length;
+  const r = words.filter(w=>w.status==='red').length;
+  setText('cG',g); setText('cY',y); setText('cR',r);
+  const dotMap = {green:'dg',yellow:'dy',red:'dr',new:'dn'};
+  clear('wlistBody');
+  words.forEach(w => {
+    const item = document.createElement('div'); item.className = 'witem';
+    const dot = document.createElement('span'); dot.className = 'dot ' + (dotMap[w.status]||'dn');
+    const en = document.createElement('span'); en.className = 'wen'; en.textContent = w.english;
+    const ja = document.createElement('span'); ja.className = 'wja'; ja.textContent = w.japanese;
+    const sc = document.createElement('span'); sc.className = 'wscore'; sc.textContent = '✓'+w.correct+' ✗'+w.incorrect;
+    item.appendChild(dot); item.appendChild(en); item.appendChild(ja); item.appendChild(sc);
+    $('wlistBody').appendChild(item);
+  });
+}
+
+function updateProg() {
+  const done = words.filter(w=>w.status==='green').length;
+  const pct = Math.round(done/words.length*100);
+  $('progFill').style.width = pct+'%';
+  setText('progLabel', done+' / '+words.length+' 語マスター');
+  setText('progPct', pct+'%');
+}
+
+function updateStreak() {
+  const p = loadP(), t = today();
+  const y = new Date(); y.setDate(y.getDate()-1);
+  const ys = y.toISOString().split('T')[0];
+  let streak = p._streak||0;
+  if (p._lastDay===ys) streak++; else if (p._lastDay!==t) streak=1;
+  p._streak=streak; p._lastDay=t; saveP(p);
+  setText('streakCount', streak);
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-area').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  $('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+init();
+</script>
+</body>
+</html>

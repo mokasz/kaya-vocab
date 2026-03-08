@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""
+音声生成スクリプト
+Gemini TTS を使って words.json の単語・例文・ストーリーのMP3を生成する
+
+使い方:
+  python generate_audio.py              # 全音声を生成
+  python generate_audio.py --words-only # 単語のみ
+  python generate_audio.py --force      # 既存ファイルも上書き
+"""
+
+import json
+import os
+import subprocess
+import sys
+import time
+import argparse
+from pathlib import Path
+
+from google import genai
+from google.genai import types
+
+# --- 設定 ---
+SCRIPT_DIR = Path(__file__).parent
+DATA_DIR = SCRIPT_DIR.parent / "data"
+WORDS_FILE = DATA_DIR / "words.json"
+AUDIO_DIR = DATA_DIR / "audio"
+WORDS_AUDIO_DIR = AUDIO_DIR / "words"
+SENTENCES_AUDIO_DIR = AUDIO_DIR / "sentences"
+STORY_AUDIO_DIR = AUDIO_DIR / "story"
+
+GEMINI_MODEL = "gemini-2.5-flash-preview-tts"
+VOICE_NAME = "Aoede"   # 女性英語音声（Kaya向け）
+PCM_RATE = 24000
+RATE_LIMIT_SLEEP = 6.5  # API レート制限対策（10 req/分 = 6秒/req）
+MAX_RETRIES = 3
+
+
+def init_client():
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print("ERROR: GEMINI_API_KEY が環境変数に設定されていません")
+        sys.exit(1)
+    return genai.Client(api_key=api_key)
+
+
+def pcm_to_mp3(pcm_bytes: bytes, output_path: Path) -> bool:
+    """raw PCM (L16, 24kHz, mono) → MP3 変換（ffmpegを使用）"""
+    cmd = [
+        "ffmpeg", "-y",
+        "-f", "s16le",
+        "-ar", str(PCM_RATE),
+        "-ac", "1",
+        "-i", "pipe:0",
+        "-codec:a", "libmp3lame",
+        "-q:a", "4",
+        str(output_path)
+    ]
+    result = subprocess.run(cmd, input=pcm_bytes, capture_output=True)
+    return result.returncode == 0
+
+
+def generate_audio(client, text: str, output_path: Path, force: bool = False) -> bool:
+    """テキストからMP3を生成して保存"""
+    if output_path.exists() and not force:
+        print(f"  SKIP (既存): {output_path.name}")
+        return True
+
+    for attempt in range(MAX_RETRIES):
+        try:
+            response = client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=text,
+                config=types.GenerateContentConfig(
+                    response_modalities=["AUDIO"],
+                    speech_config=types.SpeechConfig(
+                        voice_config=types.VoiceConfig(
+                            prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                                voice_name=VOICE_NAME
+                            )
+                        )
+                    ),
+                ),
+            )
+            pcm_data = response.candidates[0].content.parts[0].inline_data.data
+
+            if pcm_to_mp3(pcm_data, output_path):
+                size_kb = output_path.stat().st_size // 1024
+                print(f"  OK: {output_path.name} ({size_kb}KB)")
+                return True
+            else:
+                print(f"  ERROR: ffmpeg変換失敗 → {output_path.name}")
+                return False
+
+        except Exception as e:
+            msg = str(e)
+            # レート制限エラー: retryDelay を取得して待機
+            if "429" in msg or "RESOURCE_EXHAUSTED" in msg:
+                wait = 30
+                import re
+                m = re.search(r"retryDelay.*?(\d+)s", msg)
+                if m:
+                    wait = int(m.group(1)) + 2
+                print(f"  WAIT: レート制限 → {wait}秒待機 (attempt {attempt+1}/{MAX_RETRIES})")
+                time.sleep(wait)
+                continue
+            print(f"  ERROR: {output_path.name} → {e}")
+            return False
+
+    print(f"  FAILED: {output_path.name} (リトライ上限到達)")
+    return False
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--words-only", action="store_true", help="単語のみ生成")
+    parser.add_argument("--force", action="store_true", help="既存ファイルを上書き")
+    args = parser.parse_args()
+
+    # ディレクトリ作成
+    WORDS_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+    SENTENCES_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+    STORY_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+
+    # データ読み込み
+    with open(WORDS_FILE, encoding="utf-8") as f:
+        data = json.load(f)
+
+    client = init_client()
+    words = data["words"]
+    story = data.get("story", {})
+
+    ok = err = 0
+
+    # --- 単語の読み上げ ---
+    print(f"\n[1/3] 単語音声を生成中... ({len(words)}語)")
+    for word in words:
+        out = WORDS_AUDIO_DIR / f"{word['id']}.mp3"
+        # 単語を自然に読み上げるため "The word is: store" 形式にする
+        text = f"{word['english']}"
+        if generate_audio(client, text, out, args.force):
+            ok += 1
+        else:
+            err += 1
+        time.sleep(RATE_LIMIT_SLEEP)
+
+    if args.words_only:
+        print(f"\n完了: {ok}成功 / {err}失敗")
+        return
+
+    # --- 例文の読み上げ ---
+    print(f"\n[2/3] 例文音声を生成中... ({len(words)}文)")
+    for word in words:
+        out = SENTENCES_AUDIO_DIR / f"{word['id']}.mp3"
+        if generate_audio(client, word["sentence"], out, args.force):
+            ok += 1
+        else:
+            err += 1
+        time.sleep(RATE_LIMIT_SLEEP)
+
+    # --- ストーリーの読み上げ ---
+    sentences = story.get("sentences", [])
+    print(f"\n[3/3] ストーリー音声を生成中... ({len(sentences)}文)")
+    for i, sentence in enumerate(sentences):
+        out = STORY_AUDIO_DIR / f"s{i+1:02d}.mp3"
+        if generate_audio(client, sentence, out, args.force):
+            ok += 1
+        else:
+            err += 1
+        time.sleep(RATE_LIMIT_SLEEP)
+
+    print(f"\n=== 完了: {ok}成功 / {err}失敗 ===")
+    print(f"出力先: {AUDIO_DIR}")
+
+
+if __name__ == "__main__":
+    main()
