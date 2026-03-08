@@ -16,7 +16,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "I go to the store with my mother.",
-      "sentence_ja": "私は母と一緒に店に行きます。"
+      "sentence_ja": "私は母と一緒に店に行きます。",
+      "image": "data/images/store.png"
     },
     {
       "id": "well",
@@ -29,7 +30,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "She plays the piano very well.",
-      "sentence_ja": "彼女はピアノをとても上手に弾きます。"
+      "sentence_ja": "彼女はピアノをとても上手に弾きます。",
+      "image": "data/images/well.png"
     },
     {
       "id": "dress",
@@ -42,7 +44,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "Kaya wears a beautiful red dress.",
-      "sentence_ja": "カヤは美しい赤いドレスを着ています。"
+      "sentence_ja": "カヤは美しい赤いドレスを着ています。",
+      "image": "data/images/dress.png"
     },
     {
       "id": "coat",
@@ -55,7 +58,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "Put on your coat. It is cold outside.",
-      "sentence_ja": "コートを着てください。外は寒いです。"
+      "sentence_ja": "コートを着てください。外は寒いです。",
+      "image": "data/images/coat.png"
     },
     {
       "id": "hospital",
@@ -68,7 +72,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "My father works at the hospital.",
-      "sentence_ja": "私の父は病院で働いています。"
+      "sentence_ja": "私の父は病院で働いています。",
+      "image": "data/images/hospital.png"
     },
     {
       "id": "always",
@@ -81,7 +86,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "I always eat breakfast before school.",
-      "sentence_ja": "私はいつも学校の前に朝食を食べます。"
+      "sentence_ja": "私はいつも学校の前に朝食を食べます。",
+      "image": "data/images/always.png"
     },
     {
       "id": "pencil",
@@ -94,7 +100,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "I need a pencil for the test.",
-      "sentence_ja": "テストにえんぴつが必要です。"
+      "sentence_ja": "テストにえんぴつが必要です。",
+      "image": "data/images/pencil.png"
     },
     {
       "id": "calendar",
@@ -107,7 +114,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "Look at the calendar. Today is Monday.",
-      "sentence_ja": "カレンダーを見てください。今日は月曜日です。"
+      "sentence_ja": "カレンダーを見てください。今日は月曜日です。",
+      "image": "data/images/calendar.png"
     },
     {
       "id": "pharmacy",
@@ -120,7 +128,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "We can buy medicine at the pharmacy.",
-      "sentence_ja": "薬局で薬を買うことができます。"
+      "sentence_ja": "薬局で薬を買うことができます。",
+      "image": "data/images/pharmacy.png"
     },
     {
       "id": "tickets",
@@ -133,7 +142,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "She has two tickets for the movie.",
-      "sentence_ja": "彼女は映画のチケットを2枚持っています。"
+      "sentence_ja": "彼女は映画のチケットを2枚持っています。",
+      "image": "data/images/tickets.png"
     },
     {
       "id": "station",
@@ -146,7 +156,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "The train station is near my school.",
-      "sentence_ja": "電車の駅は私の学校の近くにあります。"
+      "sentence_ja": "電車の駅は私の学校の近くにあります。",
+      "image": "data/images/station.png"
     },
     {
       "id": "awesome",
@@ -159,7 +170,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "This is an awesome game! I love it.",
-      "sentence_ja": "これはすごいゲームです！大好きです。"
+      "sentence_ja": "これはすごいゲームです！大好きです。",
+      "image": "data/images/awesome.png"
     },
     {
       "id": "excited",
@@ -172,7 +184,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "Kaya is very excited about her new school.",
-      "sentence_ja": "カヤは新しい学校についてとてもわくわくしています。"
+      "sentence_ja": "カヤは新しい学校についてとてもわくわくしています。",
+      "image": "data/images/excited.png"
     },
     {
       "id": "clown",
@@ -185,7 +198,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "The clown at the circus is very funny.",
-      "sentence_ja": "サーカスのピエロはとてもおかしいです。"
+      "sentence_ja": "サーカスのピエロはとてもおかしいです。",
+      "image": "data/images/clown.png"
     },
     {
       "id": "over",
@@ -198,7 +212,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "The game is over. Our team won!",
-      "sentence_ja": "ゲームは終わりました。私たちのチームが勝ちました！"
+      "sentence_ja": "ゲームは終わりました。私たちのチームが勝ちました！",
+      "image": "data/images/over.png"
     },
     {
       "id": "difficult",
@@ -211,7 +226,8 @@
       "incorrect": 0,
       "lastSeen": null,
       "sentence": "This math problem is difficult for me.",
-      "sentence_ja": "この数学の問題は私には難しいです。"
+      "sentence_ja": "この数学の問題は私には難しいです。",
+      "image": "data/images/difficult.png"
     }
   ],
   "story": {

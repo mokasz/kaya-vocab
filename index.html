@@ -61,6 +61,7 @@
 
     /* Front face */
     .theme-badge { font-size:0.72rem; color:var(--primary); background:var(--primary-light); padding:3px 10px; border-radius:10px; font-weight:700; }
+    .card-illust { width:130px; height:130px; object-fit:contain; border-radius:14px; background:#F8F9FF; padding:6px; }
     .sent-display { font-size:1.05rem; line-height:1.9; text-align:center; color:var(--text); width:100%; }
     .blank { display:inline-block; min-width:80px; border-bottom:3px solid var(--primary); margin:0 4px; vertical-align:bottom; }
 
@@ -181,6 +182,7 @@
           <!-- FRONT -->
           <div class="face front" id="faceF">
             <span class="theme-badge" id="fTheme"></span>
+            <img class="card-illust" id="cardIllust" src="" alt="">
             <p class="sent-display" id="fSent"></p>
             <div class="input-row">
               <input class="answer-input" id="ansInput" type="text" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="英単語を入力…">
@@ -347,6 +349,9 @@ function renderCard() {
   // Front
   txt('ctr', (qi+1) + ' / ' + queue.length);
   txt('fTheme', w.theme);
+  const img = $('cardIllust');
+  if (w.image) { img.src = BASE + w.image; img.alt = w.english; img.style.display = 'block'; }
+  else         { img.style.display = 'none'; }
 
   clr('fSent');
   $('fSent').appendChild(buildSentWithBlank(w.sentence, w.english));
@@ -357,7 +362,7 @@ function renderCard() {
 
   // Full sentence with highlight on back
   clr('fullSent');
-  const re2 = new RegExp('\\b' + w.english + 's?\\b', 'i');
+  const re2 = new RegExp('\\b' + w.english + 's?\\b', 'gi');
   const ms = [...w.sentence.matchAll(re2)];
   if (ms.length > 0) {
     let pos2 = 0;
