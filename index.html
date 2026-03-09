@@ -90,7 +90,7 @@
     /* Back face */
     .result-badge { font-size:1.4rem; font-weight:800; }
     .result-badge.ok  { color:var(--success); }
-    .result-badge.ng  { color:var(--danger); }
+    .result-badge.ng  { color:var(--danger); font-size:1rem; }
 
     .answer-word { font-size:2.2rem; font-weight:800; color:var(--text); letter-spacing:-1px; }
     .answer-meaning { font-size:1rem; color:var(--primary); font-weight:700; }
@@ -263,7 +263,7 @@
             <p class="sent-display" id="fSent"></p>
             <span class="theme-reveal" id="fTheme" style="visibility:hidden"></span>
             <div class="input-row">
-              <input class="answer-input" id="ansInput" type="text" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="英単語を入力…">
+              <input class="answer-input" id="ansInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="英単語を入力…">
               <button class="check-btn" id="checkBtn">確認 →</button>
             </div>
             <div class="hint-row">
@@ -501,6 +501,17 @@ async function initApp() {
 
   $('checkBtn').onclick = checkAnswer;
   $('ansInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && isFlipped) {
+      const nextBtn = document.querySelector('#resRow .rb.next');
+      if (nextBtn) nextBtn.click();
+    }
+  });
+  $('faceF').addEventListener('click', e => {
+    if (!isFlipped && e.target === $('faceF') || e.target.closest('.sent-display, .card-illust, .theme-reveal')) {
+      $('ansInput').focus();
+    }
+  });
   $('hintTheme').onclick = () => {
     $('fTheme').style.visibility = 'visible';
     $('hintTheme').disabled = true;
@@ -610,12 +621,12 @@ function checkAnswer() {
   $('card3d').classList.add('flipped');
   $('faceB').classList.add(correct ? 'correct' : 'wrong');
 
-  txt('resBadge', correct ? '✅ Correct!' : '❌ Not quite…');
-  $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
   const wrongMsg = correct ? '' :
-    (pluralMistake ? '惜しい！単数・複数の違いです: "' + typed + '" → "' + w.english + '"'
-                   : '入力: "' + typed + '"  →  正解: "' + w.english + '"');
-  txt('typedWrong', wrongMsg);
+    (pluralMistake ? '❌ 惜しい！単数・複数の違いです: "' + typed + '" → "' + w.english + '"'
+                   : '❌ 入力: "' + typed + '"  →  正解: "' + w.english + '"');
+  txt('resBadge', correct ? '✅ Correct!' : wrongMsg);
+  $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
+  txt('typedWrong', '');
 
   // Audio feedback: correct → sentence only, incorrect → word → spelling → sentence
   if (correct) {
@@ -687,7 +698,23 @@ function record(status) {
 function showDone() {
   $('cardWrap').style.display = 'none';
   $('doneWrap').style.display = 'block';
-  txt('doneMsg', queue.length + '語完了！ ✅ ' + stats.correct + '  ❌ ' + stats.incorrect);
+  const reviewWords = words.filter(w => w.status === 'red' || w.status === 'yellow');
+  if (reviewWords.length > 0) {
+    txt('doneMsg', queue.length + '語完了！ ✅ ' + stats.correct + '  ❌ ' + stats.incorrect + '\n要復習: ' + reviewWords.length + '語');
+    $('restartBtn').textContent = '要復習を練習する';
+    setTimeout(() => {
+      stats = {correct:0, incorrect:0};
+      queue = [...words.filter(w => w.status==='red'), ...words.filter(w => w.status==='yellow')];
+      qi = 0;
+      $('doneWrap').style.display = 'none';
+      $('cardWrap').style.display = 'block';
+      $('restartBtn').textContent = 'もう一度練習する';
+      renderCard();
+    }, 1500);
+  } else {
+    txt('doneMsg', queue.length + '語完了！ ✅ ' + stats.correct + '  ❌ ' + stats.incorrect + '\n全問グリーン！🌟');
+    $('restartBtn').textContent = 'もう一度練習する';
+  }
 }
 function restart() {
   stats = {correct:0, incorrect:0};
