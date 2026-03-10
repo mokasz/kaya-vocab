@@ -120,7 +120,7 @@
     .rb { flex:1; padding:12px 8px; border:none; border-radius:12px; font-size:0.88rem; font-weight:700; cursor:pointer; transition:transform 0.15s; }
     .rb:hover { transform:translateY(-2px); }
     .rb.next   { background:var(--primary-light); color:var(--primary); border:2px solid #C7D2FE; }
-    .rb.review { background:#FEF2F2; color:var(--danger); border:2px solid #FECACA; }
+    .rb.review { background:var(--primary-light); color:var(--primary); border:2px solid #C7D2FE; }
     .hint-note { font-size:0.78rem; color:var(--warning); font-weight:600; }
 
     /* Input shake animation */
@@ -179,8 +179,8 @@
     .snum { font-size:0.7rem; font-weight:700; color:var(--primary); background:var(--primary-light); padding:2px 7px; border-radius:7px; flex-shrink:0; margin-top:4px; }
     .stxt { font-size:0.92rem; line-height:1.75; flex:1; }
     .stxt .hl { color:var(--primary); font-weight:700; border-bottom:2px solid var(--primary); }
-    .splay { background:none; border:none; cursor:pointer; color:var(--text-sub); padding:3px 5px; border-radius:6px; font-size:1rem; flex-shrink:0; }
-    .splay:hover { color:var(--primary); background:var(--primary-light); }
+    .splay { background:var(--primary-light); border:none; cursor:pointer; color:var(--primary); padding:4px 10px; border-radius:20px; font-size:0.95rem; flex-shrink:0; font-weight:700; }
+    .splay:hover { background:#C7D2FE; }
 
     /* ===== Results tab ===== */
     .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px; }
@@ -198,6 +198,8 @@
     .wen { font-weight:700; flex:1; } .wja { color:var(--text-sub); font-size:0.82rem; } .wsc { font-size:0.77rem; color:var(--text-sub); }
     .wi { cursor:pointer; }
     .wi:hover { background:#F9FAFB; }
+    .review-tag { background:none; border:1px solid #C7D2FE; color:var(--primary); font-size:0.72rem; padding:2px 8px; border-radius:10px; cursor:pointer; flex-shrink:0; font-weight:600; }
+    .review-tag:hover { background:var(--primary-light); }
 
     /* ===== Reference Modal ===== */
     .ref-modal { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; padding:20px; }
@@ -259,7 +261,7 @@
       .story-hdr h2 { font-size: 1.25rem; }
       .story-hdr p { font-size: 0.95rem; }
       .stxt { font-size: 1.1rem; }
-      .splay { font-size: 1.2rem; }
+      .splay { font-size: 1.1rem; padding: 6px 14px; }
 
       /* Results */
       .stat .n { font-size: 2.2rem; }
@@ -562,7 +564,7 @@ async function initApp() {
   updateStreak(); buildQueue(); renderCard(); renderStory(); renderResults(); updateProg();
 
   $('checkBtn').onclick = checkAnswer;
-  $('ansInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); });
+  $('ansInput').addEventListener('keydown', e => { if (e.key === 'Enter') { if (!isFlipped) { e.stopPropagation(); checkAnswer(); } } });
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && isFlipped) {
       const nextBtn = document.querySelector('#resRow .rb.next');
@@ -720,7 +722,7 @@ function checkAnswer() {
   } else {
     // Correct + no hint → green by default, can downgrade
     const bReview = document.createElement('button');
-    bReview.className = 'rb review'; bReview.textContent = '要復習';
+    bReview.className = 'rb review'; bReview.textContent = 'もう一回';
     bReview.onclick = () => record('yellow');
     btns.appendChild(bReview);
     const bNext = document.createElement('button');
@@ -803,6 +805,24 @@ function renderStory() {
   });
 }
 
+// --- Status update (from progress tab) ---
+function setStatus(w, newStatus) {
+  w.status = newStatus; w.lastSeen = today();
+  const p = loadP();
+  p[w.id] = { status:w.status, correct:w.correct, incorrect:w.incorrect, lastSeen:w.lastSeen };
+  saveP(p);
+  if (currentUser) {
+    sb.from('progress_sync').upsert({
+      user_id: currentUser.id, book_key: BOOK_KEY, word_key: w.id,
+      status: w.status, correct: w.correct, incorrect: w.incorrect,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,book_key,word_key' }).then(({ error }) => {
+      if (error) console.warn('Supabase sync error:', error);
+    });
+  }
+  buildQueue(); renderResults(); updateProg();
+}
+
 // --- Results ---
 function renderResults() {
   const g = words.filter(w=>w.status==='green').length;
@@ -818,6 +838,11 @@ function renderResults() {
     const ja = document.createElement('span'); ja.className = 'wja'; ja.textContent = w.japanese;
     const sc = document.createElement('span'); sc.className = 'wsc'; sc.textContent = '✓'+w.correct+' ✗'+w.incorrect;
     item.appendChild(dot); item.appendChild(en); item.appendChild(ja); item.appendChild(sc);
+    if (w.status === 'green') {
+      const btn = document.createElement('button'); btn.className = 'review-tag'; btn.textContent = 'もう一回';
+      btn.onclick = e => { e.stopPropagation(); setStatus(w, 'yellow'); };
+      item.appendChild(btn);
+    }
     item.onclick = () => openRef(w);
     $('wlistBody').appendChild(item);
   });
