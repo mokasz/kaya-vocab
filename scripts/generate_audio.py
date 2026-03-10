@@ -9,6 +9,7 @@ Gemini TTS を使って words.json の単語・例文・ストーリーのMP3を
   python generate_audio.py --force      # 既存ファイルも上書き
 """
 
+import csv
 import json
 import os
 import subprocess
@@ -19,6 +20,7 @@ from pathlib import Path
 
 from google import genai
 from google.genai import types
+from google.cloud import texttospeech
 
 # --- 設定 ---
 SCRIPT_DIR = Path(__file__).parent
@@ -36,7 +38,13 @@ LETTER_NAMES = {
     'n':'en','o':'oh','p':'pee','q':'cue','r':'ar','s':'ess',
     't':'tee','u':'you','v':'vee','w':'double-you','x':'ex','y':'why','z':'zee'
 }
-SPELLING_TEMPO = 1.7  # atempo倍率（速度調整）
+SPELLING_TEMPO = 1.7  # atempo倍率（速度調整、旧方式）
+SPELLING_BREAK_MS = 50  # Google Cloud TTS スペル文字間ポーズ（ms）
+CSV_PATH = (
+    "/Users/shiwei.zhu/Library/CloudStorage/"
+    "GoogleDrive-shiwei76@gmail.com/マイドライブ/01.M&K/02.Kaya/洗足/"
+    "NEW_TREASURE_Stage1_単語帳.csv"
+)
 
 LETTERS_AUDIO_DIR = AUDIO_DIR / "letters"
 
@@ -128,35 +136,38 @@ def ensure_letter_audio(client, letter: str, force: bool = False) -> Path | None
     return None
 
 
-def generate_spelling_audio(client, word: str, output_path: Path, force: bool = False) -> bool:
-    """個別文字MP3を生成して結合し、スペル読み上げMP3を作成"""
+def generate_spelling_audio(word: str, output_path: Path, force: bool = False) -> bool:
+    """Google Cloud TTS + SSML でスペル読み上げMP3を生成"""
     if output_path.exists() and not force:
         print(f"  SKIP (既存): {output_path.name}")
         return True
 
-    # 各文字のMP3を確保
-    letter_paths = []
-    for c in word.lower():
-        if c not in LETTER_NAMES:
-            print(f"  WARN: '{c}' はLETTER_NAMESにありません、スキップ")
-            continue
-        p = ensure_letter_audio(client, c, force=False)  # 文字音声は再生成しない
-        if p is None:
-            print(f"  FAILED: {output_path.name} (letter '{c}' 生成失敗)")
-            return False
-        letter_paths.append(p)
-        time.sleep(RATE_LIMIT_SLEEP)
-
-    if not letter_paths:
-        print(f"  FAILED: {output_path.name} (文字なし)")
-        return False
-
-    if concat_letter_mp3s(letter_paths, output_path):
-        size_kb = output_path.stat().st_size // 1024
-        print(f"  OK: {output_path.name} ({size_kb}KB) [concat]")
+    # アルファベット以外の文字を除外
+    letters = [c for c in word.upper() if c.isalpha()]
+    if not letters:
+        print(f"  SKIP (非アルファベット): {output_path.name}")
         return True
-    else:
-        print(f"  FAILED: {output_path.name} (ffmpeg concat失敗)")
+
+    break_tag = f' <break time="{SPELLING_BREAK_MS}ms"/> '
+    ssml = f'<speak><prosody rate="0.9">{break_tag.join(letters)}</prosody></speak>'
+
+    try:
+        tts_client = texttospeech.TextToSpeechClient()
+        response = tts_client.synthesize_speech(
+            input=texttospeech.SynthesisInput(ssml=ssml),
+            voice=texttospeech.VoiceSelectionParams(
+                language_code='en-US', name='en-US-Wavenet-F'
+            ),
+            audio_config=texttospeech.AudioConfig(
+                audio_encoding=texttospeech.AudioEncoding.MP3
+            )
+        )
+        output_path.write_bytes(response.audio_content)
+        size_kb = len(response.audio_content) // 1024
+        print(f"  OK: {output_path.name} ({size_kb}KB)")
+        return True
+    except Exception as e:
+        print(f"  FAILED: {output_path.name} ({e})")
         return False
 
 
@@ -220,7 +231,8 @@ def generate_audio(client, text: str, output_path: Path, force: bool = False) ->
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--words-only", action="store_true", help="単語のみ生成")
-    parser.add_argument("--spelling-only", action="store_true", help="スペル音声のみ生成")
+    parser.add_argument("--spelling-only", action="store_true", help="スペル音声のみ生成（words.json対象）")
+    parser.add_argument("--spelling-all", action="store_true", help="CSV全単語のスペル音声を一括生成（Google Cloud TTS）")
     parser.add_argument("--gen-letters", action="store_true", help="a–z 文字音声を生成（スペル合成の前準備）")
     parser.add_argument("--force", action="store_true", help="既存ファイルを上書き")
     args = parser.parse_args()
@@ -256,19 +268,33 @@ def main():
 
     ok = err = 0
 
+    if args.spelling_all:
+        # --- CSV から全単語のスペル音声を一括生成 ---
+        seen: set[str] = set()
+        with open(CSV_PATH, encoding="utf-8") as f:
+            all_words = sorted({row["English"].strip() for row in csv.DictReader(f) if row["English"].strip()})
+        print(f"\n[スペル音声・全単語] 生成中... ({len(all_words)}語)")
+        for word in all_words:
+            out = SPELLING_AUDIO_DIR / f"{word}.mp3"
+            if generate_spelling_audio(word, out, args.force):
+                ok += 1
+            else:
+                err += 1
+        print(f"\n完了: {ok}成功 / {err}失敗")
+        return
+
     if args.spelling_only:
-        # --- スペル音声のみ ---
-        seen = set()
+        # --- words.json のスペル音声のみ ---
+        seen: set[str] = set()
         unique_words = [w for w in words if not (w.get('word', w['english']) in seen or seen.add(w.get('word', w['english'])))]
         print(f"\n[スペル音声] 生成中... ({len(unique_words)}語)")
         for word in unique_words:
             base = word.get('word', word['english'])
             out = SPELLING_AUDIO_DIR / f"{base}.mp3"
-            if generate_spelling_audio(client, base, out, args.force):
+            if generate_spelling_audio(base, out, args.force):
                 ok += 1
             else:
                 err += 1
-            time.sleep(RATE_LIMIT_SLEEP)
         print(f"\n完了: {ok}成功 / {err}失敗")
         return
 

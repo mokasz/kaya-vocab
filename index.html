@@ -220,6 +220,60 @@
     .ref-nav-dots { display:flex; gap:6px; align-items:center; }
     .ref-nav-dot { width:8px; height:8px; border-radius:50%; background:var(--border); }
     .ref-nav-dot.on { background:var(--primary); }
+
+    /* ===== iPad styles (min-width: 768px) ===== */
+    @media (min-width: 768px) {
+      /* Header */
+      header h1 { font-size: 1.4rem; }
+      header .sub { font-size: 0.95rem; }
+      .streak { font-size: 1rem; }
+      .user-chip .uname { font-size: 1rem; max-width: 160px; }
+      .logout-btn { font-size: 0.88rem; padding: 5px 12px; }
+
+      /* Progress / tabs */
+      .prog-row { font-size: 1rem; }
+      .tab { font-size: 1.05rem; padding: 14px 0; }
+
+      /* Card front */
+      .ctr { font-size: 1rem; }
+      .card-illust { width: 180px; height: 180px; }
+      .sent-display { font-size: 1.35rem; }
+      #ansInput { font-size: 1.2rem; padding: 14px 18px; }
+      #checkBtn { font-size: 1.05rem; padding: 14px 24px; }
+      .hint-btn { font-size: 1rem; padding: 8px 18px; }
+      .theme-reveal { font-size: 1rem; }
+
+      /* Card back */
+      .result-badge { font-size: 1.7rem; }
+      .result-badge.ng { font-size: 1.25rem; }
+      .answer-word { font-size: 2.8rem; }
+      .answer-meaning { font-size: 1.2rem; }
+      .full-sentence { font-size: 1.1rem; }
+      .sent-ja { font-size: 1rem; }
+      .meaning-item { font-size: 1rem; }
+      .audio-btn { font-size: 1rem; padding: 10px 18px; }
+      .rb { font-size: 1.05rem; padding: 15px 8px; }
+      .hint-note { font-size: 0.95rem; }
+
+      /* Story */
+      .story-hdr h2 { font-size: 1.25rem; }
+      .story-hdr p { font-size: 0.95rem; }
+      .stxt { font-size: 1.1rem; }
+      .splay { font-size: 1.2rem; }
+
+      /* Results */
+      .stat .n { font-size: 2.2rem; }
+      .stat .l { font-size: 0.95rem; }
+      .wi { font-size: 1.05rem; padding: 14px 18px; }
+      .wja { font-size: 1rem; }
+
+      /* Ref modal */
+      .ref-word { font-size: 2.4rem; }
+      .ref-meaning { font-size: 1.15rem; }
+      .ref-img { width: 140px; height: 140px; }
+      .ref-sent { font-size: 1.05rem; }
+      .ref-sent-ja { font-size: 0.95rem; }
+    }
   </style>
 </head>
 <body>
@@ -471,7 +525,15 @@ async function initApp() {
   const d = await (await fetch(BASE + 'data/words.json')).json();
   words = d.words; storyData = d.story;
   const p = loadP();
-  words.forEach(w => { if (p[w.id]) Object.assign(w, p[w.id]); });
+  const newDate = d.meta && d.meta.created;
+  const isNewDay = newDate && p._wordsDate !== newDate;
+  if (isNewDay) {
+    words.forEach(w => delete p[w.id]);
+    p._wordsDate = newDate;
+    saveP(p);
+  } else {
+    words.forEach(w => { if (p[w.id]) Object.assign(w, p[w.id]); });
+  }
 
   // Supabase進捗をバックグラウンドで非同期ロード（UIをブロックしない）
   if (currentUser) {
@@ -480,7 +542,7 @@ async function initApp() {
       .eq('user_id', currentUser.id)
       .eq('book_key', BOOK_KEY)
       .then(({ data }) => {
-        if (data && data.length > 0) {
+        if (!isNewDay && data && data.length > 0) {
           const map = {};
           data.forEach(r => { map[r.word_key] = r; });
           let updated = false;
