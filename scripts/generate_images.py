@@ -60,6 +60,18 @@ PROMPT_OVERRIDES = {
         "walking together through a supermarket aisle, colorful product shelves on both sides. "
         "No text, no words, no letters, no labels, no signs. Purely visual. White background."
     ),
+    "over_adv": (
+        "Simple flat cartoon illustration of two children talking to each other after school. "
+        "One child is smiling and gesturing with their hand toward a small house in the background, "
+        "inviting the other child to come over. The other child looks happy and nods. "
+        "School building visible behind them, house visible in the direction the child is pointing. "
+        "Friendly, warm atmosphere. No text, no words, no letters, no signs. White background."
+    ),
+    "over_prep": (
+        "Simple flat cartoon illustration of a cute cat leaping over a brick wall, "
+        "mid-jump with all four legs extended, showing clear motion. "
+        "No text, no words, no letters. White background."
+    ),
 }
 
 

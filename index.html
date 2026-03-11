@@ -603,6 +603,7 @@ function renderCard() {
   if (qi >= queue.length) { showDone(); return; }
   const w = queue[qi];
 
+
   // Reset flip
   isFlipped = false;
   hintUsed = false;
@@ -620,8 +621,12 @@ function renderCard() {
   $('fTheme').style.visibility = 'hidden';
   $('hintTheme').disabled = false;
   const img = $('cardIllust');
-  if (w.image) { img.src = BASE + w.image; img.alt = w.english; img.style.display = 'block'; }
-  else         { img.style.display = 'none'; }
+  if (w.image) {
+    img.style.display = 'none';
+    img.alt = w.english;
+    img.onload = () => { img.style.display = 'block'; };
+    img.src = BASE + w.image + '?v=20260311';
+  } else { img.style.display = 'none'; }
 
   clr('fSent');
   $('fSent').appendChild(buildSentWithBlank(w.sentence, w.english));
@@ -776,12 +781,21 @@ function showDone() {
       renderCard();
     }, 1500);
   } else {
-    txt('doneMsg', queue.length + '語完了！ ✅ ' + stats.correct + '  ❌ ' + stats.incorrect + '\n全問グリーン！🌟');
-    $('restartBtn').textContent = 'もう一度練習する';
+    if (queue.length === 0) {
+      txt('doneMsg', '今日の単語はすべてマスター済みです！🌟');
+      $('restartBtn').style.display = 'none';
+    } else {
+      const msg = queue.length === 0
+        ? '今日の単語はすべてマスター済みです！🌟'
+        : queue.length + '語完了！ ✅ ' + stats.correct + '  ❌ ' + stats.incorrect + '\n全問グリーン！🌟';
+      txt('doneMsg', msg);
+      $('restartBtn').style.display = 'none';
+    }
   }
 }
 function restart() {
   stats = {correct:0, incorrect:0};
+  $('restartBtn').style.display = '';
   buildQueue();
   $('doneWrap').style.display = 'none';
   $('cardWrap').style.display = 'block';
@@ -820,7 +834,14 @@ function setStatus(w, newStatus) {
       if (error) console.warn('Supabase sync error:', error);
     });
   }
-  buildQueue(); renderResults(); updateProg();
+  buildQueue();
+
+  if (queue.length > 0) {
+    $('doneWrap').style.display = 'none';
+    $('cardWrap').style.display = 'block';
+    renderCard();
+  }
+  renderResults(); updateProg();
 }
 
 // --- Results ---
@@ -990,6 +1011,10 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
   $('tab-'+name).classList.add('on');
   btn.classList.add('on');
+  if (name === 'cards' && queue.length > 0 && qi < queue.length) {
+    txt('ctr', (qi+1) + ' / ' + queue.length);
+
+  }
 }
 
 // === Auth ===
