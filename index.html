@@ -762,6 +762,14 @@ function record(status) {
     }, { onConflict: 'user_id,book_key,word_key' }).then(({ error }) => {
       if (error) console.warn('Supabase sync error:', error);
     });
+    // FSRS移行用レビューログ（green=4 / yellow=2 / red=1）
+    const fsrsRating = { green: 4, yellow: 2, red: 1 }[status] ?? 1;
+    sb.from('review_log').insert({
+      user_id: currentUser.id, book_key: BOOK_KEY,
+      word_key: w.id, rating: fsrsRating
+    }).then(({ error }) => {
+      if (error) console.warn('review_log error:', error);
+    });
   }
   qi++; updateProg(); renderCard(); renderResults();
 }
