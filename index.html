@@ -479,7 +479,7 @@ function playAudioP(src) {
   });
 }
 
-// Incorrect answer audio sequence: word → sentence
+// Backside audio sequence: word → sentence
 async function playIncorrectSequence(w) {
   await playAudioP(AUDIO + 'words/' + w.word + '.mp3');
   await playAudioP(AUDIO + 'sentences/' + w.id + '.mp3');
@@ -524,7 +524,7 @@ function buildSentWithBlank(sentence, word) {
 
 // --- Init ---
 async function initApp() {
-  const d = await (await fetch(BASE + 'data/words.json')).json();
+  const d = await (await fetch(BASE + 'data/words.json?v=' + Date.now())).json();
   words = d.words; storyData = d.story;
   const p = loadP();
   const newDate = d.meta && d.meta.created;
@@ -599,43 +599,9 @@ function buildQueue() {
   qi = 0;
 }
 
-function renderCard() {
-  if (qi >= queue.length) { showDone(); return; }
-  const w = queue[qi];
-
-
-  // Reset flip
-  isFlipped = false;
-  hintUsed = false;
-  $('card3d').classList.remove('flipped');
-  $('faceB').classList.remove('correct', 'wrong');
-  $('ansInput').value = '';
-  $('ansInput').classList.remove('shake');
-  txt('typedWrong', '');
-  clr('resRow');
-
-  // Front
-  txt('ctr', (qi+1) + ' / ' + queue.length);
-  const posLabel = POS_MAP[w.pos] || w.pos;
-  txt('fTheme', '(Hint: ' + w.theme + ' 【' + posLabel + '】)');
-  $('fTheme').style.visibility = 'hidden';
-  $('hintTheme').disabled = false;
-  const img = $('cardIllust');
-  if (w.image) {
-    img.style.display = 'none';
-    img.alt = w.english;
-    img.onload = () => { img.style.display = 'block'; };
-    img.src = BASE + w.image + '?v=20260311';
-  } else { img.style.display = 'none'; }
-
-  clr('fSent');
-  $('fSent').appendChild(buildSentWithBlank(w.sentence, w.english));
-
-  // Back (pre-populate)
+function populateBackFace(w) {
   txt('ansWord', w.english);
   txt('ansMeaning', w.japanese + '  (' + (POS_MAP[w.pos] || w.pos) + ')');
-
-  // Meanings list (only shown when multiple cards share same word)
   clr('meaningsList');
   const sameWord = words.filter(w2 => w2.word === w.word);
   if (sameWord.length > 1) {
@@ -643,16 +609,13 @@ function renderCard() {
     sameWord.forEach((m, i) => {
       const item = document.createElement('div');
       item.className = 'meaning-item' + (m.id === w.id ? ' current' : '');
-      const num = document.createElement('span');
-      num.className = 'meaning-num'; num.textContent = nums[i];
+      const num = document.createElement('span'); num.className = 'meaning-num'; num.textContent = nums[i];
       const lbl = document.createElement('span');
       lbl.textContent = m.japanese + '【' + (POS_MAP[m.pos] || m.pos) + '】';
       item.appendChild(num); item.appendChild(lbl);
       $('meaningsList').appendChild(item);
     });
   }
-
-  // Full sentence with highlight on back
   clr('fullSent');
   const re2 = new RegExp('\\b' + w.english + 's?\\b', 'gi');
   const ms = [...w.sentence.matchAll(re2)];
@@ -669,6 +632,55 @@ function renderCard() {
     $('fullSent').appendChild(document.createTextNode(w.sentence));
   }
   txt('fullSentJa', w.sentence_ja);
+}
+
+function renderCard() {
+  if (qi >= queue.length) { showDone(); return; }
+  const w = queue[qi];
+
+  // Reset flip — start animation (180° → 0°)
+  isFlipped = false;
+  hintUsed = false;
+  $('card3d').classList.remove('flipped');
+  $('faceB').classList.remove('correct', 'wrong');
+  $('ansInput').value = '';
+  $('ansInput').classList.remove('shake');
+  txt('typedWrong', '');
+  clr('resRow');
+
+  // 裏面を即座にクリア（フリップアニメーション中に答えが見えないように）
+  txt('ansWord', '');
+  txt('ansMeaning', '');
+  clr('meaningsList');
+  clr('fullSent');
+  txt('fullSentJa', '');
+  txt('resBadge', '');
+
+  // Front（裏返し中も非表示なので即時更新して問題なし）
+  txt('ctr', (qi+1) + ' / ' + queue.length);
+  const posLabel = POS_MAP[w.pos] || w.pos;
+  txt('fTheme', '(Hint: ' + w.theme + ' 【' + posLabel + '】)');
+  $('fTheme').style.visibility = 'hidden';
+  $('hintTheme').disabled = false;
+  const img = $('cardIllust');
+  if (w.image) {
+    img.style.display = 'none';
+    img.alt = w.english;
+    img.onload = () => { img.style.display = 'block'; };
+    img.src = BASE + w.image + '?v=20260311';
+  } else { img.style.display = 'none'; }
+
+  clr('fSent');
+  $('fSent').appendChild(buildSentWithBlank(w.sentence, w.english));
+
+  // 裏面コンテンツはアニメーション完了後に設定（答えのフラッシュ防止）
+  // --flip-speed: 0.55s なので 600ms 待つ。600ms 未満で解答した場合は
+  // checkAnswer() 内で populateBackFace() が呼ばれるためカバー済み。
+  const cardWord = w;
+  setTimeout(() => {
+    if (queue[qi] !== cardWord) return; // カードが切り替わっていたらスキップ
+    populateBackFace(cardWord);
+  }, 600);
 
   // Focus input after flip animation
   setTimeout(() => $('ansInput').focus(), 100);
@@ -689,6 +701,8 @@ function checkAnswer() {
   isFlipped = true;
   $('card3d').classList.add('flipped');
   $('faceB').classList.add(correct ? 'correct' : 'wrong');
+  // 600ms未満で解答した場合に備えて裏面コンテンツを確実にセット
+  if (!$('ansWord').textContent) populateBackFace(w);
 
   const wrongMsg = correct ? '' :
     (pluralMistake ? '❌ 惜しい！単数・複数の違いです: "' + typed + '" → "' + w.english + '"'
@@ -697,12 +711,8 @@ function checkAnswer() {
   $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
   txt('typedWrong', '');
 
-  // Audio feedback: correct → sentence only, incorrect → word → spelling → sentence
-  if (correct) {
-    setTimeout(playSent, 350);
-  } else {
-    setTimeout(() => playIncorrectSequence(w), 350);
-  }
+  // Audio feedback: word → sentence (both correct and incorrect)
+  setTimeout(() => playIncorrectSequence(w), 350);
 
   // Build result buttons based on correctness + hint usage
   clr('resRow');
@@ -715,17 +725,8 @@ function checkAnswer() {
     b.className = 'rb next'; b.textContent = '次へ →';
     b.onclick = () => record('red');
     btns.appendChild(b);
-  } else if (hintUsed) {
-    // Correct + hint → auto yellow
-    const note = document.createElement('span');
-    note.className = 'hint-note'; note.textContent = '🏷️ ヒントあり → 要復習';
-    $('resRow').appendChild(note);
-    const b = document.createElement('button');
-    b.className = 'rb next'; b.textContent = '次へ →';
-    b.onclick = () => record('yellow');
-    btns.appendChild(b);
   } else {
-    // Correct + no hint → green by default, can downgrade
+    // Correct → green by default, can downgrade (hint does not affect result)
     const bReview = document.createElement('button');
     bReview.className = 'rb review'; bReview.textContent = 'もう一回';
     bReview.onclick = () => record('yellow');
