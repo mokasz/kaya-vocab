@@ -751,13 +751,14 @@ function record(status) {
   // Push to Supabase (fire-and-forget, non-blocking)
   if (currentUser) {
     sb.from('progress_sync').upsert({
-      user_id:    currentUser.id,
-      book_key:   BOOK_KEY,
-      word_key:   w.id,
-      status:     w.status,
-      correct:    w.correct,
-      incorrect:  w.incorrect,
-      updated_at: new Date().toISOString()
+      user_id:      currentUser.id,
+      book_key:     BOOK_KEY,
+      word_key:     w.id,
+      status:       w.status,
+      correct:      w.correct,
+      incorrect:    w.incorrect,
+      last_studied: today(),
+      updated_at:   new Date().toISOString()
     }, { onConflict: 'user_id,book_key,word_key' }).then(({ error }) => {
       if (error) console.warn('Supabase sync error:', error);
     });
@@ -830,7 +831,7 @@ function setStatus(w, newStatus) {
     sb.from('progress_sync').upsert({
       user_id: currentUser.id, book_key: BOOK_KEY, word_key: w.id,
       status: w.status, correct: w.correct, incorrect: w.incorrect,
-      updated_at: new Date().toISOString()
+      last_studied: today(), updated_at: new Date().toISOString()
     }, { onConflict: 'user_id,book_key,word_key' }).then(({ error }) => {
       if (error) console.warn('Supabase sync error:', error);
     });

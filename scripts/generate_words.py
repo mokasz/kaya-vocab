@@ -282,7 +282,6 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
     sys.path.insert(0, str(Path(__file__).parent))
     from sm2 import sm2_update, quality_from_status
 
-    today = date.today().isoformat()
     rows = (
         sb.table("progress_sync")
         .select("*")
@@ -305,7 +304,6 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
                 "interval_days": interval,
                 "repetitions": reps,
                 "next_review": next_review,
-                "last_studied": today,
             })
             .eq("user_id", kaya_user_id)
             .eq("book_key", BOOK_KEY)
