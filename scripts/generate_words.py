@@ -17,7 +17,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from sm2 import sm2_update, quality_from_status, MASTERED_INTERVAL
+from sm2 import sm2_update, quality_from_review_log, MASTERED_INTERVAL
 
 from google import genai
 from supabase import create_client, Client
@@ -421,8 +421,31 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
         r for r in rows
         if r["next_review"] is None or r["next_review"] <= r["last_studied"]
     ]
+    if not rows:
+        print(f"  SM-2 updated 0 words")
+        return
+
+    # review_log を一括取得（対象単語の last_studied 日付分）
+    word_keys = [r["word_key"] for r in rows]
+    log_rows = (
+        sb.table("review_log")
+        .select("word_key, rating, created_at")
+        .eq("user_id", kaya_user_id)
+        .eq("book_key", BOOK_KEY)
+        .in_("word_key", word_keys)
+        .execute()
+        .data
+    )
+    # word_key → {date → [ratings]} のマップを構築
+    from collections import defaultdict
+    log_map: dict[str, dict[str, list[int]]] = defaultdict(lambda: defaultdict(list))
+    for log in log_rows:
+        d = log["created_at"][:10]  # "YYYY-MM-DD"
+        log_map[log["word_key"]][d].append(log["rating"])
+
     for row in rows:
-        quality = quality_from_status(row["status"])
+        ratings = log_map[row["word_key"]].get(row["last_studied"], [])
+        quality = quality_from_review_log(ratings)
         ease, interval, reps = sm2_update(
             row["ease_factor"], row["interval_days"], row["repetitions"], quality
         )
