@@ -16,9 +16,9 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My dog always barks at the mailman.",
-      "sentence_ja": "私の犬はいつも郵便配達員に吠えます。",
-      "image": "data/images/always.png"
+      "sentence": "The library is always open on weekdays.",
+      "sentence_ja": "図書館は平日いつも開いています。",
+      "image": ""
     },
     {
       "id": "calendar",
@@ -31,9 +31,9 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The concert date is marked on my calendar.",
-      "sentence_ja": "コンサートの日付は私のカレンダーに印がつけてあります。",
-      "image": "data/images/calendar.png"
+      "sentence": "This calendar has twelve beautiful pictures, one for each month.",
+      "sentence_ja": "このカレンダーには、各月ごとに12枚の美しい写真があります。",
+      "image": ""
     },
     {
       "id": "dress",
@@ -46,9 +46,9 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The shop sells many pretty dresses.",
-      "sentence_ja": "その店はたくさんの可愛いドレスを売っている。",
-      "image": "data/images/dress.png",
+      "sentence": "She has two different dresses for summer.",
+      "sentence_ja": "彼女は夏用に2着の異なるドレスを持っている。",
+      "image": "",
       "plural": "dresses"
     },
     {
@@ -64,7 +64,7 @@
       "lastSeen": null,
       "sentence": "",
       "sentence_ja": "",
-      "image": "data/images/excited.png"
+      "image": ""
     },
     {
       "id": "hospital",
@@ -77,9 +77,9 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "There are many hospitals in Tokyo.",
-      "sentence_ja": "東京にはたくさんの病院があります。",
-      "image": "data/images/hospital.png",
+      "sentence": "Many hospitals have emergency rooms.",
+      "sentence_ja": "多くの病院には救急病棟があります。",
+      "image": "",
       "plural": "hospitals"
     },
     {
@@ -87,30 +87,32 @@
       "word": "ink",
       "english": "ink",
       "japanese": "インク",
-      "pos": "",
+      "pos": "名",
       "theme": "",
       "status": "new",
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The printer is out of ink.",
-      "sentence_ja": "プリンターのインクが切れています。",
-      "image": "data/images/ink.png"
+      "sentence": "This bottle has black ink.",
+      "sentence_ja": "このびんには黒いインクが入っています。",
+      "image": "",
+      "plural": null
     },
     {
       "id": "jam",
       "word": "jam",
       "english": "jam",
       "japanese": "ジャム",
-      "pos": "",
+      "pos": "名",
       "theme": "",
       "status": "new",
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "She put some jam on her scone.",
-      "sentence_ja": "彼女はスコーンにジャムを少し塗りました。",
-      "image": "data/images/jam.png"
+      "sentence": "My mother makes delicious homemade jam.",
+      "sentence_ja": "私の母は美味しい手作りジャムを作ります。",
+      "image": "",
+      "plural": null
     },
     {
       "id": "over",
@@ -123,9 +125,9 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The bird flew over the house.",
-      "sentence_ja": "鳥が家の上を飛んだ。",
-      "image": "data/images/over.png"
+      "sentence": "He jumped over the puddle.",
+      "sentence_ja": "彼は水たまりを飛び越えた。",
+      "image": ""
     },
     {
       "id": "store",
@@ -138,9 +140,9 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "Many stores are in this area.",
-      "sentence_ja": "この地域には多くの店があります。",
-      "image": "data/images/store.png",
+      "sentence": "These stores close early on weekdays.",
+      "sentence_ja": "これらの店は平日早く閉まります。",
+      "image": "",
       "plural": "stores"
     },
     {
@@ -154,9 +156,9 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "Please wash your hands well before eating.",
-      "sentence_ja": "食事の前に手をよく洗ってください。",
-      "image": "data/images/well.png"
+      "sentence": "She plays the piano very well.",
+      "sentence_ja": "彼女はピアノがとても上手です。",
+      "image": ""
     }
   ],
   "story": {
