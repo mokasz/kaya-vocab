@@ -444,7 +444,7 @@ function stopAllAudio() {
 
 const playAudio = src => {
   stopAllAudio();
-  const a = new Audio(src);
+  const a = new Audio(src + '?v=' + Date.now());
   _currentAudio = a;
   a.onended = () => { if (_currentAudio === a) _currentAudio = null; };
   a.play().catch(() => {});
@@ -456,7 +456,7 @@ const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') +
 // Promise-based audio (for sequencing)
 function playAudioP(src) {
   return new Promise(resolve => {
-    const a = new Audio(src);
+    const a = new Audio(src + '?v=' + Date.now());
     _currentAudio = a;
     a.onended = resolve;
     a.onerror = resolve;
