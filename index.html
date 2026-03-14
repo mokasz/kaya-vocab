@@ -23,10 +23,6 @@
     .streak { background:rgba(255,255,255,0.2); padding:5px 12px; border-radius:20px; font-size:0.82rem; font-weight:600; }
 
     /* ===== Progress ===== */
-    .prog-wrap { background:white; padding:10px 20px; border-bottom:1px solid var(--border); }
-    .prog-row { display:flex; justify-content:space-between; font-size:0.78rem; color:var(--text-sub); margin-bottom:5px; }
-    .prog-bar { height:6px; background:var(--border); border-radius:3px; overflow:hidden; }
-    .prog-fill { height:100%; background:linear-gradient(90deg,var(--primary),#A855F7); border-radius:3px; transition:width 0.4s; }
 
     /* ===== Tabs ===== */
     .tabs { display:flex; background:white; border-bottom:2px solid var(--border); }
@@ -183,11 +179,11 @@
     .splay:hover { background:#C7D2FE; }
 
     /* ===== Results tab ===== */
-    .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px; }
-    .stat { background:var(--card-bg); border-radius:14px; padding:16px 12px; text-align:center; box-shadow:0 4px 14px rgba(108,99,255,0.08); }
-    .stat .n { font-size:1.8rem; font-weight:800; }
+    .stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:18px; }
+    .stat { background:var(--card-bg); border-radius:14px; padding:12px 6px; text-align:center; box-shadow:0 4px 14px rgba(108,99,255,0.08); }
+    .stat .n { font-size:1.5rem; font-weight:800; }
     .stat .l { font-size:0.75rem; color:var(--text-sub); margin-top:3px; }
-    .sg .n{color:var(--success);} .sy .n{color:var(--warning);} .sr .n{color:var(--danger);}
+    .sg .n{color:var(--success);} .sy .n{color:var(--warning);} .sr .n{color:var(--danger);} .sn .n{color:var(--text-sub);}
 
     .wlist { background:var(--card-bg); border-radius:14px; box-shadow:0 4px 14px rgba(108,99,255,0.08); overflow:hidden; }
     .wlist-hdr { padding:12px 18px; font-weight:700; font-size:0.85rem; border-bottom:1px solid var(--border); color:var(--text-sub); background:#F9FAFB; }
@@ -232,8 +228,6 @@
       .user-chip .uname { font-size: 1rem; max-width: 160px; }
       .logout-btn { font-size: 0.88rem; padding: 5px 12px; }
 
-      /* Progress / tabs */
-      .prog-row { font-size: 1rem; }
       .tab { font-size: 1.05rem; padding: 14px 0; }
 
       /* Card front */
@@ -292,10 +286,6 @@
   </div>
 </header>
 
-<div class="prog-wrap">
-  <div class="prog-row"><span id="progLbl">0 / 16 語マスター</span><span id="progPct">0%</span></div>
-  <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-</div>
 
 <div class="tabs">
   <button class="tab on" data-tab="cards">カード学習</button>
@@ -371,10 +361,11 @@
 
   <!-- RESULTS -->
   <div class="view" id="tab-results">
-    <div class="stat-row">
-      <div class="stat sg"><div class="n" id="cG">0</div><div class="l">🟢 マスター</div></div>
+    <div class="stat-row" id="statRow">
+      <div class="stat sg"><div class="n" id="cG">0</div><div class="l">🟢 正解</div></div>
       <div class="stat sy"><div class="n" id="cY">0</div><div class="l">🟡 練習中</div></div>
-      <div class="stat sr"><div class="n" id="cR">0</div><div class="l">🔴 要復習</div></div>
+      <div class="stat sr"><div class="n" id="cR">0</div><div class="l">🔴 不正解</div></div>
+      <div class="stat sn"><div class="n" id="cN">0</div><div class="l">⬜ 待ち</div></div>
     </div>
     <div class="wlist">
       <div class="wlist-hdr">単語一覧</div>
@@ -419,11 +410,7 @@
 <script>
 const BASE = location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') + '/';
 const AUDIO = BASE + 'data/audio/';
-const VOCAB = ['store','well','dress','coat','hospital','always','pencil',
-               'calendar','pharmacy','tickets','station','awesome',
-               'excited','clown','over','difficult'];
-const KEY = 'kaya_vocab_v1';
-
+let VOCAB = [];
 // === Supabase ===
 const SUPA_URL = 'https://uzpmpjkkwapaohleejtt.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6cG1wamtrd2FwYW9obGVlanR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5NzkzMjksImV4cCI6MjA4ODU1NTMyOX0.vnmV6eC05k4BRMR3SgrJBrn5x0gb0_4wI9_L39pGfl0';
@@ -442,8 +429,6 @@ let currentUser = null;
 const $ = id => document.getElementById(id);
 const txt = (id, v) => $(id).textContent = v;
 const clr = id => { const n=$(id); while(n.firstChild) n.removeChild(n.firstChild); };
-const loadP = () => { try { return JSON.parse(localStorage.getItem(KEY))||{}; } catch{return{};} };
-const saveP = d => localStorage.setItem(KEY, JSON.stringify(d));
 const today = () => new Date().toISOString().split('T')[0];
 
 // --- Audio ---
@@ -524,44 +509,39 @@ function buildSentWithBlank(sentence, word) {
 
 // --- Init ---
 async function initApp() {
-  const d = await (await fetch(BASE + 'data/words.json?v=' + Date.now())).json();
+  const d = await fetch(BASE + 'data/words.json?v=' + Date.now()).then(r => r.json());
   words = d.words; storyData = d.story;
-  const p = loadP();
-  const newDate = d.meta && d.meta.created;
-  const isNewDay = newDate && p._wordsDate !== newDate;
-  if (isNewDay) {
-    words.forEach(w => delete p[w.id]);
-    p._wordsDate = newDate;
-    saveP(p);
-  } else {
-    words.forEach(w => { if (p[w.id]) Object.assign(w, p[w.id]); });
-  }
+  VOCAB = [...new Set(words.map(w => w.word))];
 
-  // Supabase進捗をバックグラウンドで非同期ロード（UIをブロックしない）
-  if (currentUser) {
-    sb.from('progress_sync')
-      .select('word_key, status, correct, incorrect')
-      .eq('user_id', currentUser.id)
-      .eq('book_key', BOOK_KEY)
-      .then(({ data }) => {
-        if (!isNewDay && data && data.length > 0) {
-          const map = {};
-          data.forEach(r => { map[r.word_key] = r; });
-          let updated = false;
-          words.forEach(w => {
-            if (map[w.id]) {
-              w.status    = map[w.id].status;
-              w.correct   = map[w.id].correct;
-              w.incorrect = map[w.id].incorrect;
-              updated = true;
-            }
-          });
-          if (updated) { buildQueue(); renderCard(); renderResults(); updateProg(); }
-        }
-      })
-      .catch(e => console.warn('progress load skipped:', e.message));
-  }
-  updateStreak(); buildQueue(); renderCard(); renderStory(); renderResults(); updateProg();
+  // 即座に表示（全語 new）、進捗サマリーは非表示
+  $('statRow').style.visibility = 'hidden';
+  updateStreak(); buildQueue(); renderCard(); renderStory(); renderResults();
+
+  // Supabaseから進捗をバックグラウンドで取得
+  sb.from('progress_sync')
+    .select('word_key, status, correct, incorrect, last_studied')
+    .eq('user_id', currentUser.id)
+    .eq('book_key', BOOK_KEY)
+    .then(({ data }) => {
+      if (data && data.length > 0) {
+        const map = {};
+        data.forEach(r => { map[r.word_key] = r; });
+        words.forEach(w => {
+          if (map[w.id]) {
+            const isNewDay = map[w.id].last_studied !== today();
+            w.status    = isNewDay ? 'new' : map[w.id].status;
+            w.correct   = map[w.id].correct;
+            w.incorrect = map[w.id].incorrect;
+          }
+        });
+        buildQueue(); renderCard(); renderResults();
+      }
+      $('statRow').style.visibility = 'visible';
+    })
+    .catch(e => {
+      console.warn('progress load skipped:', e.message);
+      $('statRow').style.visibility = 'visible';
+    });
 
   $('checkBtn').onclick = checkAnswer;
   $('ansInput').addEventListener('keydown', e => { if (e.key === 'Enter') { if (!isFlipped) { e.stopPropagation(); checkAnswer(); } } });
@@ -657,7 +637,7 @@ function renderCard() {
   txt('resBadge', '');
 
   // Front（裏返し中も非表示なので即時更新して問題なし）
-  txt('ctr', (qi+1) + ' / ' + queue.length);
+  txt('ctr', (qi+1) + ' / ' + words.length);
   const posLabel = POS_MAP[w.pos] || w.pos;
   txt('fTheme', '(Hint: ' + w.theme + ' 【' + posLabel + '】)');
   $('fTheme').style.visibility = 'hidden';
@@ -745,9 +725,6 @@ function record(status) {
   w.status = status; w.lastSeen = today();
   if (status === 'red') { w.incorrect++; stats.incorrect++; }
   else { w.correct++; stats.correct++; }
-  const p = loadP();
-  p[w.id] = { status:w.status, correct:w.correct, incorrect:w.incorrect, lastSeen:w.lastSeen };
-  saveP(p);
   // Push to Supabase (fire-and-forget, non-blocking)
   if (currentUser) {
     sb.from('progress_sync').upsert({
@@ -771,7 +748,7 @@ function record(status) {
       if (error) console.warn('review_log error:', error);
     });
   }
-  qi++; updateProg(); renderCard(); renderResults();
+  qi++; renderCard(); renderResults();
 }
 
 function showDone() {
@@ -832,9 +809,6 @@ function renderStory() {
 // --- Status update (from progress tab) ---
 function setStatus(w, newStatus) {
   w.status = newStatus; w.lastSeen = today();
-  const p = loadP();
-  p[w.id] = { status:w.status, correct:w.correct, incorrect:w.incorrect, lastSeen:w.lastSeen };
-  saveP(p);
   if (currentUser) {
     sb.from('progress_sync').upsert({
       user_id: currentUser.id, book_key: BOOK_KEY, word_key: w.id,
@@ -851,7 +825,7 @@ function setStatus(w, newStatus) {
     $('cardWrap').style.display = 'block';
     renderCard();
   }
-  renderResults(); updateProg();
+  renderResults();
 }
 
 // --- Results ---
@@ -859,7 +833,8 @@ function renderResults() {
   const g = words.filter(w=>w.status==='green').length;
   const y = words.filter(w=>w.status==='yellow').length;
   const r = words.filter(w=>w.status==='red').length;
-  txt('cG',g); txt('cY',y); txt('cR',r);
+  const n = words.filter(w=>w.status==='new').length;
+  txt('cG',g); txt('cY',y); txt('cR',r); txt('cN',n);
   const dm = {green:'dg',yellow:'dy',red:'dr',new:'dn'};
   clr('wlistBody');
   words.forEach(w => {
@@ -879,24 +854,25 @@ function renderResults() {
   });
 }
 
-// --- Progress ---
-function updateProg() {
-  const done = words.filter(w=>w.status==='green').length;
-  const pct = Math.round(done/words.length*100);
-  $('progFill').style.width = pct + '%';
-  txt('progLbl', done + ' / ' + words.length + ' 語マスター');
-  txt('progPct', pct + '%');
-}
 
 // --- Streak ---
-function updateStreak() {
-  const p = loadP(), t = today();
-  const y = new Date(); y.setDate(y.getDate()-1);
-  const ys = y.toISOString().split('T')[0];
-  let s = p._streak||0;
-  if (p._lastDay===ys) s++; else if (p._lastDay!==t) s=1;
-  p._streak=s; p._lastDay=t; saveP(p);
-  txt('streakN', s);
+async function updateStreak() {
+  const { data } = await sb.from('progress_sync')
+    .select('last_studied')
+    .eq('user_id', currentUser.id)
+    .eq('book_key', BOOK_KEY)
+    .not('last_studied', 'is', null);
+  if (!data) return;
+  const days = [...new Set(data.map(r => r.last_studied))].sort();
+  const t = today();
+  let streak = 0;
+  let d = new Date(t);
+  while (true) {
+    const s = d.toISOString().split('T')[0];
+    if (days.includes(s)) { streak++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  txt('streakN', streak);
 }
 
 // --- Reference Modal ---
@@ -1022,7 +998,7 @@ function switchTab(name, btn) {
   $('tab-'+name).classList.add('on');
   btn.classList.add('on');
   if (name === 'cards' && queue.length > 0 && qi < queue.length) {
-    txt('ctr', (qi+1) + ' / ' + queue.length);
+    txt('ctr', (qi+1) + ' / ' + words.length);
 
   }
 }

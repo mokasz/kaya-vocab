@@ -421,7 +421,6 @@ def run_generate():
         sys.exit(1)
     book_id = book_res.data[0]["id"]
 
-    update_sm2_from_progress(sb, kaya_user_id)
     words_data = select_todays_words(sb, kaya_user_id, book_id)
     print(f"  selected {len(words_data)} words for today")
 

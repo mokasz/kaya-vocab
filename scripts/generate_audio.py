@@ -300,10 +300,15 @@ def main():
 
     # --- 単語の読み上げ ---
     print(f"\n[1/4] 単語音声を生成中... ({len(words)}語)")
+    seen_words: set[str] = set()
     for word in words:
-        out = WORDS_AUDIO_DIR / f"{word['id']}.mp3"
-        # 単語を自然に読み上げるため "The word is: store" 形式にする
-        text = f"{word['english']}"
+        base = word.get('word', word['english'])
+        if base in seen_words:
+            print(f"  SKIP (共有音声済み): {base}.mp3")
+            continue
+        seen_words.add(base)
+        out = WORDS_AUDIO_DIR / f"{base}.mp3"
+        text = f"Say the word: {base}"
         if generate_audio(client, text, out, args.force):
             ok += 1
         else:
@@ -330,19 +335,6 @@ def main():
     for i, sentence in enumerate(sentences):
         out = STORY_AUDIO_DIR / f"s{i+1:02d}.mp3"
         if generate_audio(client, sentence, out, args.force):
-            ok += 1
-        else:
-            err += 1
-        time.sleep(RATE_LIMIT_SLEEP)
-
-    # --- スペル読み上げ ---
-    seen = set()
-    unique_words = [w for w in words if not (w.get('word', w['english']) in seen or seen.add(w.get('word', w['english'])))]
-    print(f"\n[4/4] スペル音声を生成中... ({len(unique_words)}語)")
-    for word in unique_words:
-        base = word.get('word', word['english'])
-        out = SPELLING_AUDIO_DIR / f"{base}.mp3"
-        if generate_spelling_audio(client, base, out, args.force):
             ok += 1
         else:
             err += 1
