@@ -16,6 +16,7 @@ import subprocess
 import sys
 import time
 import argparse
+from datetime import date
 from pathlib import Path
 
 from google import genai
@@ -332,9 +333,23 @@ def main():
     # --- ストーリーの読み上げ ---
     sentences = story.get("sentences", [])
     print(f"\n[3/4] ストーリー音声を生成中... ({len(sentences)}文)")
+
+    # 前日以前のストーリー音声を .bak にバックアップ（当日生成済みはそのまま）
+    today = date.today()
+    backed_up = 0
+    for mp3 in sorted(STORY_AUDIO_DIR.glob("s*.mp3")):
+        if date.fromtimestamp(mp3.stat().st_mtime) < today:
+            bak = mp3.with_name(mp3.name + ".bak")
+            if bak.exists():
+                bak.unlink()
+            mp3.rename(bak)
+            backed_up += 1
+    if backed_up:
+        print(f"  → 前日分 {backed_up}件を .bak にバックアップ")
     for i, sentence in enumerate(sentences):
         out = STORY_AUDIO_DIR / f"s{i+1:02d}.mp3"
-        if generate_audio(client, sentence, out, args.force):
+        # .bak 退避後は既存ファイルなし → force 不要で生成。当日生成済みは force フラグに従う
+        if generate_audio(client, sentence, out, force=args.force or not out.exists()):
             ok += 1
         else:
             err += 1

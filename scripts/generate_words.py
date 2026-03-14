@@ -16,6 +16,9 @@ from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from sm2 import sm2_update, quality_from_status, MASTERED_INTERVAL
+
 from google import genai
 from supabase import create_client, Client
 
@@ -27,10 +30,9 @@ CSV_PATH = (
 )
 BOOK_KEY = "kaya-stage1"
 BOOK_NAME = "NEW TREASURE Stage 1"
-KAYA_USER_EMAIL = "kaya.zhu@icloud.com"  # 実行前に更新すること
-DAILY_NEW = 8
+DAILY_NEW = 10
+DAILY_MAX = 15
 OUTPUT_PATH = Path("kaya-vocab/data/words.json")
-MASTERED_INTERVAL = 21
 
 # 品詞略称 → フル名
 POS_MAP = {
@@ -144,6 +146,47 @@ def upsert_words(sb: Client, words: list[dict], book_id: str):
     print(f"  upserted {len(records)} words")
 
 
+# ── 活用形生成 ────────────────────────────────────────
+def generate_forms(client, word: str, japanese: str, pos: str) -> dict:
+    """品詞に応じた活用形を Gemini で生成して返す。名詞・動詞以外は {}。"""
+    base_pos = pos.split("・")[0] if pos else ""
+    if base_pos == "名":
+        prompt = (
+            f'Give the plural form of the English noun "{word}" (Japanese: {japanese}).\n'
+            f'Respond ONLY with JSON (no markdown): {{"plural": "..."}}'
+        )
+    elif base_pos == "動":
+        prompt = (
+            f'Give all inflected forms of the English verb "{word}" (Japanese: {japanese}).\n'
+            f'Respond ONLY with JSON (no markdown): {{"base": "...", "third": "...", "past": "...", "ing": "..."}}'
+        )
+    else:
+        return {}
+
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+    text = response.text.strip()
+    if "```" in text:
+        parts = text.split("```")
+        text = parts[1] if len(parts) > 1 else parts[0]
+        if text.startswith("json"):
+            text = text[4:]
+    return json.loads(text.strip())
+
+
+# ── テーマ生成 ────────────────────────────────────────
+def generate_theme(client, word: str, japanese: str, pos: str) -> str:
+    """単語の意味的カテゴリ（テーマ）を Gemini で生成して返す。"""
+    pos_full = POS_MAP.get(pos, pos)
+    prompt = (
+        f'Assign a short Japanese semantic category (2–5 characters) for the English word "{word}" '
+        f'(Japanese: {japanese}, part of speech: {pos_full}).\n'
+        f'Examples: 場所・建物, 動作, 食べ物, 学校・教育, 感情・状態, 自然・環境, 数・時間, 人・家族\n'
+        f'Respond ONLY with the category string, no explanation.'
+    )
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+    return response.text.strip()
+
+
 # ── センテンス生成 ────────────────────────────────────
 def sentence_forms(pos: str) -> list[str]:
     base_pos = pos.split("・")[0] if pos else ""
@@ -203,14 +246,15 @@ def save_sentences(sb: Client, word_key: str, forms: list[str], sentences: list[
 
 
 # ── --import モード ───────────────────────────────────
-def run_import():
+def run_import(user_email: str):
     print("=== Import: CSV → Supabase ===")
+    print(f"  user: {user_email}")
     sb = get_supabase()
 
     users = sb.auth.admin.list_users()
-    parent = next((u for u in users if getattr(u, 'email', '') == KAYA_USER_EMAIL), None)
+    parent = next((u for u in users if getattr(u, 'email', '') == user_email), None)
     if parent is None:
-        print(f"  Warning: {KAYA_USER_EMAIL} not found. book.created_by will be NULL.")
+        print(f"  Warning: {user_email} not found. book.created_by will be NULL.")
 
     words = parse_csv(CSV_PATH)
     print(f"  parsed {len(words)} words from CSV")
@@ -221,6 +265,43 @@ def run_import():
     upsert_words(sb, words, book_id)
 
     client = get_gemini()
+
+    # metadata（活用形）未設定の単語に生成・保存
+    existing_meta = {
+        r["word_key"]: r["metadata"]
+        for r in sb.table("words").select("word_key, metadata").eq("book_id", book_id).execute().data
+    }
+    todo_meta = [w for w in words if not existing_meta.get(w["word_key"])]
+    print(f"  generating metadata for {len(todo_meta)} words...")
+    for i, w in enumerate(todo_meta):
+        base_pos = w["pos"].split("・")[0] if w["pos"] else ""
+        if base_pos not in ("名", "動"):
+            continue
+        print(f"  [{i+1}/{len(todo_meta)}] {w['word_key']}")
+        try:
+            metadata = generate_forms(client, w["word"], w["japanese"], w["pos"])
+            sb.table("words").update({"metadata": metadata}) \
+                .eq("book_id", book_id).eq("word_key", w["word_key"]).execute()
+        except Exception as e:
+            print(f"    ERROR: {e} — skipping")
+
+    # theme 未設定の単語に生成・保存
+    existing_themes = {
+        r["word_key"]
+        for r in sb.table("words").select("word_key, theme").eq("book_id", book_id).execute().data
+        if r["theme"]
+    }
+    todo_theme = [w for w in words if w["word_key"] not in existing_themes]
+    print(f"  generating themes for {len(todo_theme)} words...")
+    for i, w in enumerate(todo_theme):
+        print(f"  [{i+1}/{len(todo_theme)}] {w['word_key']}")
+        try:
+            theme = generate_theme(client, w["word"], w["japanese"], w["pos"])
+            sb.table("words").update({"theme": theme}) \
+                .eq("book_id", book_id).eq("word_key", w["word_key"]).execute()
+        except Exception as e:
+            print(f"    ERROR: {e} — skipping")
+
     existing_keys = {
         r["word_key"]
         for r in sb.table("word_sentences").select("word_key").eq("book_key", BOOK_KEY).execute().data
@@ -263,7 +344,7 @@ def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, p
         .data
     )
     if not rows:
-        return {"sentence": "", "sentence_ja": ""}
+        return {"sentence": "", "sentence_ja": "", "form": "default"}
 
     chosen = rows[0]
 
@@ -274,23 +355,72 @@ def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, p
         {"last_used_at": date.today().isoformat()}
     ).eq("id", chosen["id"]).execute()
 
-    return {"sentence": chosen["sentence"], "sentence_ja": chosen["sentence_ja"]}
+    return {"sentence": chosen["sentence"], "sentence_ja": chosen["sentence_ja"], "form": chosen["form"]}
+
+
+# ── ストーリー生成 ────────────────────────────────────
+def get_study_day(sb: Client, kaya_user_id: str) -> int:
+    """Kayaの累積学習日数 + 1（今日はまだ記録されていないため +1）。"""
+    rows = (
+        sb.table("progress_sync")
+        .select("last_studied")
+        .eq("user_id", kaya_user_id)
+        .eq("book_key", BOOK_KEY)
+        .not_.is_("last_studied", "null")
+        .execute()
+        .data
+    )
+    distinct_dates = {r["last_studied"] for r in rows}
+    return len(distinct_dates) + 1
+
+
+def generate_story(client, words_data: list[dict], day: int) -> dict:
+    """今日の単語を全て使った短編ストーリーを Gemini で生成して返す。"""
+    word_list = ", ".join(w["word"] for w in words_data)
+    prompt = f"""Write a short story in English for Kaya, a Japanese junior high school student (beginner level).
+
+Rules:
+- The main character is Kaya
+- Use ALL of these words at least once (any natural form): {word_list}
+- Maximum 10 sentences, minimum 8 sentences
+- Each sentence must be simple (under 15 words)
+- The story must have a single unified theme or scene
+- Dialogue is allowed but limited to 1-2 lines
+- Write for a beginner English learner — no difficult vocabulary beyond the word list
+
+Respond ONLY with a JSON object (no markdown, no explanation):
+{{"title": "...", "sentences": ["...", ...]}}"""
+
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+    text = response.text.strip()
+    if "```" in text:
+        parts = text.split("```")
+        text = parts[1] if len(parts) > 1 else parts[0]
+        if text.startswith("json"):
+            text = text[4:]
+    data = json.loads(text.strip())
+    return {"day": day, "title": data["title"], "sentences": data["sentences"]}
 
 
 # ── --generate モード ─────────────────────────────────
 def update_sm2_from_progress(sb: Client, kaya_user_id: str):
-    sys.path.insert(0, str(Path(__file__).parent))
-    from sm2 import sm2_update, quality_from_status
-
+    today = date.today().isoformat()
     rows = (
         sb.table("progress_sync")
         .select("*")
         .eq("user_id", kaya_user_id)
         .eq("book_key", BOOK_KEY)
         .neq("status", "new")
+        .not_.is_("last_studied", "null")
+        .lt("last_studied", today)
         .execute()
         .data
     )
+    # next_review が NULL または last_studied 以前の行のみ処理（未反映の回答結果）
+    rows = [
+        r for r in rows
+        if r["next_review"] is None or r["next_review"] <= r["last_studied"]
+    ]
     for row in rows:
         quality = quality_from_status(row["status"])
         ease, interval, reps = sm2_update(
@@ -314,11 +444,9 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
 
 
 def select_todays_words(sb: Client, kaya_user_id: str, book_id: str) -> list[dict]:
-    from sm2 import is_mastered
-
     today = date.today().isoformat()
 
-    # 復習単語: next_review <= 今日 かつ 未習得
+    # 復習単語: next_review <= 今日 かつ 未習得（期日が古い順、最大 DAILY_MAX 語）
     review_rows = (
         sb.table("progress_sync")
         .select("word_key")
@@ -327,12 +455,14 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str) -> list[dic
         .lte("next_review", today)
         .lt("interval_days", MASTERED_INTERVAL)
         .neq("status", "new")
+        .order("next_review")
+        .limit(DAILY_MAX)
         .execute()
         .data
     )
     review_keys = {r["word_key"] for r in review_rows}
 
-    # 既出単語キー
+    # 既出単語キー（PostgREST デフォルト1000行制限を超えるため上限を明示）
     all_seen = {
         r["word_key"]
         for r in (
@@ -340,6 +470,7 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str) -> list[dic
             .select("word_key")
             .eq("user_id", kaya_user_id)
             .eq("book_key", BOOK_KEY)
+            .limit(10000)
             .execute()
             .data
         )
@@ -374,14 +505,29 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str) -> list[dic
     )
 
 
-def build_words_json(words_data: list[dict], sentences: dict[str, dict]) -> dict:
+def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: dict | None = None) -> dict:
     result = []
     for w in words_data:
         sent = sentences.get(w["word_key"], {})
-        result.append({
+        metadata = w.get("metadata") or {}
+        form = sent.get("form", "default")
+        pos_base = (w["pos"] or "").split("・")[0]
+
+        # word_sentences.form + words.metadata から english を導出
+        form_to_english = {
+            "singular": w["word"],
+            "plural":   metadata.get("plural", w["word"]),
+            "base":     w["word"],
+            "third":    metadata.get("third", w["word"]),
+            "past":     metadata.get("past",  w["word"]),
+            "default":  w["word"],
+        }
+        english = form_to_english.get(form, w["word"])
+
+        card = {
             "id": w["word_key"],
             "word": w["word"],
-            "english": w["word"],
+            "english": english,
             "japanese": w["back_main"],
             "pos": w["pos"] or "",
             "theme": w["theme"] or "",
@@ -392,8 +538,20 @@ def build_words_json(words_data: list[dict], sentences: dict[str, dict]) -> dict
             "sentence": sent.get("sentence", ""),
             "sentence_ja": sent.get("sentence_ja", ""),
             "image": w["image_path"] or "",
-        })
-    return {
+        }
+
+        # 活用形フィールド（ミス検出用）— pos に応じて必要なものだけ追加
+        if pos_base == "名":
+            card["plural"] = metadata.get("plural")
+        elif pos_base == "動":
+            card["base"]  = metadata.get("base")
+            card["third"] = metadata.get("third")
+            card["past"]  = metadata.get("past")
+            card["ing"]   = metadata.get("ing")
+
+        result.append(card)
+
+    output = {
         "meta": {
             "total": len(result),
             "theme": BOOK_NAME,
@@ -401,17 +559,21 @@ def build_words_json(words_data: list[dict], sentences: dict[str, dict]) -> dict
         },
         "words": result,
     }
+    if story:
+        output["story"] = story
+    return output
 
 
-def run_generate():
+def run_generate(user_email: str):
     print("=== Generate: SM-2 → words.json ===")
+    print(f"  user: {user_email}")
     sb = get_supabase()
     client = get_gemini()
 
     users = sb.auth.admin.list_users()
-    kaya = next((u for u in users if getattr(u, 'email', '') == KAYA_USER_EMAIL), None)
+    kaya = next((u for u in users if getattr(u, 'email', '') == user_email), None)
     if not kaya:
-        print(f"ERROR: {KAYA_USER_EMAIL} not found. Update KAYA_USER_EMAIL.")
+        print(f"ERROR: {user_email} not found in Supabase Auth.")
         sys.exit(1)
     kaya_user_id = kaya.id
 
@@ -421,6 +583,7 @@ def run_generate():
         sys.exit(1)
     book_id = book_res.data[0]["id"]
 
+    update_sm2_from_progress(sb, kaya_user_id)
     words_data = select_todays_words(sb, kaya_user_id, book_id)
     print(f"  selected {len(words_data)} words for today")
 
@@ -430,23 +593,45 @@ def run_generate():
             sb, client, w["word_key"], w["word"], w["back_main"], w["pos"] or ""
         )
 
-    output = build_words_json(words_data, sentences)
+    day = get_study_day(sb, kaya_user_id)
+    print(f"  generating story for day {day}...")
+    story = None
+    try:
+        story = generate_story(client, words_data, day)
+    except Exception as e:
+        print(f"  story generation failed: {e} — skipping")
+
+    output = build_words_json(words_data, sentences, story)
     OUTPUT_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=2))
-    print(f"  wrote {OUTPUT_PATH} ({len(words_data)} words)")
+    print(f"  wrote {OUTPUT_PATH} ({len(words_data)} words, story={'yes' if story else 'no'})")
     print("=== Generate complete ===")
 
 
 # ── エントリポイント ──────────────────────────────────
+def resolve_user_email(args_user: str | None) -> str:
+    """--user 引数 → KAYA_USER_EMAIL 環境変数 の順で解決。どちらもなければエラー終了。"""
+    email = args_user or os.environ.get("KAYA_USER_EMAIL")
+    if not email:
+        print("ERROR: ユーザーメールが指定されていません。")
+        print("  ローカルテスト: --user shiwei76@gmail.com")
+        print("  本番実行:       --user kaya.zhu@icloud.com")
+        print("  または環境変数: export KAYA_USER_EMAIL=<email>")
+        sys.exit(1)
+    return email
+
+
 def main():
     parser = argparse.ArgumentParser(description="SM-2 単語生成スクリプト")
     parser.add_argument("--import", dest="do_import", action="store_true", help="CSV → Supabase インポート")
     parser.add_argument("--generate", dest="do_generate", action="store_true", help="SM-2 → words.json 生成")
+    parser.add_argument("--user", dest="user_email", default=None,
+                        help="対象ユーザーのメールアドレス（省略時は KAYA_USER_EMAIL 環境変数）")
     args = parser.parse_args()
 
     if args.do_import:
-        run_import()
+        run_import(resolve_user_email(args.user_email))
     elif args.do_generate:
-        run_generate()
+        run_generate(resolve_user_email(args.user_email))
     else:
         parser.print_help()
 

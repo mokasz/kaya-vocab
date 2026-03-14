@@ -72,6 +72,11 @@ PROMPT_OVERRIDES = {
         "mid-jump with all four legs extended, showing clear motion. "
         "No text, no words, no letters. White background."
     ),
+    "ink": (
+        "Simple flat cartoon illustration of an open ink bottle with a black fountain pen "
+        "resting beside it, a small black ink puddle on a white surface. "
+        "No text, no words, no letters, no labels. Purely visual. White background."
+    ),
 }
 
 
