@@ -647,7 +647,7 @@ function renderCard() {
     img.style.display = 'none';
     img.alt = w.english;
     img.onload = () => { img.style.display = 'block'; };
-    img.src = BASE + w.image + '?v=20260311';
+    img.src = BASE + w.image + '?v=' + Date.now();
   } else { img.style.display = 'none'; }
 
   clr('fSent');
