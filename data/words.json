@@ -18,7 +18,7 @@
       "lastSeen": null,
       "sentence": "The library is always open on weekdays.",
       "sentence_ja": "図書館は平日いつも開いています。",
-      "image": ""
+      "image": "data/images/always.png"
     },
     {
       "id": "calendar",
@@ -33,7 +33,7 @@
       "lastSeen": null,
       "sentence": "This calendar has twelve beautiful pictures, one for each month.",
       "sentence_ja": "このカレンダーには、各月ごとに12枚の美しい写真があります。",
-      "image": ""
+      "image": "data/images/calendar.png"
     },
     {
       "id": "dress",
@@ -48,7 +48,7 @@
       "lastSeen": null,
       "sentence": "She has two different dresses for summer.",
       "sentence_ja": "彼女は夏用に2着の異なるドレスを持っている。",
-      "image": "",
+      "image": "data/images/dress.png",
       "plural": "dresses"
     },
     {
@@ -64,7 +64,7 @@
       "lastSeen": null,
       "sentence": "",
       "sentence_ja": "",
-      "image": ""
+      "image": "data/images/excited.png"
     },
     {
       "id": "hospital",
@@ -79,7 +79,7 @@
       "lastSeen": null,
       "sentence": "Many hospitals have emergency rooms.",
       "sentence_ja": "多くの病院には救急病棟があります。",
-      "image": "",
+      "image": "data/images/hospital.png",
       "plural": "hospitals"
     },
     {
@@ -95,7 +95,7 @@
       "lastSeen": null,
       "sentence": "This bottle has black ink.",
       "sentence_ja": "このびんには黒いインクが入っています。",
-      "image": "",
+      "image": "data/images/ink.png",
       "plural": null
     },
     {
@@ -111,7 +111,7 @@
       "lastSeen": null,
       "sentence": "My mother makes delicious homemade jam.",
       "sentence_ja": "私の母は美味しい手作りジャムを作ります。",
-      "image": "",
+      "image": "data/images/jam.png",
       "plural": null
     },
     {
@@ -127,7 +127,7 @@
       "lastSeen": null,
       "sentence": "He jumped over the puddle.",
       "sentence_ja": "彼は水たまりを飛び越えた。",
-      "image": ""
+      "image": "data/images/over.png"
     },
     {
       "id": "store",
@@ -142,7 +142,7 @@
       "lastSeen": null,
       "sentence": "These stores close early on weekdays.",
       "sentence_ja": "これらの店は平日早く閉まります。",
-      "image": "",
+      "image": "data/images/store.png",
       "plural": "stores"
     },
     {
@@ -158,7 +158,7 @@
       "lastSeen": null,
       "sentence": "She plays the piano very well.",
       "sentence_ja": "彼女はピアノがとても上手です。",
-      "image": ""
+      "image": "data/images/well.png"
     }
   ],
   "story": {
