@@ -639,7 +639,7 @@ function renderCard() {
   // Front（裏返し中も非表示なので即時更新して問題なし）
   txt('ctr', (qi+1) + ' / ' + words.length);
   const posLabel = POS_MAP[w.pos] || w.pos;
-  txt('fTheme', '(Hint: ' + w.theme + ' 【' + posLabel + '】)');
+  txt('fTheme', '(Hint: ' + w.japanese + ' 【' + posLabel + '】)');
   $('fTheme').style.visibility = 'hidden';
   $('hintTheme').disabled = false;
   const img = $('cardIllust');
