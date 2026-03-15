@@ -2,7 +2,7 @@
   "meta": {
     "total": 10,
     "theme": "NEW TREASURE Stage 1",
-    "created": "2026-03-15"
+    "created": "2026-03-16"
   },
   "words": [
     {
@@ -31,14 +31,14 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "This calendar has twelve beautiful pictures, one for each month.",
-      "sentence_ja": "このカレンダーには、各月ごとに12枚の美しい写真があります。",
+      "sentence": "My mom hung a new calendar on the wall.",
+      "sentence_ja": "お母さんが壁に新しいカレンダーを掛けました。",
       "image": "data/images/calendar.png"
     },
     {
       "id": "dress",
       "word": "dress",
-      "english": "dresses",
+      "english": "dress",
       "japanese": "ドレス",
       "pos": "名",
       "theme": "",
@@ -46,8 +46,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "She has two different dresses for summer.",
-      "sentence_ja": "彼女は夏用に2着の異なるドレスを持っている。",
+      "sentence": "She bought a new dress.",
+      "sentence_ja": "彼女は新しいドレスを買いました。",
       "image": "data/images/dress.png",
       "plural": "dresses"
     },
@@ -62,14 +62,14 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "",
-      "sentence_ja": "",
+      "sentence": "I am excited for the party tonight.",
+      "sentence_ja": "今夜のパーティーが楽しみです。",
       "image": "data/images/excited.png"
     },
     {
       "id": "hospital",
       "word": "hospital",
-      "english": "hospitals",
+      "english": "hospital",
       "japanese": "病院",
       "pos": "名",
       "theme": "",
@@ -77,8 +77,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "Many hospitals have emergency rooms.",
-      "sentence_ja": "多くの病院には救急病棟があります。",
+      "sentence": "My friend works at a hospital.",
+      "sentence_ja": "私の友達は病院で働いています。",
       "image": "data/images/hospital.png",
       "plural": "hospitals"
     },
@@ -93,8 +93,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "This bottle has black ink.",
-      "sentence_ja": "このびんには黒いインクが入っています。",
+      "sentence": "The printer needs new ink.",
+      "sentence_ja": "そのプリンターは新しいインクが必要です。",
       "image": "data/images/ink.png",
       "plural": null
     },
@@ -109,30 +109,47 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My mother makes delicious homemade jam.",
-      "sentence_ja": "私の母は美味しい手作りジャムを作ります。",
+      "sentence": "My mother made homemade berry jam yesterday.",
+      "sentence_ja": "私の母は昨日、自家製ベリージャムを作りました。",
       "image": "data/images/jam.png",
       "plural": null
     },
     {
-      "id": "over",
-      "word": "over",
-      "english": "over",
-      "japanese": "〜の上に・〜を越えて",
-      "pos": "前",
+      "id": "key",
+      "word": "key",
+      "english": "keys",
+      "japanese": "鍵",
+      "pos": "名",
       "theme": "",
       "status": "new",
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "He jumped over the puddle.",
-      "sentence_ja": "彼は水たまりを飛び越えた。",
-      "image": "data/images/over.png"
+      "sentence": "My dad has many keys.",
+      "sentence_ja": "私の父はたくさんの鍵を持っています。",
+      "image": "data/images/key.png",
+      "plural": "keys"
+    },
+    {
+      "id": "lion",
+      "word": "lion",
+      "english": "lions",
+      "japanese": "ライオン",
+      "pos": "名",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "Many lions hunt together.",
+      "sentence_ja": "多くのライオンが一緒に狩りをします。",
+      "image": "data/images/lion.png",
+      "plural": "lions"
     },
     {
       "id": "store",
       "word": "store",
-      "english": "stores",
+      "english": "store",
       "japanese": "店",
       "pos": "名",
       "theme": "",
@@ -140,41 +157,26 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "These stores close early on weekdays.",
-      "sentence_ja": "これらの店は平日早く閉まります。",
+      "sentence": "This store sells fresh bread.",
+      "sentence_ja": "この店は焼きたてのパンを売っています。",
       "image": "data/images/store.png",
       "plural": "stores"
-    },
-    {
-      "id": "well",
-      "word": "well",
-      "english": "well",
-      "japanese": "上手に・ええと",
-      "pos": "副",
-      "theme": "",
-      "status": "new",
-      "correct": 0,
-      "incorrect": 0,
-      "lastSeen": null,
-      "sentence": "She plays the piano very well.",
-      "sentence_ja": "彼女はピアノがとても上手です。",
-      "image": "data/images/well.png"
     }
   ],
   "story": {
-    "day": 5,
-    "title": "Kaya's Party Dress",
+    "day": 4,
+    "title": "Kaya's Special Day",
     "sentences": [
-      "Kaya was excited for her friend's party.",
-      "She looked at the calendar for the date.",
-      "Kaya chose her favorite blue dress.",
-      "She was always careful with her clothes.",
-      "But then, some red jam dropped on her dress!",
-      "\"Oh no!\" she said. It made an ink-like spot.",
-      "She tried to clean it, but it was not well.",
-      "Kaya quickly ran to the store to buy a new dress.",
-      "The trouble was over soon.",
-      "She did not need to go to the hospital."
+      "Kaya always checked her calendar.",
+      "Today was a very special day!",
+      "She was feeling very excited.",
+      "Kaya ate bread with sweet jam.",
+      "She put on her favorite blue dress.",
+      "Kaya picked up her small lion toy.",
+      "Then, she found her house key.",
+      "\"I need blue ink!\" she thought.",
+      "Kaya walked to the small store.",
+      "The store was next to the hospital."
     ]
   }
 }

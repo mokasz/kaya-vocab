@@ -431,7 +431,7 @@ let currentUser = null;
 const $ = id => document.getElementById(id);
 const txt = (id, v) => $(id).textContent = v;
 const clr = id => { const n=$(id); while(n.firstChild) n.removeChild(n.firstChild); };
-const today = () => new Date().toISOString().split('T')[0];
+const today = () => new Date(Date.now() + 9*60*60*1000).toISOString().split('T')[0];
 
 // --- Audio ---
 let _currentAudio = null;

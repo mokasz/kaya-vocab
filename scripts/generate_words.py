@@ -344,7 +344,18 @@ def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, p
         .data
     )
     if not rows:
-        return {"sentence": "", "sentence_ja": "", "form": "default"}
+        replenish_sentences(sb, client, word_key, word, japanese, pos)
+        rows = (
+            sb.table("word_sentences")
+            .select("*")
+            .eq("word_key", word_key)
+            .eq("book_key", BOOK_KEY)
+            .order("last_used_at", desc=False, nullsfirst=True)
+            .execute()
+            .data
+        )
+        if not rows:
+            return {"sentence": "", "sentence_ja": "", "form": "default"}
 
     chosen = rows[0]
 
@@ -382,7 +393,7 @@ def generate_story(client, words_data: list[dict], day: int) -> dict:
 Rules:
 - The main character is Kaya
 - Use ALL of these words at least once (any natural form): {word_list}
-- Maximum 10 sentences, minimum 8 sentences
+- Exactly 10 sentences
 - Each sentence must be simple (under 15 words)
 - The story must have a single unified theme or scene
 - Dialogue is allowed but limited to 1-2 lines
@@ -403,8 +414,7 @@ Respond ONLY with a JSON object (no markdown, no explanation):
 
 
 # ── --generate モード ─────────────────────────────────
-def update_sm2_from_progress(sb: Client, kaya_user_id: str):
-    today = date.today().isoformat()
+def update_sm2_from_progress(sb: Client, kaya_user_id: str, as_of_date: date):
     rows = (
         sb.table("progress_sync")
         .select("*")
@@ -412,7 +422,7 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
         .eq("book_key", BOOK_KEY)
         .neq("status", "new")
         .not_.is_("last_studied", "null")
-        .lt("last_studied", today)
+        .lt("last_studied", as_of_date.isoformat())
         .execute()
         .data
     )
@@ -429,7 +439,7 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
     word_keys = [r["word_key"] for r in rows]
     log_rows = (
         sb.table("review_log")
-        .select("word_key, rating, created_at")
+        .select("word_key, rating, reviewed_at")
         .eq("user_id", kaya_user_id)
         .eq("book_key", BOOK_KEY)
         .in_("word_key", word_keys)
@@ -440,7 +450,7 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
     from collections import defaultdict
     log_map: dict[str, dict[str, list[int]]] = defaultdict(lambda: defaultdict(list))
     for log in log_rows:
-        d = log["created_at"][:10]  # "YYYY-MM-DD"
+        d = log["reviewed_at"][:10]  # "YYYY-MM-DD"
         log_map[log["word_key"]][d].append(log["rating"])
 
     for row in rows:
@@ -449,7 +459,7 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
         ease, interval, reps = sm2_update(
             row["ease_factor"], row["interval_days"], row["repetitions"], quality
         )
-        next_review = (date.today() + timedelta(days=interval)).isoformat()
+        next_review = (date.fromisoformat(row["last_studied"]) + timedelta(days=interval)).isoformat()
         (
             sb.table("progress_sync")
             .update({
@@ -466,16 +476,14 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str):
     print(f"  SM-2 updated {len(rows)} words")
 
 
-def select_todays_words(sb: Client, kaya_user_id: str, book_id: str) -> list[dict]:
-    today = date.today().isoformat()
-
-    # 復習単語: next_review <= 今日 かつ 未習得（期日が古い順、最大 DAILY_MAX 語）
+def select_todays_words(sb: Client, kaya_user_id: str, book_id: str, target_date: date) -> list[dict]:
+    # 復習単語: next_review <= target_date かつ 未習得（期日が古い順、最大 DAILY_MAX 語）
     review_rows = (
         sb.table("progress_sync")
         .select("word_key")
         .eq("user_id", kaya_user_id)
         .eq("book_key", BOOK_KEY)
-        .lte("next_review", today)
+        .lte("next_review", target_date.isoformat())
         .lt("interval_days", MASTERED_INTERVAL)
         .neq("status", "new")
         .order("next_review")
@@ -560,7 +568,11 @@ def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: 
             "lastSeen": None,
             "sentence": sent.get("sentence", ""),
             "sentence_ja": sent.get("sentence_ja", ""),
-            "image": w["image_path"] or "",
+            "image": w["image_path"] or (
+                f"data/images/{w['word_key']}.png"
+                if (OUTPUT_PATH.parent / "images" / f"{w['word_key']}.png").exists()
+                else ""
+            ),
         }
 
         # 活用形フィールド（ミス検出用）— pos に応じて必要なものだけ追加
@@ -587,9 +599,10 @@ def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: 
     return output
 
 
-def run_generate(user_email: str):
+def run_generate(user_email: str, target_date: date):
     print("=== Generate: SM-2 → words.json ===")
     print(f"  user: {user_email}")
+    print(f"  date: {target_date.isoformat()}")
     sb = get_supabase()
     client = get_gemini()
 
@@ -606,8 +619,8 @@ def run_generate(user_email: str):
         sys.exit(1)
     book_id = book_res.data[0]["id"]
 
-    update_sm2_from_progress(sb, kaya_user_id)
-    words_data = select_todays_words(sb, kaya_user_id, book_id)
+    update_sm2_from_progress(sb, kaya_user_id, as_of_date=target_date)
+    words_data = select_todays_words(sb, kaya_user_id, book_id, target_date=target_date)
     print(f"  selected {len(words_data)} words for today")
 
     sentences = {}
@@ -649,12 +662,16 @@ def main():
     parser.add_argument("--generate", dest="do_generate", action="store_true", help="SM-2 → words.json 生成")
     parser.add_argument("--user", dest="user_email", default=None,
                         help="対象ユーザーのメールアドレス（省略時は KAYA_USER_EMAIL 環境変数）")
+    parser.add_argument("--date", dest="target_date", default=None,
+                        help="生成対象日 YYYY-MM-DD（省略時は今日）。事前生成時に使用")
     args = parser.parse_args()
+
+    target_date = date.fromisoformat(args.target_date) if args.target_date else date.today()
 
     if args.do_import:
         run_import(resolve_user_email(args.user_email))
     elif args.do_generate:
-        run_generate(resolve_user_email(args.user_email))
+        run_generate(resolve_user_email(args.user_email), target_date)
     else:
         parser.print_help()
 
