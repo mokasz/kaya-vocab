@@ -1,8 +1,8 @@
 {
   "meta": {
-    "total": 10,
+    "total": 11,
     "theme": "NEW TREASURE Stage 1",
-    "created": "2026-03-16"
+    "created": "2026-03-17"
   },
   "words": [
     {
@@ -21,24 +21,40 @@
       "image": "data/images/always.png"
     },
     {
-      "id": "calendar",
-      "word": "calendar",
-      "english": "calendar",
-      "japanese": "カレンダー",
-      "pos": "",
+      "id": "coat",
+      "word": "coat",
+      "english": "coats",
+      "japanese": "コート",
+      "pos": "名",
       "theme": "",
       "status": "new",
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My mom hung a new calendar on the wall.",
-      "sentence_ja": "お母さんが壁に新しいカレンダーを掛けました。",
-      "image": "data/images/calendar.png"
+      "sentence": "These coats are perfect for cold weather.",
+      "sentence_ja": "これらのコートは寒い天気にぴったりです。",
+      "image": "data/images/coat.png",
+      "plural": "coats"
+    },
+    {
+      "id": "difficult",
+      "word": "difficult",
+      "english": "difficult",
+      "japanese": "難しい",
+      "pos": "形",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "It is difficult to learn to play the piano.",
+      "sentence_ja": "ピアノを弾くことを学ぶのは難しいです。",
+      "image": "data/images/difficult.png"
     },
     {
       "id": "dress",
       "word": "dress",
-      "english": "dress",
+      "english": "dresses",
       "japanese": "ドレス",
       "pos": "名",
       "theme": "",
@@ -46,8 +62,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "She bought a new dress.",
-      "sentence_ja": "彼女は新しいドレスを買いました。",
+      "sentence": "My sister has many dresses.",
+      "sentence_ja": "私の姉はたくさんのドレスを持っています。",
       "image": "data/images/dress.png",
       "plural": "dresses"
     },
@@ -69,7 +85,7 @@
     {
       "id": "hospital",
       "word": "hospital",
-      "english": "hospital",
+      "english": "hospitals",
       "japanese": "病院",
       "pos": "名",
       "theme": "",
@@ -77,26 +93,10 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My friend works at a hospital.",
-      "sentence_ja": "私の友達は病院で働いています。",
+      "sentence": "There are many hospitals in the city.",
+      "sentence_ja": "その街にはたくさんの病院があります。",
       "image": "data/images/hospital.png",
       "plural": "hospitals"
-    },
-    {
-      "id": "ink",
-      "word": "ink",
-      "english": "ink",
-      "japanese": "インク",
-      "pos": "名",
-      "theme": "",
-      "status": "new",
-      "correct": 0,
-      "incorrect": 0,
-      "lastSeen": null,
-      "sentence": "The printer needs new ink.",
-      "sentence_ja": "そのプリンターは新しいインクが必要です。",
-      "image": "data/images/ink.png",
-      "plural": null
     },
     {
       "id": "jam",
@@ -109,8 +109,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My mother made homemade berry jam yesterday.",
-      "sentence_ja": "私の母は昨日、自家製ベリージャムを作りました。",
+      "sentence": "I like strawberry jam on toast.",
+      "sentence_ja": "私はトーストにイチゴジャムを塗るのが好きです。",
       "image": "data/images/jam.png",
       "plural": null
     },
@@ -125,8 +125,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My dad has many keys.",
-      "sentence_ja": "私の父はたくさんの鍵を持っています。",
+      "sentence": "She keeps her keys on a ring.",
+      "sentence_ja": "彼女は鍵をキーリングにつけています。",
       "image": "data/images/key.png",
       "plural": "keys"
     },
@@ -141,15 +141,31 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "Many lions hunt together.",
-      "sentence_ja": "多くのライオンが一緒に狩りをします。",
+      "sentence": "Many lions were resting under the shade of a tree.",
+      "sentence_ja": "たくさんのライオンが木陰で休んでいました。",
       "image": "data/images/lion.png",
       "plural": "lions"
     },
     {
+      "id": "pharmacy",
+      "word": "pharmacy",
+      "english": "pharmacy",
+      "japanese": "薬局",
+      "pos": "名",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "Most pharmacies sell basic health products.",
+      "sentence_ja": "ほとんどの薬局は基本的な健康商品を販売しています。",
+      "image": "data/images/pharmacy.png",
+      "plural": null
+    },
+    {
       "id": "store",
       "word": "store",
-      "english": "store",
+      "english": "stores",
       "japanese": "店",
       "pos": "名",
       "theme": "",
@@ -157,26 +173,26 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "This store sells fresh bread.",
-      "sentence_ja": "この店は焼きたてのパンを売っています。",
+      "sentence": "Many stores are closed today.",
+      "sentence_ja": "今日、多くの店が閉まっています。",
       "image": "data/images/store.png",
       "plural": "stores"
     }
   ],
   "story": {
-    "day": 4,
-    "title": "Kaya's Special Day",
+    "day": 5,
+    "title": "Kaya's Big Day",
     "sentences": [
-      "Kaya always checked her calendar.",
-      "Today was a very special day!",
-      "She was feeling very excited.",
-      "Kaya ate bread with sweet jam.",
-      "She put on her favorite blue dress.",
-      "Kaya picked up her small lion toy.",
-      "Then, she found her house key.",
-      "\"I need blue ink!\" she thought.",
-      "Kaya walked to the small store.",
-      "The store was next to the hospital."
+      "Kaya always loved animals.",
+      "She put on a pretty dress.",
+      "Her warm coat was ready.",
+      "Kaya felt very excited today.",
+      "\"Oh no, my key!\" she cried.",
+      "Finding the key was difficult.",
+      "She looked next to the jam.",
+      "Finally, she went out and passed the store.",
+      "She saw a pharmacy and a hospital.",
+      "Kaya was going to see a big lion!"
     ]
   }
 }

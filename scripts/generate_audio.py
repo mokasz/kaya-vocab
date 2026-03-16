@@ -236,6 +236,8 @@ def main():
     parser.add_argument("--spelling-all", action="store_true", help="CSV全単語のスペル音声を一括生成（Google Cloud TTS）")
     parser.add_argument("--gen-letters", action="store_true", help="a–z 文字音声を生成（スペル合成の前準備）")
     parser.add_argument("--force", action="store_true", help="既存ファイルを上書き")
+    parser.add_argument("--date", dest="target_date", default=None,
+                        help="生成対象日 YYYY-MM-DD（省略時は words.json の meta.created）")
     args = parser.parse_args()
 
     # ディレクトリ作成
@@ -266,6 +268,10 @@ def main():
 
     words = data["words"]
     story = data.get("story", {})
+
+    # 日付: --date 引数 > meta.created > 今日
+    audio_date = args.target_date or data.get("meta", {}).get("created") or date.today().isoformat()
+    print(f"音声日付: {audio_date}")
 
     ok = err = 0
 
@@ -320,36 +326,22 @@ def main():
         print(f"\n完了: {ok}成功 / {err}失敗")
         return
 
-    # --- 例文の読み上げ ---
+    # --- 例文の読み上げ（日付付きファイル名） ---
     print(f"\n[2/4] 例文音声を生成中... ({len(words)}文)")
     for word in words:
-        out = SENTENCES_AUDIO_DIR / f"{word['id']}.mp3"
+        out = SENTENCES_AUDIO_DIR / f"{word['id']}_{audio_date}.mp3"
         if generate_audio(client, word["sentence"], out, args.force):
             ok += 1
         else:
             err += 1
         time.sleep(RATE_LIMIT_SLEEP)
 
-    # --- ストーリーの読み上げ ---
+    # --- ストーリーの読み上げ（日付付きファイル名） ---
     sentences = story.get("sentences", [])
     print(f"\n[3/4] ストーリー音声を生成中... ({len(sentences)}文)")
-
-    # 前日以前のストーリー音声を .bak にバックアップ（当日生成済みはそのまま）
-    today = date.today()
-    backed_up = 0
-    for mp3 in sorted(STORY_AUDIO_DIR.glob("s*.mp3")):
-        if date.fromtimestamp(mp3.stat().st_mtime) < today:
-            bak = mp3.with_name(mp3.name + ".bak")
-            if bak.exists():
-                bak.unlink()
-            mp3.rename(bak)
-            backed_up += 1
-    if backed_up:
-        print(f"  → 前日分 {backed_up}件を .bak にバックアップ")
     for i, sentence in enumerate(sentences):
-        out = STORY_AUDIO_DIR / f"s{i+1:02d}.mp3"
-        # .bak 退避後は既存ファイルなし → force 不要で生成。当日生成済みは force フラグに従う
-        if generate_audio(client, sentence, out, force=args.force or not out.exists()):
+        out = STORY_AUDIO_DIR / f"s{i+1:02d}_{audio_date}.mp3"
+        if generate_audio(client, sentence, out, args.force):
             ok += 1
         else:
             err += 1

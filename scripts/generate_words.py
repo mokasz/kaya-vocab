@@ -536,7 +536,7 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str, target_date
     )
 
 
-def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: dict | None = None) -> dict:
+def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: dict | None = None, target_date: date | None = None) -> dict:
     result = []
     for w in words_data:
         sent = sentences.get(w["word_key"], {})
@@ -590,7 +590,7 @@ def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: 
         "meta": {
             "total": len(result),
             "theme": BOOK_NAME,
-            "created": date.today().isoformat(),
+            "created": (target_date or date.today()).isoformat(),
         },
         "words": result,
     }
@@ -637,7 +637,7 @@ def run_generate(user_email: str, target_date: date):
     except Exception as e:
         print(f"  story generation failed: {e} — skipping")
 
-    output = build_words_json(words_data, sentences, story)
+    output = build_words_json(words_data, sentences, story, target_date=target_date)
     OUTPUT_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=2))
     print(f"  wrote {OUTPUT_PATH} ({len(words_data)} words, story={'yes' if story else 'no'})")
     print("=== Generate complete ===")

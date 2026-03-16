@@ -421,7 +421,7 @@ const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 
 const POS_MAP = {'名':'名詞','動':'動詞','副':'副詞','形':'形容詞','前':'前置詞','副・前':'副詞・前置詞'};
 
-let words = [], queue = [], qi = 0, storyData = null;
+let words = [], queue = [], qi = 0, storyData = null, audioDate = '';
 let stats = {correct:0, incorrect:0};
 let isFlipped = false;
 let hintUsed = false;
@@ -452,8 +452,8 @@ const playAudio = src => {
   a.play().catch(() => {});
 };
 const playWord = () => playAudio(AUDIO + 'words/' + queue[qi].word + '.mp3');
-const playSent = () => playAudio(AUDIO + 'sentences/' + queue[qi].id + '.mp3');
-const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '.mp3');
+const playSent = () => playAudio(AUDIO + 'sentences/' + queue[qi].id + '_' + audioDate + '.mp3');
+const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '_' + audioDate + '.mp3');
 
 // Promise-based audio (for sequencing)
 function playAudioP(src) {
@@ -469,7 +469,7 @@ function playAudioP(src) {
 // Backside audio sequence: word → sentence
 async function playIncorrectSequence(w) {
   await playAudioP(AUDIO + 'words/' + w.word + '.mp3');
-  await playAudioP(AUDIO + 'sentences/' + w.id + '.mp3');
+  await playAudioP(AUDIO + 'sentences/' + w.id + '_' + audioDate + '.mp3');
 }
 
 // --- Story highlight (safe DOM, matchAll) ---
@@ -512,7 +512,7 @@ function buildSentWithBlank(sentence, word) {
 // --- Init ---
 async function initApp() {
   const d = await fetch(BASE + 'data/words.json?v=' + Date.now()).then(r => r.json());
-  words = d.words; storyData = d.story;
+  words = d.words; storyData = d.story; audioDate = (d.meta || {}).created || today();
   VOCAB = [...new Set(words.map(w => w.word))];
 
   // 即座に表示（全語 new）、進捗サマリーは非表示
@@ -872,7 +872,7 @@ function renderResults() {
   txt('cG',g); txt('cY',y); txt('cR',r); txt('cN',n);
   const dm = {green:'dg',yellow:'dy',red:'dr',new:'dn'};
   clr('wlistBody');
-  words.forEach(w => {
+  words.filter(w => w.status !== 'new').forEach(w => {
     const item = document.createElement('div'); item.className = 'wi';
     const dot = document.createElement('span'); dot.className = 'dot ' + (dm[w.status]||'dn');
     const en = document.createElement('span'); en.className = 'wen'; en.textContent = w.english;
@@ -991,7 +991,7 @@ function renderRefSlide() {
   wBtn.onclick = () => playAudio(AUDIO + 'words/' + w.word + '.mp3');
   const sBtn = document.createElement('button');
   sBtn.className = 'audio-btn s'; sBtn.textContent = '🔊 例文';
-  sBtn.onclick = () => playAudio(AUDIO + 'sentences/' + w.id + '.mp3');
+  sBtn.onclick = () => playAudio(AUDIO + 'sentences/' + w.id + '_' + audioDate + '.mp3');
   audioRow.appendChild(wBtn); audioRow.appendChild(sBtn);
   body.appendChild(audioRow);
 
