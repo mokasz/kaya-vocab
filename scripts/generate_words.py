@@ -319,6 +319,29 @@ def run_import(user_email: str):
         except Exception as e:
             print(f"    ERROR: {e} — skipping")
 
+    # Fix C: metadata 未設定の名詞・動詞を検出して警告
+    print("  checking metadata completeness...")
+    all_words_check = (
+        sb.table("words")
+        .select("word_key, pos, metadata")
+        .eq("book_id", book_id)
+        .execute()
+        .data
+    )
+    missing_meta = [
+        r["word_key"]
+        for r in all_words_check
+        if (r["pos"] or "").split("・")[0] in ("名", "動") and not r.get("metadata")
+    ]
+    if missing_meta:
+        print(f"  ⚠ WARNING: metadata が空の名詞・動詞が {len(missing_meta)} 語あります:")
+        for wk in missing_meta:
+            print(f"    - {wk}")
+        print("  → --import を再実行するか、Supabase で手動設定してください。")
+        print("  → この状態で --generate を実行すると、活用形文と英語答えが不整合になる場合があります。")
+    else:
+        print(f"  ✓ metadata 完全性チェック OK（名詞・動詞 全語に metadata あり）")
+
     print("=== Import complete ===")
 
 
@@ -333,19 +356,17 @@ def replenish_sentences(sb: Client, client, word_key: str, word: str, japanese: 
         print(f"    補充ERROR: {e}")
 
 
-def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, pos: str) -> dict:
-    rows = (
-        sb.table("word_sentences")
-        .select("*")
-        .eq("word_key", word_key)
-        .eq("book_key", BOOK_KEY)
-        .order("last_used_at", desc=False, nullsfirst=True)
-        .execute()
-        .data
-    )
-    if not rows:
-        replenish_sentences(sb, client, word_key, word, japanese, pos)
-        rows = (
+# Fix B: 活用形文に必要な metadata キーを返す。不要なら None
+def _required_meta_key(form: str) -> str | None:
+    return {"plural": "plural", "third": "third", "past": "past", "ing": "ing"}.get(form)
+
+
+def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, pos: str, metadata: dict | None = None) -> dict:
+    if metadata is None:
+        metadata = {}
+
+    def fetch_rows() -> list:
+        return (
             sb.table("word_sentences")
             .select("*")
             .eq("word_key", word_key)
@@ -354,13 +375,28 @@ def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, p
             .execute()
             .data
         )
+
+    rows = fetch_rows()
+    if not rows:
+        replenish_sentences(sb, client, word_key, word, japanese, pos)
+        rows = fetch_rows()
         if not rows:
             return {"sentence": "", "sentence_ja": "", "form": "default"}
 
-    chosen = rows[0]
-
     if len(rows) <= 1:
         replenish_sentences(sb, client, word_key, word, japanese, pos)
+
+    # Fix B: metadata に対応するフィールドがある文だけを候補にする
+    def is_compatible(row: dict) -> bool:
+        key = _required_meta_key(row.get("form", "default"))
+        return key is None or bool(metadata.get(key))
+
+    compatible = [r for r in rows if is_compatible(r)]
+    if not compatible:
+        print(f"  WARNING: {word_key} — metadata 未設定により活用形文が使用不可（metadata={metadata}）。singular/default 文にフォールバック。")
+        compatible = rows  # 最終手段: 全行を候補にする
+
+    chosen = compatible[0]
 
     sb.table("word_sentences").update(
         {"last_used_at": date.today().isoformat()}
@@ -547,13 +583,21 @@ def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: 
         # word_sentences.form + words.metadata から english を導出
         form_to_english = {
             "singular": w["word"],
-            "plural":   metadata.get("plural", w["word"]),
+            "plural":   metadata.get("plural"),   # None if missing
             "base":     w["word"],
-            "third":    metadata.get("third", w["word"]),
-            "past":     metadata.get("past",  w["word"]),
+            "third":    metadata.get("third"),     # None if missing
+            "past":     metadata.get("past"),      # None if missing
             "default":  w["word"],
         }
         english = form_to_english.get(form, w["word"])
+
+        # Fix A: metadata 未設定で english が None になる場合は警告して base word にフォールバック
+        if english is None:
+            print(
+                f"  WARNING: {w['word_key']} form='{form}' だが metadata['{form}'] 未設定 "
+                f"→ english を '{w['word']}' にフォールバック（sentence との不整合の可能性あり）"
+            )
+            english = w["word"]
 
         card = {
             "id": w["word_key"],
@@ -626,7 +670,8 @@ def run_generate(user_email: str, target_date: date):
     sentences = {}
     for w in words_data:
         sentences[w["word_key"]] = pick_sentence(
-            sb, client, w["word_key"], w["word"], w["back_main"], w["pos"] or ""
+            sb, client, w["word_key"], w["word"], w["back_main"], w["pos"] or "",
+            metadata=w.get("metadata") or {}
         )
 
     day = get_study_day(sb, kaya_user_id)

@@ -77,6 +77,13 @@ PROMPT_OVERRIDES = {
         "resting beside it, a small black ink puddle on a white surface. "
         "No text, no words, no letters, no labels. Purely visual. White background."
     ),
+    "name": (
+        "Simple flat cartoon illustration of a friendly teacher holding a clipboard, "
+        "standing in front of a group of smiling children. Each child wears a colorful "
+        "badge on their chest — just small blank colored rectangles suggesting name tags, "
+        "no readable text on them. No text, no words, no letters, no writing anywhere. "
+        "Purely visual. White background."
+    ),
 }
 
 
