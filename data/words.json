@@ -2,40 +2,9 @@
   "meta": {
     "total": 10,
     "theme": "NEW TREASURE Stage 1",
-    "created": "2026-03-18"
+    "created": "2026-03-20"
   },
   "words": [
-    {
-      "id": "always",
-      "word": "always",
-      "english": "always",
-      "japanese": "いつも",
-      "pos": "副",
-      "theme": "",
-      "status": "new",
-      "correct": 0,
-      "incorrect": 0,
-      "lastSeen": null,
-      "sentence": "The library is always open on weekdays.",
-      "sentence_ja": "図書館は平日いつも開いています。",
-      "image": "data/images/always.png"
-    },
-    {
-      "id": "dress",
-      "word": "dress",
-      "english": "dress",
-      "japanese": "ドレス",
-      "pos": "名",
-      "theme": "",
-      "status": "new",
-      "correct": 0,
-      "incorrect": 0,
-      "lastSeen": null,
-      "sentence": "My sister wants a new dress for her birthday.",
-      "sentence_ja": "私の妹は誕生日に新しいドレスを欲しがっている。",
-      "image": "data/images/dress.png",
-      "plural": "dresses"
-    },
     {
       "id": "excited",
       "word": "excited",
@@ -47,8 +16,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I am excited for the party tonight.",
-      "sentence_ja": "今夜のパーティーが楽しみです。",
+      "sentence": "She was excited when she got a good test score.",
+      "sentence_ja": "彼女は良いテストの点数を取って興奮した。",
       "image": "data/images/excited.png"
     },
     {
@@ -62,26 +31,10 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I found my key.",
-      "sentence_ja": "私は自分の鍵を見つけました。",
+      "sentence": "I lost my house key.",
+      "sentence_ja": "私は家の鍵をなくしました。",
       "image": "data/images/key.png",
       "plural": "keys"
-    },
-    {
-      "id": "lion",
-      "word": "lion",
-      "english": "lion",
-      "japanese": "ライオン",
-      "pos": "名",
-      "theme": "",
-      "status": "new",
-      "correct": 0,
-      "incorrect": 0,
-      "lastSeen": null,
-      "sentence": "A lion has a loud roar.",
-      "sentence_ja": "ライオンは大きなほえ声を持っています。",
-      "image": "data/images/lion.png",
-      "plural": "lions"
     },
     {
       "id": "milk",
@@ -94,8 +47,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The store sells many different milks.",
-      "sentence_ja": "その店では多くの種類の牛乳を売っています。",
+      "sentence": "These milks are all from local farms.",
+      "sentence_ja": "これらの牛乳はすべて地元の農場からのものです。",
       "image": "data/images/milk.png",
       "plural": "milks"
     },
@@ -110,15 +63,15 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The teacher learned all the students' names quickly.",
-      "sentence_ja": "先生は生徒全員の名前をすぐに覚えました。",
+      "sentence": "They talked about many possible names for their new baby.",
+      "sentence_ja": "彼らは新しい赤ちゃんのたくさんの候補となる名前について話しました。",
       "image": "data/images/name.png",
       "plural": "names"
     },
     {
       "id": "orange",
       "word": "orange",
-      "english": "orange",
+      "english": "oranges",
       "japanese": "オレンジ",
       "pos": "名",
       "theme": "",
@@ -126,10 +79,26 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I ate an orange.",
-      "sentence_ja": "私はオレンジを食べました。",
+      "sentence": "There are three oranges on the table.",
+      "sentence_ja": "テーブルの上にオレンジが3つあります。",
       "image": "data/images/orange.png",
       "plural": "oranges"
+    },
+    {
+      "id": "panda",
+      "word": "panda",
+      "english": "pandas",
+      "japanese": "パンダ",
+      "pos": "名",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "Pandas live in the mountains.",
+      "sentence_ja": "パンダは山に住んでいます。",
+      "image": "data/images/panda.png",
+      "plural": "pandas"
     },
     {
       "id": "pharmacy",
@@ -148,9 +117,41 @@
       "plural": null
     },
     {
+      "id": "question",
+      "word": "question",
+      "english": "questions",
+      "japanese": "質問",
+      "pos": "名",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "The students had many questions.",
+      "sentence_ja": "生徒たちは多くの質問がありました。",
+      "image": "data/images/question.png",
+      "plural": "questions"
+    },
+    {
+      "id": "rabbit",
+      "word": "rabbit",
+      "english": "rabbits",
+      "japanese": "ウサギ",
+      "pos": "名",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "Many rabbits live in this field.",
+      "sentence_ja": "この野原にはたくさんのウサギが住んでいます。",
+      "image": "data/images/rabbit.png",
+      "plural": "rabbits"
+    },
+    {
       "id": "store",
       "word": "store",
-      "english": "store",
+      "english": "stores",
       "japanese": "店",
       "pos": "名",
       "theme": "",
@@ -158,26 +159,26 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "This store sells delicious bread.",
-      "sentence_ja": "この店はおいしいパンを売っています。",
+      "sentence": "Many stores are in this area.",
+      "sentence_ja": "この地域には多くの店があります。",
       "image": "data/images/store.png",
       "plural": "stores"
     }
   ],
   "story": {
-    "day": 5,
-    "title": "Kaya's Morning",
+    "day": 6,
+    "title": "Kaya's Morning Store Trip",
     "sentences": [
-      "Her name is Kaya.",
-      "She is always ready for fun.",
-      "Today, she chose a yellow dress.",
-      "Kaya felt so excited.",
-      "She took her small key.",
-      "First, Kaya went to the store.",
-      "She bought some fresh milk.",
-      "Then, she bought a juicy orange.",
-      "She passed by the pharmacy.",
-      "A toy lion smiled at her."
+      "Kaya woke up early.",
+      "She felt excited today.",
+      "Her mother had a question.",
+      "\"Please buy milk,\" she said.",
+      "Kaya took her key.",
+      "She knew the store name.",
+      "On the way, she passed a pharmacy.",
+      "She saw a cute rabbit toy.",
+      "A friendly panda looked at her.",
+      "Kaya bought milk and an orange."
     ]
   }
 }
