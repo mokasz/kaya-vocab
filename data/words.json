@@ -1,8 +1,8 @@
 {
   "meta": {
-    "total": 10,
+    "total": 12,
     "theme": "NEW TREASURE Stage 1",
-    "created": "2026-03-20"
+    "created": "2026-03-21"
   },
   "words": [
     {
@@ -23,7 +23,7 @@
     {
       "id": "key",
       "word": "key",
-      "english": "key",
+      "english": "keys",
       "japanese": "鍵",
       "pos": "名",
       "theme": "",
@@ -31,8 +31,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I lost my house key.",
-      "sentence_ja": "私は家の鍵をなくしました。",
+      "sentence": "He keeps his keys in his pocket.",
+      "sentence_ja": "彼は鍵をポケットに入れています。",
       "image": "data/images/key.png",
       "plural": "keys"
     },
@@ -47,8 +47,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "These milks are all from local farms.",
-      "sentence_ja": "これらの牛乳はすべて地元の農場からのものです。",
+      "sentence": "This store sells many different milks, like almond and soy.",
+      "sentence_ja": "この店では、アーモンドミルクや豆乳など、たくさんの種類の牛乳を売っています。",
       "image": "data/images/milk.png",
       "plural": "milks"
     },
@@ -63,8 +63,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "They talked about many possible names for their new baby.",
-      "sentence_ja": "彼らは新しい赤ちゃんのたくさんの候補となる名前について話しました。",
+      "sentence": "The teacher called out all the students' names.",
+      "sentence_ja": "先生は生徒全員の名前を呼び上げました。",
       "image": "data/images/name.png",
       "plural": "names"
     },
@@ -79,10 +79,25 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "There are three oranges on the table.",
-      "sentence_ja": "テーブルの上にオレンジが3つあります。",
+      "sentence": "We bought two oranges.",
+      "sentence_ja": "私たちはオレンジを2つ買いました。",
       "image": "data/images/orange.png",
       "plural": "oranges"
+    },
+    {
+      "id": "over",
+      "word": "over",
+      "english": "over",
+      "japanese": "〜の上に・〜を越えて",
+      "pos": "前",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "Please walk over the bridge.",
+      "sentence_ja": "橋を渡ってください。",
+      "image": "data/images/over.png"
     },
     {
       "id": "panda",
@@ -95,15 +110,15 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "Pandas live in the mountains.",
-      "sentence_ja": "パンダは山に住んでいます。",
+      "sentence": "Pandas are black and white.",
+      "sentence_ja": "パンダは白と黒です。",
       "image": "data/images/panda.png",
       "plural": "pandas"
     },
     {
       "id": "pharmacy",
       "word": "pharmacy",
-      "english": "pharmacy",
+      "english": "pharmacies",
       "japanese": "薬局",
       "pos": "名",
       "theme": "",
@@ -111,10 +126,10 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I went to the pharmacy to buy some medicine.",
-      "sentence_ja": "薬を買うために薬局に行きました。",
+      "sentence": "There are many pharmacies in this town.",
+      "sentence_ja": "この町にはたくさんの薬局があります。",
       "image": "data/images/pharmacy.png",
-      "plural": null
+      "plural": "pharmacies"
     },
     {
       "id": "question",
@@ -127,8 +142,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The students had many questions.",
-      "sentence_ja": "生徒たちは多くの質問がありました。",
+      "sentence": "The students asked many questions.",
+      "sentence_ja": "生徒たちは多くの質問をしました。",
       "image": "data/images/question.png",
       "plural": "questions"
     },
@@ -143,15 +158,15 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "Many rabbits live in this field.",
-      "sentence_ja": "この野原にはたくさんのウサギが住んでいます。",
+      "sentence": "Rabbits are fast runners.",
+      "sentence_ja": "ウサギは足が速いです。",
       "image": "data/images/rabbit.png",
       "plural": "rabbits"
     },
     {
       "id": "store",
       "word": "store",
-      "english": "stores",
+      "english": "store",
       "japanese": "店",
       "pos": "名",
       "theme": "",
@@ -159,26 +174,41 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "Many stores are in this area.",
-      "sentence_ja": "この地域には多くの店があります。",
+      "sentence": "The new store opened yesterday.",
+      "sentence_ja": "その新しい店は昨日開店しました。",
       "image": "data/images/store.png",
       "plural": "stores"
+    },
+    {
+      "id": "well",
+      "word": "well",
+      "english": "well",
+      "japanese": "上手に・ええと",
+      "pos": "副",
+      "theme": "",
+      "status": "new",
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": null,
+      "sentence": "He can play the guitar very well.",
+      "sentence_ja": "彼はとても上手にギターを弾けます。",
+      "image": "data/images/well.png"
     }
   ],
   "story": {
-    "day": 6,
-    "title": "Kaya's Morning Store Trip",
+    "day": 7,
+    "title": "Kaya's Store Trip",
     "sentences": [
-      "Kaya woke up early.",
-      "She felt excited today.",
-      "Her mother had a question.",
-      "\"Please buy milk,\" she said.",
-      "Kaya took her key.",
-      "She knew the store name.",
-      "On the way, she passed a pharmacy.",
-      "She saw a cute rabbit toy.",
-      "A friendly panda looked at her.",
-      "Kaya bought milk and an orange."
+      "Kaya was excited to go to the store.",
+      "She put her house key in her pocket.",
+      "Kaya walked past the pharmacy.",
+      "She wanted to buy milk and an orange.",
+      "Inside the store, she saw a cute panda.",
+      "A small rabbit toy was right over it.",
+      "Kaya had a question.",
+      "She asked a worker, \"What is its name?\"",
+      "The worker said, \"It is Panky!\"",
+      "Kaya felt well and smiled."
     ]
   }
 }
