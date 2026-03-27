@@ -30,8 +30,10 @@ CSV_PATH = (
 )
 BOOK_KEY = "kaya-stage1"
 BOOK_NAME = "NEW TREASURE Stage 1"
-DAILY_NEW = 10
-DAILY_MAX = 15
+DAILY_LIMIT = 15
+MIN_NEW = 5
+DUE_MAX = 10
+MASTERED_INTERVAL = 21
 OUTPUT_PATH = Path("kaya-vocab/data/words.json")
 
 # 品詞略称 → フル名
@@ -65,7 +67,7 @@ FORM_LABEL = {
 # ── クライアント ─────────────────────────────────────
 def get_supabase() -> Client:
     url = os.environ["SUPABASE_URL"]
-    key = os.environ["SUPABASE_SERVICE_KEY"]
+    key = os.environ.get("SUPABASE_SECRET_KEY")
     return create_client(url, key)
 
 
@@ -122,7 +124,7 @@ def get_or_create_book(sb: Client, parent_user_id: str | None) -> str:
         "name": BOOK_NAME,
         "subject": "english",
         "created_by": parent_user_id,
-        "config": {"daily_new": DAILY_NEW, "book_key": BOOK_KEY},
+        "config": {"daily_limit": DAILY_LIMIT, "book_key": BOOK_KEY},
     }).execute()
     return res.data[0]["id"]
 
@@ -198,6 +200,49 @@ def sentence_forms(pos: str) -> list[str]:
         return ["default", "default", "default"]
 
 
+def validate_sentence(client, word: str, pos: str, form: str, sentence: str) -> bool:
+    """文が（単複などで）曖昧でないか別の LLM にチェックさせる。"""
+    base_pos = pos.split("・")[0] if pos else ""
+    if base_pos == "名":
+        target = "singular/plural"
+        other = "plural" if form == "singular" else "singular"
+        instruction = (
+            f'Check if the sentence below makes it EXTREMELY OBVIOUS that "{word}" must be in its {form} form.\n'
+            f'If swapping it with the {other} form would also result in a natural sentence '
+            f'WITHOUT adding or changing any other words (like "a" or numbers), then it is "ambiguous".\n'
+            f'Example of AMBIGUOUS: "He keeps his keys in his bag." (Both key/keys are natural contextually)\n'
+            f'Example of NON-AMBIGUOUS: "He keeps three keys in his bag." (Only "keys" is natural because of "three")\n'
+        )
+    elif base_pos == "動":
+        target = "tense/person"
+        instruction = (
+            f'Check if the sentence below makes it EXTREMELY OBVIOUS that "{word}" must be in its {form} form.\n'
+            f'If swapping it with another form (base/third/past/ing) would also be natural without other changes, it is "ambiguous".\n'
+        )
+    else:
+        return True # その他はパス
+
+    prompt = f"""{instruction}
+Sentence: "{sentence}"
+Word: "{word}"
+Intended form: {form}
+
+Is this sentence ambiguous for the intended form?
+Respond ONLY with JSON: {{"ambiguous": true/false, "reason": "..."}}"""
+
+    try:
+        response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+        text = response.text.strip().replace("```json", "").replace("```", "")
+        res = json.loads(text)
+        if res.get("ambiguous"):
+            print(f"    Validation Failed ({form}): {sentence} — {res.get('reason')}")
+            return False
+        return True
+    except Exception as e:
+        print(f"    Validation Error: {e} (skipping validation)")
+        return True
+
+
 def generate_sentences_for_word(client, word: str, japanese: str, pos: str, forms: list[str]) -> list[dict]:
     form_list = "\n".join(f"{i+1}. {FORM_LABEL[f]} of '{word}'" for i, f in enumerate(forms))
     prompt = f"""Generate {len(forms)} English example sentences for the word "{word}" (Japanese meaning: {japanese}, part of speech: {POS_MAP.get(pos, pos)}).
@@ -207,42 +252,76 @@ Rules:
 - Sentences must be simple enough for a Japanese junior high school student
 - Each sentence must be clearly different from the others
 - Do NOT include any text on signs, labels, or store names in the image
+- IMPORTANT: If the word is a noun, the context must make it extremely obvious whether it is singular or plural (e.g., use "a", "one", "this" for singular; use "two", "many", "these", "are" for plural).
+- IMPORTANT: If the word is a verb, the context must make the tense (past/present/future) or 3rd person singular extremely obvious (e.g., use time words like "yesterday", "every day", or clear subjects like "He", "She").
 
 Required forms:
 {form_list}
 
 Respond ONLY with a JSON array (no markdown, no explanation):
 [
-  {{"sentence": "...", "sentence_ja": "（日本語訳）"}},
+  {{"sentence": "...", "sentence_ja": "（日本語訳）", "exact_word": "（その文で実際に使われた英単語の形、例：stores, played）"}},
   ...
 ]"""
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-    )
-    text = response.text.strip()
-    if "```" in text:
-        parts = text.split("```")
-        text = parts[1] if len(parts) > 1 else parts[0]
-        if text.startswith("json"):
-            text = text[4:]
-    return json.loads(text.strip())
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+            )
+            text = response.text.strip()
+            if "```" in text:
+                parts = text.split("```")
+                text = parts[1] if len(parts) > 1 else parts[0]
+                if text.startswith("json"):
+                    text = text[4:]
+            
+            sentences = json.loads(text.strip())
+            
+            # バリデーション実行
+            all_valid = True
+            for i, form in enumerate(forms):
+                if i < len(sentences):
+                    if not validate_sentence(client, word, pos, form, sentences[i]["sentence"]):
+                        all_valid = False
+                        break
+            
+            if all_valid:
+                return sentences
+            else:
+                print(f"    Retrying generation (attempt {attempt+1}/{max_retries})...")
+        except Exception as e:
+            print(f"    Generation Error: {e}")
+            if attempt == max_retries - 1:
+                raise e
+
+    return sentences # 最終的にダメでも最後のものを返す
 
 
 def save_sentences(sb: Client, word_key: str, forms: list[str], sentences: list[dict]):
-    records = [
-        {
-            "word_key": word_key,
-            "book_key": BOOK_KEY,
-            "form": forms[i],
-            "sentence": s["sentence"],
-            "sentence_ja": s["sentence_ja"],
-        }
-        for i, s in enumerate(sentences)
-        if i < len(forms)
-    ]
-    sb.table("word_sentences").insert(records).execute()
+    # 既存の文を取得して重複チェック (last_used_at を保護するため upsert ではなく insert を使用)
+    existing_rows = sb.table("word_sentences").select("sentence").eq("word_key", word_key).eq("book_key", BOOK_KEY).execute().data
+    existing_sentences = {r["sentence"].strip() for r in existing_rows}
+
+    records_to_insert = []
+    for i, s in enumerate(sentences):
+        if i >= len(forms):
+            break
+        sentence_text = s["sentence"].strip()
+        if sentence_text not in existing_sentences:
+            records_to_insert.append({
+                "word_key": word_key,
+                "book_key": BOOK_KEY,
+                "form": forms[i],
+                "sentence": sentence_text,
+                "sentence_ja": s["sentence_ja"],
+                "exact_word": s.get("exact_word", ""),
+            })
+
+    if records_to_insert:
+        sb.table("word_sentences").insert(records_to_insert).execute()
 
 
 # ── --import モード ───────────────────────────────────
@@ -361,7 +440,7 @@ def _required_meta_key(form: str) -> str | None:
     return {"plural": "plural", "third": "third", "past": "past", "ing": "ing"}.get(form)
 
 
-def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, pos: str, metadata: dict | None = None) -> dict:
+def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, pos: str, metadata: dict | None = None, force_base_form: bool = False) -> dict:
     if metadata is None:
         metadata = {}
 
@@ -381,7 +460,7 @@ def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, p
         replenish_sentences(sb, client, word_key, word, japanese, pos)
         rows = fetch_rows()
         if not rows:
-            return {"sentence": "", "sentence_ja": "", "form": "default"}
+            return {"sentence": "", "sentence_ja": "", "form": "default", "exact_word": word}
 
     if len(rows) <= 1:
         replenish_sentences(sb, client, word_key, word, japanese, pos)
@@ -392,17 +471,34 @@ def pick_sentence(sb: Client, client, word_key: str, word: str, japanese: str, p
         return key is None or bool(metadata.get(key))
 
     compatible = [r for r in rows if is_compatible(r)]
+
+    # force_base_form=True の場合は、base/singular/default に絞る
+    if force_base_form:
+        base_candidates = [r for r in compatible if r.get("form") in ("base", "singular", "default")]
+        if base_candidates:
+            compatible = base_candidates
+        else:
+            print(f"  WARNING: {word_key} — force_base_form=True だが base/singular/default 例文なし。")
+
     if not compatible:
         print(f"  WARNING: {word_key} — metadata 未設定により活用形文が使用不可（metadata={metadata}）。singular/default 文にフォールバック。")
         compatible = rows  # 最終手段: 全行を候補にする
 
+    # もし「今日すでに選ばれた文」があれば、そのまま使う（ローテーションしない）
+    today_str = date.today().isoformat()
+    already_used_today = [r for r in compatible if r.get("last_used_at") == today_str]
+    if already_used_today:
+        chosen = already_used_today[0]
+        return {"sentence": chosen["sentence"], "sentence_ja": chosen["sentence_ja"], "form": chosen["form"], "exact_word": chosen.get("exact_word", "")}
+
+    # 今日まだ選んでいなければ、最も古い（または未使用の）文を選ぶ
     chosen = compatible[0]
 
     sb.table("word_sentences").update(
-        {"last_used_at": date.today().isoformat()}
+        {"last_used_at": today_str}
     ).eq("id", chosen["id"]).execute()
 
-    return {"sentence": chosen["sentence"], "sentence_ja": chosen["sentence_ja"], "form": chosen["form"]}
+    return {"sentence": chosen["sentence"], "sentence_ja": chosen["sentence_ja"], "form": chosen["form"], "exact_word": chosen.get("exact_word", "")}
 
 
 # ── ストーリー生成 ────────────────────────────────────
@@ -513,7 +609,7 @@ def update_sm2_from_progress(sb: Client, kaya_user_id: str, as_of_date: date):
 
 
 def select_todays_words(sb: Client, kaya_user_id: str, book_id: str, target_date: date) -> list[dict]:
-    # 復習単語: next_review <= target_date かつ 未習得（期日が古い順、最大 DAILY_MAX 語）
+    # 復習単語: next_review <= target_date かつ 未習得（期日が古い順、最大 DUE_MAX 語）
     review_rows = (
         sb.table("progress_sync")
         .select("word_key")
@@ -523,7 +619,7 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str, target_date
         .lt("interval_days", MASTERED_INTERVAL)
         .neq("status", "new")
         .order("next_review")
-        .limit(DAILY_MAX)
+        .limit(DUE_MAX)
         .execute()
         .data
     )
@@ -543,8 +639,8 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str, target_date
         )
     }
 
-    # 新出単語
-    new_words_needed = max(0, DAILY_NEW - len(review_keys))
+    # 新出単語（合計 DAILY_LIMIT になるように補充）
+    new_words_needed = max(MIN_NEW, DAILY_LIMIT - len(review_keys))
     exclude = list(all_seen) if all_seen else ["__none__"]
     new_rows = (
         sb.table("words")
@@ -562,7 +658,7 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str, target_date
     if not selected_keys:
         return []
 
-    return (
+    words = (
         sb.table("words")
         .select("*")
         .eq("book_id", book_id)
@@ -570,6 +666,12 @@ def select_todays_words(sb: Client, kaya_user_id: str, book_id: str, target_date
         .execute()
         .data
     )
+
+    # _is_new フラグを付与
+    for w in words:
+        w["_is_new"] = w["word_key"] in new_keys
+
+    return words
 
 
 def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: dict | None = None, target_date: date | None = None) -> dict:
@@ -580,24 +682,26 @@ def build_words_json(words_data: list[dict], sentences: dict[str, dict], story: 
         form = sent.get("form", "default")
         pos_base = (w["pos"] or "").split("・")[0]
 
-        # word_sentences.form + words.metadata から english を導出
-        form_to_english = {
-            "singular": w["word"],
-            "plural":   metadata.get("plural"),   # None if missing
-            "base":     w["word"],
-            "third":    metadata.get("third"),     # None if missing
-            "past":     metadata.get("past"),      # None if missing
-            "default":  w["word"],
-        }
-        english = form_to_english.get(form, w["word"])
+        # word_sentences.exact_word を最優先し、無ければ form + metadata から導出
+        english = sent.get("exact_word")
+        if not english:
+            form_to_english = {
+                "singular": w["word"],
+                "plural":   metadata.get("plural"),   # None if missing
+                "base":     w["word"],
+                "third":    metadata.get("third"),     # None if missing
+                "past":     metadata.get("past"),      # None if missing
+                "default":  w["word"],
+            }
+            english = form_to_english.get(form, w["word"])
 
-        # Fix A: metadata 未設定で english が None になる場合は警告して base word にフォールバック
-        if english is None:
-            print(
-                f"  WARNING: {w['word_key']} form='{form}' だが metadata['{form}'] 未設定 "
-                f"→ english を '{w['word']}' にフォールバック（sentence との不整合の可能性あり）"
-            )
-            english = w["word"]
+            # Fix A: metadata 未設定で english が None になる場合は警告して base word にフォールバック
+            if english is None:
+                print(
+                    f"  WARNING: {w['word_key']} form='{form}' だが metadata['{form}'] 未設定 "
+                    f"→ english を '{w['word']}' にフォールバック（sentence との不整合の可能性あり）"
+                )
+                english = w["word"]
 
         card = {
             "id": w["word_key"],
@@ -669,9 +773,13 @@ def run_generate(user_email: str, target_date: date):
 
     sentences = {}
     for w in words_data:
+        # 新出単語の場合は原形を強制
+        is_new = w.get("_is_new", False)
+        print(f"DEBUG: {w['word_key']} _is_new={is_new}")
         sentences[w["word_key"]] = pick_sentence(
             sb, client, w["word_key"], w["word"], w["back_main"], w["pos"] or "",
-            metadata=w.get("metadata") or {}
+            metadata=w.get("metadata") or {},
+            force_base_form=is_new
         )
 
     day = get_study_day(sb, kaya_user_id)

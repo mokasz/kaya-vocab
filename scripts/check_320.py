@@ -3,7 +3,7 @@ from supabase import create_client
 
 def main():
     url = os.environ.get("SUPABASE_URL")
-    key = os.environ.get("SUPABASE_SERVICE_KEY")
+    key = os.environ.get("SUPABASE_SECRET_KEY")
     sb = create_client(url, key)
     
     user_email = "kaya.zhu@icloud.com"

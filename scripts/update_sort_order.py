@@ -108,7 +108,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="DBを変更せず結果のみ表示")
     args = parser.parse_args()
 
-    sb = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+    sb = create_client(os.environ["SUPABASE_URL"], os.environ.get("SUPABASE_SECRET_KEY"))
 
     # book_id を取得
     book = sb.table("books").select("id").eq("name", "NEW TREASURE Stage 1").execute()

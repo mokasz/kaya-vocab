@@ -2,7 +2,7 @@ import os
 from supabase import create_client
 
 def main():
-    sb = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+    sb = create_client(os.environ["SUPABASE_URL"], os.environ.get("SUPABASE_SECRET_KEY"))
     
     updates = [
         {"word_key": "pharmacy", "metadata": {"plural": "pharmacies"}},

@@ -312,6 +312,7 @@
               <input class="answer-input" id="ansInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="英単語を入力…">
               <button class="check-btn" id="checkBtn">確認 →</button>
             </div>
+            <p id="fWarning" style="color:var(--danger); font-size:0.85rem; font-weight:bold; margin-top:5px; height:1rem; text-align:center;"></p>
             <div class="hint-row">
               <button class="hint-btn" id="hintTheme">🏷️ ヒント</button>
               <button class="hint-btn" id="hintAudio">🔊 発音</button>
@@ -413,7 +414,7 @@ const AUDIO = BASE + 'data/audio/';
 let VOCAB = [];
 // === Supabase ===
 const SUPA_URL = 'https://uzpmpjkkwapaohleejtt.supabase.co';
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6cG1wamtrd2FwYW9obGVlanR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5NzkzMjksImV4cCI6MjA4ODU1NTMyOX0.vnmV6eC05k4BRMR3SgrJBrn5x0gb0_4wI9_L39pGfl0';
+const SUPA_KEY = 'sb_publishable_YCsV4Wpn8tb8gwLrgsPf2g_xAX0Q4gt';
 const BOOK_KEY = 'kaya-stage1';
 const PENDING_KEY = BOOK_KEY + '_sync_pending';
 let isSyncing = false;
@@ -630,6 +631,7 @@ function renderCard() {
   $('faceB').classList.remove('correct', 'wrong');
   $('ansInput').value = '';
   $('ansInput').classList.remove('shake');
+  txt('fWarning', '');
   txt('typedWrong', '');
   clr('resRow');
 
@@ -675,6 +677,7 @@ function checkAnswer() {
   if (isFlipped) return;
   const w = queue[qi];
   const typed = $('ansInput').value.trim().toLowerCase();
+  
   if (!typed) {
     $('ansInput').classList.add('shake');
     setTimeout(() => $('ansInput').classList.remove('shake'), 400);
@@ -682,16 +685,31 @@ function checkAnswer() {
   }
 
   const correct = typed === w.english.toLowerCase();
-  const pluralMistake = !correct && w.plural && typed === w.plural.toLowerCase();
+  
+  // 単複のミスの検知（正解ではなく、かつ単数形か複数形のいずれかと一致する）
+  // w.word は単数形（ベースの単語）、w.english は出題の正解、w.plural は複数形
+  const isSingular = typed === w.word.toLowerCase();
+  const isPlural = w.plural && typed === w.plural.toLowerCase();
+  const pluralMistake = !correct && (isSingular || isPlural);
+
+  if (pluralMistake) {
+    // フリップさせずに警告を出す
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    const needPlural = isSingular; // 単数形を打ってしまった＝複数形が必要
+    txt('fWarning', needPlural ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
+    return; // ここで処理を中断
+  }
+
+  // 以降は通常の正解または完全な間違いの処理
+  txt('fWarning', '');
   isFlipped = true;
   $('card3d').classList.add('flipped');
   $('faceB').classList.add(correct ? 'correct' : 'wrong');
   // 600ms未満で解答した場合に備えて裏面コンテンツを確実にセット
   if (!$('ansWord').textContent) populateBackFace(w);
 
-  const wrongMsg = correct ? '' :
-    (pluralMistake ? '❌ 惜しい！単数・複数の違いです: "' + typed + '" → "' + w.english + '"'
-                   : '❌ 入力: "' + typed + '"  →  正解: "' + w.english + '"');
+  const wrongMsg = correct ? '' : '❌ 入力: "' + typed + '"  →  正解: "' + w.english + '"';
   txt('resBadge', correct ? '✅ Correct!' : wrongMsg);
   $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
   txt('typedWrong', '');

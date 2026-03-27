@@ -34,9 +34,18 @@ VERTEX_KEY_FILE = SCRIPT_DIR.parent.parent / "service-account-key.json"
 def build_prompt(word: dict) -> str:
     if word["id"] in PROMPT_OVERRIDES:
         return PROMPT_OVERRIDES[word["id"]]
+    
+    pos = word.get("pos", "")
+    extra_instruction = ""
+    if "名" in pos:
+        extra_instruction = "IMPORTANT: Clearly show the quantity (singular vs plural) exactly as described in the sentence. "
+    elif "動" in pos:
+        extra_instruction = "IMPORTANT: Clearly show the action, its timing (tense), or the person exactly as described in the sentence. "
+
     return (
         f"Simple flat cartoon illustration showing the concept of '{word['english']}'. "
         f"Scene inspired by: {word['sentence']} "
+        f"{extra_instruction}"
         f"No text, no words, no letters, no labels, no captions, no writing of any kind. "
         f"Purely visual. White background."
     )
@@ -45,9 +54,18 @@ def build_prompt(word: dict) -> str:
 def build_vertex_prompt(word: dict) -> str:
     if word["id"] in PROMPT_OVERRIDES:
         return PROMPT_OVERRIDES[word["id"]]
+
+    pos = word.get("pos", "")
+    extra_instruction = ""
+    if "名" in pos:
+        extra_instruction = "IMPORTANT: Clearly show the quantity (singular vs plural) exactly as described in the sentence. "
+    elif "動" in pos:
+        extra_instruction = "IMPORTANT: Clearly show the action, its timing (tense), or the person exactly as described in the sentence. "
+
     return (
         f"Simple flat cartoon illustration showing the concept of '{word['english']}'. "
         f"Scene inspired by: {word['sentence']} "
+        f"{extra_instruction}"
         f"Purely visual. White background."
     )
 
@@ -55,6 +73,37 @@ NEGATIVE_PROMPT = "text, words, letters, labels, signs, captions, writing, typog
 
 # 単語名が看板になりやすい語のプロンプトオーバーライド（場面描写で代替）
 PROMPT_OVERRIDES = {
+    "box": (
+        "Simple flat cartoon illustration of exactly one single red cardboard box sitting alone. "
+        "No text, no words, no letters, no labels. Purely visual. White background."
+    ),
+    "key": (
+        "Simple flat cartoon illustration of a single large metal keyring holding many different metal keys. "
+        "No text, no words, no letters, no labels. Purely visual. White background."
+    ),
+    "milk": (
+        "Simple flat cartoon illustration of multiple different bottles and cartons of milk grouped together on a store shelf. "
+        "No text, no words, no letters, no labels. Purely visual. White background."
+    ),
+    "orange": (
+        "Simple flat cartoon illustration of exactly three whole orange fruits sitting together on a wooden table. "
+        "No text, no words, no letters, no labels. Purely visual. White background."
+    ),
+    "question": (
+        "Simple flat cartoon illustration of a clear blue sky filled with many colorful hot air balloons. "
+        "Every balloon is shaped like a giant question mark symbol. "
+        "The scene must show a large number of these question mark balloons to clearly represent 'many questions'. "
+        "No text, no letters, no words, only the symbols. Purely visual. White background."
+    ),
+    "tea": (
+        "Simple flat cartoon illustration of a store display showing multiple different cups, teapots, and containers of various types of tea. "
+        "No text, no words, no letters, no labels. Purely visual. White background."
+    ),
+    "jam": (
+        "Simple flat cartoon illustration of multiple glass jars grouped together, "
+        "each filled with a different brightly colored fruit jam (like red strawberry, purple grape, and orange marmalade). "
+        "No text, no words, no letters, no labels. Purely visual. White background."
+    ),
     "store": (
         "Simple flat cartoon illustration of a mother and young child "
         "walking together through a supermarket aisle, colorful product shelves on both sides. "
@@ -89,6 +138,12 @@ PROMPT_OVERRIDES = {
         "badge on their chest — just small blank colored rectangles suggesting name tags, "
         "no readable text on them. No text, no words, no letters, no writing anywhere. "
         "Purely visual. White background."
+    ),
+    "map": (
+        "Simple flat cartoon illustration of exactly ONE old geographical paper map rolled out flat. "
+        "The map surface shows a drawing of an island coastline, some green forest, and a dotted trail leading to a spot. "
+        "Absolutely NO treasure chests, NO coins, NO compass rose, NO letters. "
+        "No text, no words, no labels, no humans. Purely visual. White background."
     ),
 }
 
