@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="words-version" content="1774692896734">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -422,7 +426,7 @@ const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 
 const POS_MAP = {'名':'名詞','動':'動詞','副':'副詞','形':'形容詞','前':'前置詞','副・前':'副詞・前置詞'};
 
-let words = [], queue = [], qi = 0, storyData = null, audioDate = '';
+let words = [], queue = [], qi = 0, storyData = null, wordsVersion = '0';
 let stats = {correct:0, incorrect:0};
 let isFlipped = false;
 let hintUsed = false;
@@ -447,19 +451,19 @@ function stopAllAudio() {
 
 const playAudio = src => {
   stopAllAudio();
-  const a = new Audio(src + '?v=' + Date.now());
+  const a = new Audio(src + '?v=' + wordsVersion);
   _currentAudio = a;
   a.onended = () => { if (_currentAudio === a) _currentAudio = null; };
   a.play().catch(() => {});
 };
 const playWord = () => playAudio(AUDIO + 'words/' + queue[qi].word + '.mp3');
-const playSent = () => playAudio(AUDIO + 'sentences/' + queue[qi].id + '_' + audioDate + '.mp3');
-const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '_' + audioDate + '.mp3');
+const playSent = () => playAudio(AUDIO + 'sentences/' + queue[qi].id + '.mp3');
+const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '.mp3');
 
 // Promise-based audio (for sequencing)
 function playAudioP(src) {
   return new Promise(resolve => {
-    const a = new Audio(src + '?v=' + Date.now());
+    const a = new Audio(src + '?v=' + wordsVersion);
     _currentAudio = a;
     a.onended = resolve;
     a.onerror = resolve;
@@ -470,7 +474,7 @@ function playAudioP(src) {
 // Backside audio sequence: word → sentence
 async function playIncorrectSequence(w) {
   await playAudioP(AUDIO + 'words/' + w.word + '.mp3');
-  await playAudioP(AUDIO + 'sentences/' + w.id + '_' + audioDate + '.mp3');
+  await playAudioP(AUDIO + 'sentences/' + w.id + '.mp3');
 }
 
 // --- Story highlight (safe DOM, matchAll) ---
@@ -512,8 +516,10 @@ function buildSentWithBlank(sentence, word) {
 
 // --- Init ---
 async function initApp() {
-  const d = await fetch(BASE + 'data/words.json?v=' + Date.now()).then(r => r.json());
-  words = d.words; storyData = d.story; audioDate = (d.meta || {}).created || today();
+  const vMeta = document.querySelector('meta[name="words-version"]')?.content || '0';
+  const d = await fetch(BASE + 'data/words.json', { cache: 'no-store' }).then(r => r.json());
+  words = d.words; storyData = d.story;
+  wordsVersion = String(d.meta?.version || vMeta);
   VOCAB = [...new Set(words.map(w => w.word))];
 
   // 即座に表示（全語 new）、進捗サマリーは非表示
@@ -654,7 +660,7 @@ function renderCard() {
     img.style.display = 'none';
     img.alt = w.english;
     img.onload = () => { img.style.display = 'block'; };
-    img.src = BASE + w.image + '?v=' + Date.now();
+    img.src = BASE + w.image + '?v=' + wordsVersion;
   } else { img.style.display = 'none'; }
 
   clr('fSent');
@@ -973,7 +979,7 @@ function renderRefSlide() {
   // Image
   if (w.image) {
     const img = document.createElement('img');
-    img.className = 'ref-img'; img.src = BASE + w.image; img.alt = w.english;
+    img.className = 'ref-img'; img.src = BASE + w.image + '?v=' + wordsVersion; img.alt = w.english;
     body.appendChild(img);
   }
 
@@ -1009,7 +1015,7 @@ function renderRefSlide() {
   wBtn.onclick = () => playAudio(AUDIO + 'words/' + w.word + '.mp3');
   const sBtn = document.createElement('button');
   sBtn.className = 'audio-btn s'; sBtn.textContent = '🔊 例文';
-  sBtn.onclick = () => playAudio(AUDIO + 'sentences/' + w.id + '_' + audioDate + '.mp3');
+  sBtn.onclick = () => playAudio(AUDIO + 'sentences/' + w.id + '.mp3');
   audioRow.appendChild(wBtn); audioRow.appendChild(sBtn);
   body.appendChild(audioRow);
 
