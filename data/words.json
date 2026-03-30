@@ -2,8 +2,8 @@
   "meta": {
     "total": 15,
     "theme": "NEW TREASURE Stage 1",
-    "created": "2026-03-29",
-    "version": 1774692896734
+    "created": "2026-03-30",
+    "version": 1774855616636
   },
   "words": [
     {
@@ -17,14 +17,14 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I always eat breakfast.",
-      "sentence_ja": "私はいつも朝食を食べます。",
+      "sentence": "The library is always open on weekdays.",
+      "sentence_ja": "図書館は平日いつも開いています。",
       "image": "data/images/always.png"
     },
     {
       "id": "bed",
       "word": "bed",
-      "english": "bed",
+      "english": "beds",
       "japanese": "ベッド",
       "pos": "名",
       "theme": "",
@@ -32,8 +32,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The cat is sleeping on the bed.",
-      "sentence_ja": "猫がベッドで寝ています。",
+      "sentence": "There are two beds in the hotel room.",
+      "sentence_ja": "そのホテルの部屋にはベッドが2つあります。",
       "image": "data/images/bed.png",
       "plural": "beds"
     },
@@ -48,8 +48,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I take the bus to school every day.",
-      "sentence_ja": "私は毎日バスで学校に行きます。",
+      "sentence": "The bus is late today.",
+      "sentence_ja": "今日はバスが遅れています。",
       "image": "data/images/bus.png",
       "plural": "buses"
     },
@@ -64,8 +64,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I have a red car.",
-      "sentence_ja": "私は赤い車を持っています。",
+      "sentence": "My dad drives a blue car.",
+      "sentence_ja": "私のお父さんは青い車を運転します。",
       "image": "data/images/car.png",
       "plural": "cars"
     },
@@ -80,8 +80,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "There are three chairs in the room.",
-      "sentence_ja": "部屋には椅子が３つあります。",
+      "sentence": "The students put their chairs under the desks.",
+      "sentence_ja": "生徒たちは椅子を机の下に置きました。",
       "image": "data/images/chair.png",
       "plural": "chairs"
     },
@@ -96,8 +96,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "The little girl hugged her doll.",
-      "sentence_ja": "その小さな女の子は彼女の人形を抱きしめました。",
+      "sentence": "The doll has big, blue eyes.",
+      "sentence_ja": "その人形は大きくて青い目をしています。",
       "image": "data/images/doll.png"
     },
     {
@@ -111,8 +111,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My house has a beautiful garden.",
-      "sentence_ja": "私の家には美しい庭があります。",
+      "sentence": "She likes to grow flowers in her garden.",
+      "sentence_ja": "彼女は自分の庭で花を育てるのが好きです。",
       "image": "data/images/garden.png",
       "plural": "gardens"
     },
@@ -127,8 +127,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I used a map to find the library.",
-      "sentence_ja": "私は図書館を見つけるために地図を使いました。",
+      "sentence": "This old map shows where the treasure is.",
+      "sentence_ja": "この古い地図は宝物の場所を示しています。",
       "image": "data/images/map.png",
       "plural": "maps"
     },
@@ -143,8 +143,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My name is Hana.",
-      "sentence_ja": "私の名前はハナです。",
+      "sentence": "My name is Ken.",
+      "sentence_ja": "私の名前はケンです。",
       "image": "data/images/name.png",
       "plural": "names"
     },
@@ -159,8 +159,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "We have two radios in our house.",
-      "sentence_ja": "私たちは家に2つのラジオを持っています。",
+      "sentence": "There are many radios in the electronics store.",
+      "sentence_ja": "電気店にはたくさんのラジオがあります。",
       "image": "data/images/radio.png",
       "plural": "radios"
     },
@@ -175,8 +175,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I like to visit this store.",
-      "sentence_ja": "私はこの店を訪れるのが好きです。",
+      "sentence": "This store sells fresh bread.",
+      "sentence_ja": "この店は焼きたてのパンを売っています。",
       "image": "data/images/store.png",
       "plural": "stores"
     },
@@ -191,15 +191,15 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I take the train to school every day.",
-      "sentence_ja": "私は毎日電車で学校に行きます。",
+      "sentence": "The train arrived at the station.",
+      "sentence_ja": "電車が駅に到着しました。",
       "image": "data/images/train.png",
       "plural": "trains"
     },
     {
       "id": "TV",
       "word": "TV",
-      "english": "TV",
+      "english": "TVs",
       "japanese": "テレビ",
       "pos": "名",
       "theme": "",
@@ -207,8 +207,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "This TV is very old.",
-      "sentence_ja": "このテレビはとても古いです。",
+      "sentence": "The store sells new TVs.",
+      "sentence_ja": "その店は新しいテレビを売っています。",
       "image": "data/images/TV.png",
       "plural": "TVs"
     },
@@ -223,8 +223,8 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "My umbrella is black.",
-      "sentence_ja": "私の傘は黒いです。",
+      "sentence": "I need an umbrella today.",
+      "sentence_ja": "今日、私は傘が必要です。",
       "image": "data/images/umbrella.png",
       "plural": "umbrellas"
     },
@@ -239,26 +239,26 @@
       "correct": 0,
       "incorrect": 0,
       "lastSeen": null,
-      "sentence": "I opened the window.",
-      "sentence_ja": "私は窓を開けました。",
+      "sentence": "The bird flew out the window.",
+      "sentence_ja": "鳥が窓から飛んでいった。",
       "image": "data/images/window.png",
       "plural": "windows"
     }
   ],
   "story": {
     "day": 10,
-    "title": "Kaya's Morning",
+    "title": "Kaya's Saturday Shop",
     "sentences": [
-      "Kaya's name is special.",
-      "She always woke up early.",
-      "Kaya got out of her bed.",
-      "She looked out the window at her garden.",
-      "Her favorite doll sat on a chair.",
-      "The radio played happy songs.",
-      "Kaya needed her umbrella today.",
-      "She checked her travel map.",
-      "Kaya turned off the TV to go to the store.",
-      "She hoped to see a bus, car, or train."
+      "Kaya woke up and got out of bed.",
+      "She always watched TV in the morning.",
+      "She looked out the window.",
+      "It was rainy, so she took an umbrella.",
+      "Her mom listened to the radio.",
+      "\"Let's go to the store,\" her mom said.",
+      "They took the bus and saw many cars.",
+      "Kaya sat on her chair.",
+      "She saw a train pass by a garden.",
+      "She checked the map for the store's name to buy a doll."
     ]
   }
 }
