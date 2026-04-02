@@ -19,7 +19,7 @@
       "lastSeen": null,
       "sentence": "April is the fourth month of the year.",
       "sentence_ja": "4月は一年の4番目の月です。",
-      "image": "data/images/April.png",
+      "image": "",
       "plural": "Aprils"
     },
     {
@@ -51,7 +51,7 @@
       "lastSeen": null,
       "sentence": "February is a short month.",
       "sentence_ja": "2月は短い月です。",
-      "image": "data/images/February.png",
+      "image": "",
       "plural": "Februarys"
     },
     {
@@ -67,7 +67,7 @@
       "lastSeen": null,
       "sentence": "I always feel fresh and hopeful in January.",
       "sentence_ja": "私はいつも1月に新鮮で希望に満ちた気持ちになります。",
-      "image": "data/images/January.png",
+      "image": "",
       "plural": "Januaries"
     },
     {
@@ -83,7 +83,7 @@
       "lastSeen": null,
       "sentence": "Many students graduate from school in March in Japan.",
       "sentence_ja": "日本では多くの学生が3月に学校を卒業します。",
-      "image": "data/images/March.png",
+      "image": "",
       "plural": "Marches"
     },
     {
@@ -99,7 +99,7 @@
       "lastSeen": null,
       "sentence": "May is a beautiful month.",
       "sentence_ja": "5月は美しい月です。",
-      "image": "data/images/May.png",
+      "image": "",
       "plural": "Mays"
     },
     {
