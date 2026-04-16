@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1775999028246">
+  <meta name="words-version" content="1776344312">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -861,8 +861,9 @@ function record(status) {
     }
   }
 
-  // 3. next_review を計算（meta.version の Unix 秒 + interval_days）
-  const nextReviewMs = (sessionVersion * 1000) + (w.interval * 86400000);
+  // 3. next_review を計算（sessionVersion がミリ秒(13桁)ならそのまま、秒(10桁)なら1000倍する）
+  const baseMs = sessionVersion > 10000000000 ? sessionVersion : sessionVersion * 1000;
+  const nextReviewMs = baseMs + (w.interval * 86400000);
   w.nextReview = new Date(nextReviewMs).toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
 
   // 4. status / カウンターを更新
