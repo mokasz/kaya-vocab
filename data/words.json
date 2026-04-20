@@ -408,5 +408,21 @@
       "image": "data/images/yellow.png",
       "plural": "yellows"
     }
-  ]
+  ],
+  "story": {
+    "day": 1,
+    "title": "Kaya's Busy Town Walk",
+    "sentences": [
+      "Kaya left her classroom and looked out the window on Friday.",
+      "First, she went to a store to buy a purple box.",
+      "Then, she saw a kind woman near the local hospital.",
+      "After that, she walked past a pharmacy and a yellow tree.",
+      "She was excited because she found a blue key on a chair.",
+      "Next, she looked at her watch and checked her phone.",
+      "Kaya heard a rabbit in the grass with her sharp ears.",
+      "Finally, she took a picture of the quiet town on Saturday.",
+      "She remembered her busy days from August to December and February.",
+      "\"It was a great Thursday,\" she said with a smile."
+    ]
+  }
 }
