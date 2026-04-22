@@ -945,7 +945,7 @@ function restart() {
 // --- Story ---
 function renderStory() {
   if (!storyData) return;
-  txt('storyTitle', 'Day ' + storyData.day + ': ' + storyData.title);
+  txt('storyTitle', storyData.title);
   clr('storyBody');
   storyData.sentences.forEach((s, i) => {
     const row = document.createElement('div'); row.className = 'srow';
