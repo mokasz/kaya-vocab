@@ -673,7 +673,7 @@ function renderCard() {
     img.style.display = 'none';
     img.alt = w.english;
     img.onload = () => { img.style.display = 'block'; };
-    img.src = BASE + w.image + '?v=' + wordsVersion;
+    img.src = BASE + w.image.replace(/_(\.png)$/, '$1') + '?v=' + wordsVersion;
   } else { img.style.display = 'none'; }
 
   clr('fSent');
@@ -1073,7 +1073,7 @@ function renderRefSlide() {
   // Image
   if (w.image) {
     const img = document.createElement('img');
-    img.className = 'ref-img'; img.src = BASE + w.image + '?v=' + wordsVersion; img.alt = w.english;
+    img.className = 'ref-img'; img.src = BASE + w.image.replace(/_(\.png)$/, '$1') + '?v=' + wordsVersion; img.alt = w.english;
     body.appendChild(img);
   }
 
