@@ -544,9 +544,10 @@ async function initApp() {
         words.forEach(w => {
           if (map[w.id]) {
             const r = map[w.id];
-            // 日次リセットではなくセッションリセット（DB は bigint なので parseInt で数値比較）
+            // 日次リセット: 前回学習日が今日でない、またはセッションバージョンが異なる場合は new
             const isSameSession = r.last_session_version === parseInt(wordsVersion);
-            w.status               = isSameSession ? r.status : 'new';
+            const isToday = r.last_studied === today();
+            w.status               = (isSameSession && isToday) ? r.status : 'new';
             w.correct              = r.correct;
             w.incorrect            = r.incorrect;
             w.ease                 = r.ease_factor    ?? 2.5;
