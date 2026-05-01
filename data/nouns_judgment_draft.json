@@ -1,0 +1,4242 @@
+[
+  {
+    "word_key": "T-shirt",
+    "word": "T-shirt",
+    "japanese": "Tシャツ",
+    "current_plural": "T-shirts",
+    "suggested_plural": "T-shirts",
+    "reason": "countable"
+  },
+  {
+    "word_key": "apple",
+    "word": "apple",
+    "japanese": "リンゴ",
+    "current_plural": "apples",
+    "suggested_plural": "apples",
+    "reason": "countable"
+  },
+  {
+    "word_key": "computer",
+    "word": "computer",
+    "japanese": "コンピューター",
+    "current_plural": "computers",
+    "suggested_plural": "computers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "egg",
+    "word": "egg",
+    "japanese": "卵",
+    "current_plural": "eggs",
+    "suggested_plural": "eggs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "guitar",
+    "word": "guitar",
+    "japanese": "ギター",
+    "current_plural": "guitars",
+    "suggested_plural": "guitars",
+    "reason": "countable"
+  },
+  {
+    "word_key": "key",
+    "word": "key",
+    "japanese": "鍵",
+    "current_plural": "keys",
+    "suggested_plural": "keys",
+    "reason": "countable"
+  },
+  {
+    "word_key": "milk",
+    "word": "milk",
+    "japanese": "牛乳",
+    "current_plural": "milk",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "orange",
+    "word": "orange",
+    "japanese": "オレンジ",
+    "current_plural": "oranges",
+    "suggested_plural": "oranges",
+    "reason": "countable"
+  },
+  {
+    "word_key": "spring",
+    "word": "spring",
+    "japanese": "春",
+    "current_plural": "springs",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "tea",
+    "word": "tea",
+    "japanese": "お茶",
+    "current_plural": "tea",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "boat",
+    "word": "boat",
+    "japanese": "ボート",
+    "current_plural": "boats",
+    "suggested_plural": "boats",
+    "reason": "countable"
+  },
+  {
+    "word_key": "name",
+    "word": "name",
+    "japanese": "名前",
+    "current_plural": "names",
+    "suggested_plural": "names",
+    "reason": "countable"
+  },
+  {
+    "word_key": "rabbit",
+    "word": "rabbit",
+    "japanese": "ウサギ",
+    "current_plural": "rabbits",
+    "suggested_plural": "rabbits",
+    "reason": "countable"
+  },
+  {
+    "word_key": "red",
+    "word": "red",
+    "japanese": "赤色・赤い",
+    "current_plural": "reds",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "ticket",
+    "word": "ticket",
+    "japanese": "チケット",
+    "current_plural": "tickets",
+    "suggested_plural": "tickets",
+    "reason": "countable"
+  },
+  {
+    "word_key": "umbrella",
+    "word": "umbrella",
+    "japanese": "傘",
+    "current_plural": "umbrellas",
+    "suggested_plural": "umbrellas",
+    "reason": "countable"
+  },
+  {
+    "word_key": "autumn",
+    "word": "autumn",
+    "japanese": "秋《英用法》",
+    "current_plural": "autumns",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "bed",
+    "word": "bed",
+    "japanese": "ベッド",
+    "current_plural": "beds",
+    "suggested_plural": "beds",
+    "reason": "countable"
+  },
+  {
+    "word_key": "classroom",
+    "word": "classroom",
+    "japanese": "教室",
+    "current_plural": "classrooms",
+    "suggested_plural": "classrooms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "fish",
+    "word": "fish",
+    "japanese": "魚",
+    "current_plural": "fish",
+    "suggested_plural": "fish",
+    "reason": "countable"
+  },
+  {
+    "word_key": "grandfather",
+    "word": "grandfather",
+    "japanese": "祖父",
+    "current_plural": "grandfathers",
+    "suggested_plural": "grandfathers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "piano",
+    "word": "piano",
+    "japanese": "ピアノ",
+    "current_plural": "pianos",
+    "suggested_plural": "pianos",
+    "reason": "countable"
+  },
+  {
+    "word_key": "window",
+    "word": "window",
+    "japanese": "窓",
+    "current_plural": "windows",
+    "suggested_plural": "windows",
+    "reason": "countable"
+  },
+  {
+    "word_key": "weekend",
+    "word": "weekend",
+    "japanese": "週末",
+    "current_plural": "weekends",
+    "suggested_plural": "weekends",
+    "reason": "countable"
+  },
+  {
+    "word_key": "week",
+    "word": "week",
+    "japanese": "週",
+    "current_plural": "weeks",
+    "suggested_plural": "weeks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Wednesday",
+    "word": "Wednesday",
+    "japanese": "水曜日",
+    "current_plural": "Wednesdays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "pharmacy",
+    "word": "pharmacy",
+    "japanese": "薬局",
+    "current_plural": "pharmacies",
+    "suggested_plural": "pharmacies",
+    "reason": "countable"
+  },
+  {
+    "word_key": "white",
+    "word": "white",
+    "japanese": "白・白い",
+    "current_plural": "whites",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "winter",
+    "word": "winter",
+    "japanese": "冬",
+    "current_plural": "winters",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "woman",
+    "word": "woman",
+    "japanese": "女性",
+    "current_plural": "women",
+    "suggested_plural": "women",
+    "reason": "countable"
+  },
+  {
+    "word_key": "word",
+    "word": "word",
+    "japanese": "単語",
+    "current_plural": "words",
+    "suggested_plural": "words",
+    "reason": "countable"
+  },
+  {
+    "word_key": "year",
+    "word": "year",
+    "japanese": "年",
+    "current_plural": "years",
+    "suggested_plural": "years",
+    "reason": "countable"
+  },
+  {
+    "word_key": "zero",
+    "word": "zero",
+    "japanese": "ゼロ",
+    "current_plural": "zeros",
+    "suggested_plural": "zeros",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bathroom",
+    "word": "bathroom",
+    "japanese": "浴室",
+    "current_plural": "bathrooms",
+    "suggested_plural": "bathrooms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "mountain",
+    "word": "mountain",
+    "japanese": "山",
+    "current_plural": "mountains",
+    "suggested_plural": "mountains",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bear",
+    "word": "bear",
+    "japanese": "クマ",
+    "current_plural": "bears",
+    "suggested_plural": "bears",
+    "reason": "countable"
+  },
+  {
+    "word_key": "money",
+    "word": "money",
+    "japanese": "お金",
+    "current_plural": "money",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "Alaska",
+    "word": "Alaska",
+    "japanese": "アラスカ《地名》",
+    "current_plural": "Alaska",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "age",
+    "word": "age",
+    "japanese": "年齢・年",
+    "current_plural": "ages",
+    "suggested_plural": "ages",
+    "reason": "countable"
+  },
+  {
+    "word_key": "airport",
+    "word": "airport",
+    "japanese": "空港",
+    "current_plural": "airports",
+    "suggested_plural": "airports",
+    "reason": "countable"
+  },
+  {
+    "word_key": "air",
+    "word": "air",
+    "japanese": "空気・大気",
+    "current_plural": "air",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "all_noun",
+    "word": "all",
+    "japanese": "すべての人〔もの〕・まったく",
+    "current_plural": "all",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "camera",
+    "word": "camera",
+    "japanese": "カメラ",
+    "current_plural": "cameras",
+    "suggested_plural": "cameras",
+    "reason": "countable"
+  },
+  {
+    "word_key": "yellow",
+    "word": "yellow",
+    "japanese": "黄色・黄色い",
+    "current_plural": "yellows",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "actor",
+    "word": "actor",
+    "japanese": "俳優",
+    "current_plural": "actors",
+    "suggested_plural": "actors",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Africa",
+    "word": "Africa",
+    "japanese": "アフリカ",
+    "current_plural": "Africa",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "area",
+    "word": "area",
+    "japanese": "地域・エリア",
+    "current_plural": "areas",
+    "suggested_plural": "areas",
+    "reason": "countable"
+  },
+  {
+    "word_key": "album",
+    "word": "album",
+    "japanese": "アルバム",
+    "current_plural": "albums",
+    "suggested_plural": "albums",
+    "reason": "countable"
+  },
+  {
+    "word_key": "animal",
+    "word": "animal",
+    "japanese": "動物",
+    "current_plural": "animals",
+    "suggested_plural": "animals",
+    "reason": "countable"
+  },
+  {
+    "word_key": "afternoon",
+    "word": "afternoon",
+    "japanese": "午後",
+    "current_plural": "afternoons",
+    "suggested_plural": "afternoons",
+    "reason": "countable"
+  },
+  {
+    "word_key": "America",
+    "word": "America",
+    "japanese": "アメリカ・アメリカ合衆国",
+    "current_plural": "Americas",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "Asia",
+    "word": "Asia",
+    "japanese": "アジア",
+    "current_plural": "Asia",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "April",
+    "word": "April",
+    "japanese": "4月",
+    "current_plural": "Aprils",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "apartment",
+    "word": "apartment",
+    "japanese": "アパート",
+    "current_plural": "apartments",
+    "suggested_plural": "apartments",
+    "reason": "countable"
+  },
+  {
+    "word_key": "arm",
+    "word": "arm",
+    "japanese": "腕",
+    "current_plural": "arms",
+    "suggested_plural": "arms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "aurora",
+    "word": "aurora",
+    "japanese": "オーロラ",
+    "current_plural": "auroras",
+    "suggested_plural": "auroras",
+    "reason": "countable"
+  },
+  {
+    "word_key": "art",
+    "word": "art",
+    "japanese": "美術・芸術",
+    "current_plural": "arts",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "Anchorage",
+    "word": "Anchorage",
+    "japanese": "アンカレッジ《地名》",
+    "current_plural": "Anchorages",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "astronaut",
+    "word": "astronaut",
+    "japanese": "宇宙飛行士",
+    "current_plural": "astronauts",
+    "suggested_plural": "astronauts",
+    "reason": "countable"
+  },
+  {
+    "word_key": "baby",
+    "word": "baby",
+    "japanese": "赤ちゃん",
+    "current_plural": "babies",
+    "suggested_plural": "babies",
+    "reason": "countable"
+  },
+  {
+    "word_key": "badminton",
+    "word": "badminton",
+    "japanese": "バドミントン",
+    "current_plural": "badminton",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "bank",
+    "word": "bank",
+    "japanese": "銀行",
+    "current_plural": "banks",
+    "suggested_plural": "banks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bag",
+    "word": "bag",
+    "japanese": "かばん",
+    "current_plural": "bags",
+    "suggested_plural": "bags",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bakery",
+    "word": "bakery",
+    "japanese": "パン屋",
+    "current_plural": "bakeries",
+    "suggested_plural": "bakeries",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bedroom",
+    "word": "bedroom",
+    "japanese": "寝室",
+    "current_plural": "bedrooms",
+    "suggested_plural": "bedrooms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "banana",
+    "word": "banana",
+    "japanese": "バナナ",
+    "current_plural": "bananas",
+    "suggested_plural": "bananas",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bath",
+    "word": "bath",
+    "japanese": "入浴",
+    "current_plural": "baths",
+    "suggested_plural": "baths",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bicycle",
+    "word": "bicycle",
+    "japanese": "自転車",
+    "current_plural": "bicycles",
+    "suggested_plural": "bicycles",
+    "reason": "countable"
+  },
+  {
+    "word_key": "basketball",
+    "word": "basketball",
+    "japanese": "バスケットボール",
+    "current_plural": "basketballs",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "beach",
+    "word": "beach",
+    "japanese": "ビーチ・浜辺",
+    "current_plural": "beaches",
+    "suggested_plural": "beaches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Australia",
+    "word": "Australia",
+    "japanese": "オーストラリア",
+    "current_plural": "Australia",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "bench",
+    "word": "bench",
+    "japanese": "ベンチ",
+    "current_plural": "benches",
+    "suggested_plural": "benches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "belt",
+    "word": "belt",
+    "japanese": "ベルト",
+    "current_plural": "belts",
+    "suggested_plural": "belts",
+    "reason": "countable"
+  },
+  {
+    "word_key": "billion",
+    "word": "billion",
+    "japanese": "10億",
+    "current_plural": "billions",
+    "suggested_plural": "billions",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bottle",
+    "word": "bottle",
+    "japanese": "ボトル・瓶",
+    "current_plural": "bottles",
+    "suggested_plural": "bottles",
+    "reason": "countable"
+  },
+  {
+    "word_key": "birthday",
+    "word": "birthday",
+    "japanese": "誕生日",
+    "current_plural": "birthdays",
+    "suggested_plural": "birthdays",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bookstore",
+    "word": "bookstore",
+    "japanese": "書店",
+    "current_plural": "bookstores",
+    "suggested_plural": "bookstores",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bread",
+    "word": "bread",
+    "japanese": "パン",
+    "current_plural": "bread",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "bridge",
+    "word": "bridge",
+    "japanese": "橋",
+    "current_plural": "bridges",
+    "suggested_plural": "bridges",
+    "reason": "countable"
+  },
+  {
+    "word_key": "ball",
+    "word": "ball",
+    "japanese": "ボール",
+    "current_plural": "balls",
+    "suggested_plural": "balls",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bamboo",
+    "word": "bamboo",
+    "japanese": "竹",
+    "current_plural": "bamboos",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "Beijing",
+    "word": "Beijing",
+    "japanese": "北京《地名》",
+    "current_plural": "Beijing",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "brother",
+    "word": "brother",
+    "japanese": "兄弟",
+    "current_plural": "brothers",
+    "suggested_plural": "brothers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "box",
+    "word": "box",
+    "japanese": "箱",
+    "current_plural": "boxes",
+    "suggested_plural": "boxes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "cat",
+    "word": "cat",
+    "japanese": "猫",
+    "current_plural": "cats",
+    "suggested_plural": "cats",
+    "reason": "countable"
+  },
+  {
+    "word_key": "blue",
+    "word": "blue",
+    "japanese": "青・青い",
+    "current_plural": "blues",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "button",
+    "word": "button",
+    "japanese": "ボタン",
+    "current_plural": "buttons",
+    "suggested_plural": "buttons",
+    "reason": "countable"
+  },
+  {
+    "word_key": "boy",
+    "word": "boy",
+    "japanese": "男の子",
+    "current_plural": "boys",
+    "suggested_plural": "boys",
+    "reason": "countable"
+  },
+  {
+    "word_key": "breakfast",
+    "word": "breakfast",
+    "japanese": "朝食",
+    "current_plural": "breakfasts",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "black",
+    "word": "black",
+    "japanese": "黒・黒い",
+    "current_plural": "blacks",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "brown",
+    "word": "brown",
+    "japanese": "茶色・茶色い",
+    "current_plural": "browns",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "building",
+    "word": "building",
+    "japanese": "建物",
+    "current_plural": "buildings",
+    "suggested_plural": "buildings",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bus",
+    "word": "bus",
+    "japanese": "バス",
+    "current_plural": "buses",
+    "suggested_plural": "buses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "cake",
+    "word": "cake",
+    "japanese": "ケーキ",
+    "current_plural": "cakes",
+    "suggested_plural": "cakes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "book",
+    "word": "book",
+    "japanese": "本",
+    "current_plural": "books",
+    "suggested_plural": "books",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bird",
+    "word": "bird",
+    "japanese": "鳥",
+    "current_plural": "birds",
+    "suggested_plural": "birds",
+    "reason": "countable"
+  },
+  {
+    "word_key": "cherry",
+    "word": "cherry",
+    "japanese": "サクランボ",
+    "current_plural": "cherries",
+    "suggested_plural": "cherries",
+    "reason": "countable"
+  },
+  {
+    "word_key": "car",
+    "word": "car",
+    "japanese": "車",
+    "current_plural": "cars",
+    "suggested_plural": "cars",
+    "reason": "countable"
+  },
+  {
+    "word_key": "cent",
+    "word": "cent",
+    "japanese": "セント",
+    "current_plural": "cents",
+    "suggested_plural": "cents",
+    "reason": "countable"
+  },
+  {
+    "word_key": "chocolate",
+    "word": "chocolate",
+    "japanese": "チョコレート",
+    "current_plural": "chocolates",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "chorus",
+    "word": "chorus",
+    "japanese": "合唱",
+    "current_plural": "choruses",
+    "suggested_plural": "choruses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "century",
+    "word": "century",
+    "japanese": "世紀",
+    "current_plural": "centuries",
+    "suggested_plural": "centuries",
+    "reason": "countable"
+  },
+  {
+    "word_key": "church",
+    "word": "church",
+    "japanese": "教会",
+    "current_plural": "churches",
+    "suggested_plural": "churches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Christmas",
+    "word": "Christmas",
+    "japanese": "クリスマス",
+    "current_plural": "Christmases",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "glass",
+    "word": "glass",
+    "japanese": "ガラス・コップ",
+    "current_plural": "glasses",
+    "suggested_plural": "glasses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "bike",
+    "word": "bike",
+    "japanese": "自転車",
+    "current_plural": "bikes",
+    "suggested_plural": "bikes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "clothes",
+    "word": "clothes",
+    "japanese": "服",
+    "current_plural": "clothes",
+    "suggested_plural": null,
+    "reason": "plural-only noun"
+  },
+  {
+    "word_key": "cloud",
+    "word": "cloud",
+    "japanese": "雲",
+    "current_plural": "clouds",
+    "suggested_plural": "clouds",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Canada",
+    "word": "Canada",
+    "japanese": "カナダ",
+    "current_plural": "Canada",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "China",
+    "word": "China",
+    "japanese": "中国",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "club",
+    "word": "club",
+    "japanese": "クラブ",
+    "current_plural": "clubs",
+    "suggested_plural": "clubs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "class",
+    "word": "class",
+    "japanese": "クラス・授業",
+    "current_plural": "classes",
+    "suggested_plural": "classes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "coat",
+    "word": "coat",
+    "japanese": "コート",
+    "current_plural": "coats",
+    "suggested_plural": "coats",
+    "reason": "countable"
+  },
+  {
+    "word_key": "August",
+    "word": "August",
+    "japanese": "8月",
+    "current_plural": "Augusts",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "day",
+    "word": "day",
+    "japanese": "日・1日",
+    "current_plural": "days",
+    "suggested_plural": "days",
+    "reason": "countable"
+  },
+  {
+    "word_key": "city",
+    "word": "city",
+    "japanese": "市・都市",
+    "current_plural": "cities",
+    "suggested_plural": "cities",
+    "reason": "countable"
+  },
+  {
+    "word_key": "clock",
+    "word": "clock",
+    "japanese": "時計",
+    "current_plural": "clocks",
+    "suggested_plural": "clocks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "classmate",
+    "word": "classmate",
+    "japanese": "クラスメイト",
+    "current_plural": "classmates",
+    "suggested_plural": "classmates",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dollar",
+    "word": "dollar",
+    "japanese": "ドル",
+    "current_plural": "dollars",
+    "suggested_plural": "dollars",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dad",
+    "word": "dad",
+    "japanese": "お父さん",
+    "current_plural": "dads",
+    "suggested_plural": "dads",
+    "reason": "countable"
+  },
+  {
+    "word_key": "coffee",
+    "word": "coffee",
+    "japanese": "コーヒー",
+    "current_plural": "coffees",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "color",
+    "word": "color",
+    "japanese": "色",
+    "current_plural": "colors",
+    "suggested_plural": "colors",
+    "reason": "countable"
+  },
+  {
+    "word_key": "concert",
+    "word": "concert",
+    "japanese": "コンサート",
+    "current_plural": "concerts",
+    "suggested_plural": "concerts",
+    "reason": "countable"
+  },
+  {
+    "word_key": "corner",
+    "word": "corner",
+    "japanese": "角",
+    "current_plural": "corners",
+    "suggested_plural": "corners",
+    "reason": "countable"
+  },
+  {
+    "word_key": "country",
+    "word": "country",
+    "japanese": "国",
+    "current_plural": "countries",
+    "suggested_plural": "countries",
+    "reason": "countable"
+  },
+  {
+    "word_key": "cousin",
+    "word": "cousin",
+    "japanese": "いとこ",
+    "current_plural": "cousins",
+    "suggested_plural": "cousins",
+    "reason": "countable"
+  },
+  {
+    "word_key": "cup",
+    "word": "cup",
+    "japanese": "カップ",
+    "current_plural": "cups",
+    "suggested_plural": "cups",
+    "reason": "countable"
+  },
+  {
+    "word_key": "curry",
+    "word": "curry",
+    "japanese": "カレー",
+    "current_plural": "curries",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "date",
+    "word": "date",
+    "japanese": "日付",
+    "current_plural": "dates",
+    "suggested_plural": "dates",
+    "reason": "countable"
+  },
+  {
+    "word_key": "nurse",
+    "word": "nurse",
+    "japanese": "看護師",
+    "current_plural": "nurses",
+    "suggested_plural": "nurses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "aunt",
+    "word": "aunt",
+    "japanese": "おば",
+    "current_plural": "aunts",
+    "suggested_plural": "aunts",
+    "reason": "countable"
+  },
+  {
+    "word_key": "earth",
+    "word": "earth",
+    "japanese": "地球",
+    "current_plural": "earths",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "child",
+    "word": "child",
+    "japanese": "子供",
+    "current_plural": "children",
+    "suggested_plural": "children",
+    "reason": "countable"
+  },
+  {
+    "word_key": "information",
+    "word": "information",
+    "japanese": "情報",
+    "current_plural": "information",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "children",
+    "word": "children",
+    "japanese": "子供たち",
+    "current_plural": "children",
+    "suggested_plural": "children",
+    "reason": "already plural"
+  },
+  {
+    "word_key": "farm",
+    "word": "farm",
+    "japanese": "農場",
+    "current_plural": "farms",
+    "suggested_plural": "farms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "ear",
+    "word": "ear",
+    "japanese": "耳",
+    "current_plural": "ears",
+    "suggested_plural": "ears",
+    "reason": "countable"
+  },
+  {
+    "word_key": "elementary school",
+    "word": "elementary school",
+    "japanese": "小学校",
+    "current_plural": "elementary schools",
+    "suggested_plural": "elementary schools",
+    "reason": "countable"
+  },
+  {
+    "word_key": "English",
+    "word": "English",
+    "japanese": "英語・英国の",
+    "current_plural": "English",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "eight",
+    "word": "eight",
+    "japanese": "8",
+    "current_plural": "eights",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "example",
+    "word": "example",
+    "japanese": "例",
+    "current_plural": "examples",
+    "suggested_plural": "examples",
+    "reason": "countable"
+  },
+  {
+    "word_key": "eraser",
+    "word": "eraser",
+    "japanese": "消しゴム",
+    "current_plural": "erasers",
+    "suggested_plural": "erasers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "fifteen",
+    "word": "fifteen",
+    "japanese": "15",
+    "current_plural": "fifteens",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "festival",
+    "word": "festival",
+    "japanese": "お祭り",
+    "current_plural": "festivals",
+    "suggested_plural": "festivals",
+    "reason": "countable"
+  },
+  {
+    "word_key": "exam",
+    "word": "exam",
+    "japanese": "試験",
+    "current_plural": "exams",
+    "suggested_plural": "exams",
+    "reason": "countable"
+  },
+  {
+    "word_key": "e-mail",
+    "word": "e-mail",
+    "japanese": "Eメール",
+    "current_plural": "e-mails",
+    "suggested_plural": "e-mails",
+    "reason": "countable"
+  },
+  {
+    "word_key": "eighteen",
+    "word": "eighteen",
+    "japanese": "18",
+    "current_plural": "eighteens",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "eighty",
+    "word": "eighty",
+    "japanese": "80",
+    "current_plural": "eighties",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "England",
+    "word": "England",
+    "japanese": "イングランド",
+    "current_plural": "England",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "elephant",
+    "word": "elephant",
+    "japanese": "象",
+    "current_plural": "elephants",
+    "suggested_plural": "elephants",
+    "reason": "countable"
+  },
+  {
+    "word_key": "eleven",
+    "word": "eleven",
+    "japanese": "11",
+    "current_plural": "elevens",
+    "suggested_plural": null,
+    "reason": "uncountable / number"
+  },
+  {
+    "word_key": "entrance",
+    "word": "entrance",
+    "japanese": "入り口",
+    "current_plural": "entrances",
+    "suggested_plural": "entrances",
+    "reason": "countable"
+  },
+  {
+    "word_key": "engineer",
+    "word": "engineer",
+    "japanese": "エンジニア",
+    "current_plural": "engineers",
+    "suggested_plural": "engineers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "evening",
+    "word": "evening",
+    "japanese": "夕方",
+    "current_plural": "evenings",
+    "suggested_plural": "evenings",
+    "reason": "countable"
+  },
+  {
+    "word_key": "eye",
+    "word": "eye",
+    "japanese": "目",
+    "current_plural": "eyes",
+    "suggested_plural": "eyes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "family",
+    "word": "family",
+    "japanese": "家族",
+    "current_plural": "families",
+    "suggested_plural": "families",
+    "reason": "countable"
+  },
+  {
+    "word_key": "face",
+    "word": "face",
+    "japanese": "顔",
+    "current_plural": "faces",
+    "suggested_plural": "faces",
+    "reason": "countable"
+  },
+  {
+    "word_key": "baseball",
+    "word": "baseball",
+    "japanese": "野球",
+    "current_plural": "baseballs",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "fifty",
+    "word": "fifty",
+    "japanese": "50",
+    "current_plural": "fifties",
+    "suggested_plural": null,
+    "reason": "uncountable / number"
+  },
+  {
+    "word_key": "finger",
+    "word": "finger",
+    "japanese": "指",
+    "current_plural": "fingers",
+    "suggested_plural": "fingers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "door",
+    "word": "door",
+    "japanese": "ドア",
+    "current_plural": "doors",
+    "suggested_plural": "doors",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dream",
+    "word": "dream",
+    "japanese": "夢",
+    "current_plural": "dreams",
+    "suggested_plural": "dreams",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Europe",
+    "word": "Europe",
+    "japanese": "ヨーロッパ",
+    "current_plural": "Europe",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "February",
+    "word": "February",
+    "japanese": "2月",
+    "current_plural": "Februaries",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "hamburger",
+    "word": "hamburger",
+    "japanese": "ハンバーガー",
+    "current_plural": "hamburgers",
+    "suggested_plural": "hamburgers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "freedom",
+    "word": "freedom",
+    "japanese": "自由",
+    "current_plural": "freedoms",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "France",
+    "word": "France",
+    "japanese": "フランス",
+    "current_plural": "Frances",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "fun",
+    "word": "fun",
+    "japanese": "楽しみ",
+    "current_plural": "fun",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "five",
+    "word": "five",
+    "japanese": "5",
+    "current_plural": "fives",
+    "suggested_plural": null,
+    "reason": "uncountable / number"
+  },
+  {
+    "word_key": "future",
+    "word": "future",
+    "japanese": "未来",
+    "current_plural": "futures",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "glasses",
+    "word": "glasses",
+    "japanese": "眼鏡",
+    "current_plural": "glasses",
+    "suggested_plural": null,
+    "reason": "already plural / uncountable"
+  },
+  {
+    "word_key": "green",
+    "word": "green",
+    "japanese": "緑・緑の",
+    "current_plural": "greens",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "garden",
+    "word": "garden",
+    "japanese": "庭",
+    "current_plural": "gardens",
+    "suggested_plural": "gardens",
+    "reason": "countable"
+  },
+  {
+    "word_key": "firefighter",
+    "word": "firefighter",
+    "japanese": "消防士",
+    "current_plural": "firefighters",
+    "suggested_plural": "firefighters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "foot",
+    "word": "foot",
+    "japanese": "足",
+    "current_plural": "feet",
+    "suggested_plural": "feet",
+    "reason": "countable"
+  },
+  {
+    "word_key": "floor",
+    "word": "floor",
+    "japanese": "床",
+    "current_plural": "floors",
+    "suggested_plural": "floers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "flower",
+    "word": "flower",
+    "japanese": "花",
+    "current_plural": "flowers",
+    "suggested_plural": "flowers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "fork",
+    "word": "fork",
+    "japanese": "フォーク",
+    "current_plural": "forks",
+    "suggested_plural": "forks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "forty",
+    "word": "forty",
+    "japanese": "40",
+    "current_plural": "forties",
+    "suggested_plural": null,
+    "reason": "uncountable / number"
+  },
+  {
+    "word_key": "four",
+    "word": "four",
+    "japanese": "4",
+    "current_plural": "fours",
+    "suggested_plural": null,
+    "reason": "uncountable / number"
+  },
+  {
+    "word_key": "fourteen",
+    "word": "fourteen",
+    "japanese": "14",
+    "current_plural": "fourteens",
+    "suggested_plural": null,
+    "reason": "uncountable / number"
+  },
+  {
+    "word_key": "friend",
+    "word": "friend",
+    "japanese": "友達",
+    "current_plural": "friends",
+    "suggested_plural": "friends",
+    "reason": "countable"
+  },
+  {
+    "word_key": "fruit",
+    "word": "fruit",
+    "japanese": "果物",
+    "current_plural": "fruits",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "game",
+    "word": "game",
+    "japanese": "ゲーム",
+    "current_plural": "games",
+    "suggested_plural": "games",
+    "reason": "countable"
+  },
+  {
+    "word_key": "girl",
+    "word": "girl",
+    "japanese": "女の子",
+    "current_plural": "girls",
+    "suggested_plural": "girls",
+    "reason": "countable"
+  },
+  {
+    "word_key": "graduation",
+    "word": "graduation",
+    "japanese": "卒業",
+    "current_plural": "graduations",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "grandmother",
+    "word": "grandmother",
+    "japanese": "祖母",
+    "current_plural": "grandmothers",
+    "suggested_plural": "grandmothers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "hall",
+    "word": "hall",
+    "japanese": "ホール",
+    "current_plural": "halls",
+    "suggested_plural": "halls",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Halloween",
+    "word": "Halloween",
+    "japanese": "ハロウィン",
+    "current_plural": "Halloweens",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "hand",
+    "word": "hand",
+    "japanese": "手",
+    "current_plural": "hands",
+    "suggested_plural": "hands",
+    "reason": "countable"
+  },
+  {
+    "word_key": "food",
+    "word": "food",
+    "japanese": "食べ物",
+    "current_plural": "food",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "hundred",
+    "word": "hundred",
+    "japanese": "100",
+    "current_plural": "hundreds",
+    "suggested_plural": null,
+    "reason": "uncountable / number"
+  },
+  {
+    "word_key": "history",
+    "word": "history",
+    "japanese": "歴史",
+    "current_plural": "histories",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "house",
+    "word": "house",
+    "japanese": "家",
+    "current_plural": "houses",
+    "suggested_plural": "houses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "head",
+    "word": "head",
+    "japanese": "頭",
+    "current_plural": "heads",
+    "suggested_plural": "heads",
+    "reason": "countable"
+  },
+  {
+    "word_key": "holiday",
+    "word": "holiday",
+    "japanese": "休日",
+    "current_plural": "holidays",
+    "suggested_plural": "holidays",
+    "reason": "countable"
+  },
+  {
+    "word_key": "ice cream",
+    "word": "ice cream",
+    "japanese": "アイスクリーム",
+    "current_plural": "ice cream",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "home",
+    "word": "home",
+    "japanese": "家",
+    "current_plural": "homes",
+    "suggested_plural": "homes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "hotel",
+    "word": "hotel",
+    "japanese": "ホテル",
+    "current_plural": "hotels",
+    "suggested_plural": "hotels",
+    "reason": "countable"
+  },
+  {
+    "word_key": "hour",
+    "word": "hour",
+    "japanese": "時間",
+    "current_plural": "hours",
+    "suggested_plural": "hours",
+    "reason": "countable"
+  },
+  {
+    "word_key": "homework",
+    "word": "homework",
+    "japanese": "宿題",
+    "current_plural": "homework",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "horse",
+    "word": "horse",
+    "japanese": "馬",
+    "current_plural": "horses",
+    "suggested_plural": "horses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "idea",
+    "word": "idea",
+    "japanese": "考え",
+    "current_plural": "ideas",
+    "suggested_plural": "ideas",
+    "reason": "countable"
+  },
+  {
+    "word_key": "husband",
+    "word": "husband",
+    "japanese": "夫",
+    "current_plural": "husbands",
+    "suggested_plural": "husbands",
+    "reason": "countable"
+  },
+  {
+    "word_key": "India",
+    "word": "India",
+    "japanese": "インド",
+    "current_plural": "Indias",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "restaurant",
+    "word": "restaurant",
+    "japanese": "レストラン",
+    "current_plural": "restaurants",
+    "suggested_plural": "restaurants",
+    "reason": "countable"
+  },
+  {
+    "word_key": "hair",
+    "word": "hair",
+    "japanese": "髪",
+    "current_plural": "hairs",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "instrument",
+    "word": "instrument",
+    "japanese": "楽器",
+    "current_plural": "instruments",
+    "suggested_plural": "instruments",
+    "reason": "countable"
+  },
+  {
+    "word_key": "hat",
+    "word": "hat",
+    "japanese": "帽子",
+    "current_plural": "hats",
+    "suggested_plural": "hats",
+    "reason": "countable"
+  },
+  {
+    "word_key": "jacket",
+    "word": "jacket",
+    "japanese": "ジャケット",
+    "current_plural": "jackets",
+    "suggested_plural": "jackets",
+    "reason": "countable"
+  },
+  {
+    "word_key": "juice",
+    "word": "juice",
+    "japanese": "ジュース",
+    "current_plural": "juices",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "bus stop",
+    "word": "bus stop",
+    "japanese": "バス停",
+    "current_plural": "bus stops",
+    "suggested_plural": "bus stops",
+    "reason": "countable"
+  },
+  {
+    "word_key": "June",
+    "word": "June",
+    "japanese": "6月",
+    "current_plural": "Junes",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "kilometer",
+    "word": "kilometer",
+    "japanese": "キロメートル",
+    "current_plural": "kilometers",
+    "suggested_plural": "kilometers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "January",
+    "word": "January",
+    "japanese": "1月",
+    "current_plural": "Januaries",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "July",
+    "word": "July",
+    "japanese": "7月",
+    "current_plural": "Julys",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "library",
+    "word": "library",
+    "japanese": "図書館",
+    "current_plural": "libraries",
+    "suggested_plural": "libraries",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Korea",
+    "word": "Korea",
+    "japanese": "韓国・朝鮮",
+    "current_plural": "Koreas",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "kitchen",
+    "word": "kitchen",
+    "japanese": "台所",
+    "current_plural": "kitchens",
+    "suggested_plural": "kitchens",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Japan",
+    "word": "Japan",
+    "japanese": "日本",
+    "current_plural": "Japans",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "lemon",
+    "word": "lemon",
+    "japanese": "レモン",
+    "current_plural": "lemons",
+    "suggested_plural": "lemons",
+    "reason": "countable"
+  },
+  {
+    "word_key": "living room",
+    "word": "living room",
+    "japanese": "居間",
+    "current_plural": "living rooms",
+    "suggested_plural": "living rooms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "lake",
+    "word": "lake",
+    "japanese": "湖",
+    "current_plural": "lakes",
+    "suggested_plural": "lakes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "language",
+    "word": "language",
+    "japanese": "言語",
+    "current_plural": "languages",
+    "suggested_plural": "languages",
+    "reason": "countable"
+  },
+  {
+    "word_key": "left",
+    "word": "left",
+    "japanese": "左・leaveの過去形",
+    "current_plural": "lefts",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "letter",
+    "word": "letter",
+    "japanese": "手紙",
+    "current_plural": "letters",
+    "suggested_plural": "letters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "leg",
+    "word": "leg",
+    "japanese": "脚",
+    "current_plural": "legs",
+    "suggested_plural": "legs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "life",
+    "word": "life",
+    "japanese": "生活・命",
+    "current_plural": "lives",
+    "suggested_plural": "lives",
+    "reason": "countable"
+  },
+  {
+    "word_key": "lion",
+    "word": "lion",
+    "japanese": "ライオン",
+    "current_plural": "lions",
+    "suggested_plural": "lions",
+    "reason": "countable"
+  },
+  {
+    "word_key": "London",
+    "word": "London",
+    "japanese": "ロンドン",
+    "current_plural": "Londons",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "message",
+    "word": "message",
+    "japanese": "メッセージ",
+    "current_plural": "messages",
+    "suggested_plural": "messages",
+    "reason": "countable"
+  },
+  {
+    "word_key": "million",
+    "word": "million",
+    "japanese": "100万",
+    "current_plural": "millions",
+    "suggested_plural": "millions",
+    "reason": "countable"
+  },
+  {
+    "word_key": "month",
+    "word": "month",
+    "japanese": "月",
+    "current_plural": "months",
+    "suggested_plural": "months",
+    "reason": "countable"
+  },
+  {
+    "word_key": "menu",
+    "word": "menu",
+    "japanese": "メニュー",
+    "current_plural": "menus",
+    "suggested_plural": "menus",
+    "reason": "countable"
+  },
+  {
+    "word_key": "island",
+    "word": "island",
+    "japanese": "島",
+    "current_plural": "islands",
+    "suggested_plural": "islands",
+    "reason": "countable"
+  },
+  {
+    "word_key": "mind",
+    "word": "mind",
+    "japanese": "心",
+    "current_plural": "minds",
+    "suggested_plural": "minds",
+    "reason": "countable"
+  },
+  {
+    "word_key": "mobile",
+    "word": "mobile",
+    "japanese": "携帯電話",
+    "current_plural": "mobiles",
+    "suggested_plural": "mobiles",
+    "reason": "countable"
+  },
+  {
+    "word_key": "moon",
+    "word": "moon",
+    "japanese": "月（天体）",
+    "current_plural": "moons",
+    "suggested_plural": "moons",
+    "reason": "countable"
+  },
+  {
+    "word_key": "May",
+    "word": "May",
+    "japanese": "5月",
+    "current_plural": "Mays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "morning",
+    "word": "morning",
+    "japanese": "朝",
+    "current_plural": "mornings",
+    "suggested_plural": "mornings",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Monday",
+    "word": "Monday",
+    "japanese": "月曜日",
+    "current_plural": "Mondays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "movie",
+    "word": "movie",
+    "japanese": "映画",
+    "current_plural": "movies",
+    "suggested_plural": "movies",
+    "reason": "countable"
+  },
+  {
+    "word_key": "nine",
+    "word": "nine",
+    "japanese": "9",
+    "current_plural": "nines",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "nature",
+    "word": "nature",
+    "japanese": "自然",
+    "current_plural": "nature",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "map",
+    "word": "map",
+    "japanese": "地図",
+    "current_plural": "maps",
+    "suggested_plural": "maps",
+    "reason": "countable"
+  },
+  {
+    "word_key": "music",
+    "word": "music",
+    "japanese": "音楽",
+    "current_plural": "music",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "March",
+    "word": "March",
+    "japanese": "3月",
+    "current_plural": "Marches",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "math",
+    "word": "math",
+    "japanese": "数学",
+    "current_plural": "math",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "meter",
+    "word": "meter",
+    "japanese": "メートル",
+    "current_plural": "meters",
+    "suggested_plural": "meters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "mouth",
+    "word": "mouth",
+    "japanese": "口",
+    "current_plural": "mouths",
+    "suggested_plural": "mouths",
+    "reason": "countable"
+  },
+  {
+    "word_key": "monkey",
+    "word": "monkey",
+    "japanese": "猿",
+    "current_plural": "monkeys",
+    "suggested_plural": "monkeys",
+    "reason": "countable"
+  },
+  {
+    "word_key": "night",
+    "word": "night",
+    "japanese": "夜",
+    "current_plural": "nights",
+    "suggested_plural": "nights",
+    "reason": "countable"
+  },
+  {
+    "word_key": "ninety",
+    "word": "ninety",
+    "japanese": "90",
+    "current_plural": "nineties",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "one",
+    "word": "one",
+    "japanese": "1",
+    "current_plural": "ones",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "pizza",
+    "word": "pizza",
+    "japanese": "ピザ",
+    "current_plural": "pizzas",
+    "suggested_plural": null,
+    "reason": "uncountable food"
+  },
+  {
+    "word_key": "plan",
+    "word": "plan",
+    "japanese": "計画",
+    "current_plural": "plans",
+    "suggested_plural": "plans",
+    "reason": "countable"
+  },
+  {
+    "word_key": "chair",
+    "word": "chair",
+    "japanese": "椅子",
+    "current_plural": "chairs",
+    "suggested_plural": "chairs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "man",
+    "word": "man",
+    "japanese": "男",
+    "current_plural": "men",
+    "suggested_plural": "men",
+    "reason": "countable"
+  },
+  {
+    "word_key": "lot",
+    "word": "lot",
+    "japanese": "たくさん",
+    "current_plural": "lots",
+    "suggested_plural": "lots",
+    "reason": "countable"
+  },
+  {
+    "word_key": "past",
+    "word": "past",
+    "japanese": "過去・〜を過ぎて",
+    "current_plural": "pasts",
+    "suggested_plural": null,
+    "reason": "uncountable abstract"
+  },
+  {
+    "word_key": "picnic",
+    "word": "picnic",
+    "japanese": "ピクニック",
+    "current_plural": "picnics",
+    "suggested_plural": "picnics",
+    "reason": "countable"
+  },
+  {
+    "word_key": "paper",
+    "word": "paper",
+    "japanese": "紙",
+    "current_plural": "papers",
+    "suggested_plural": null,
+    "reason": "uncountable material"
+  },
+  {
+    "word_key": "playground",
+    "word": "playground",
+    "japanese": "運動場",
+    "current_plural": "playgrounds",
+    "suggested_plural": "playgrounds",
+    "reason": "countable"
+  },
+  {
+    "word_key": "plane",
+    "word": "plane",
+    "japanese": "飛行機",
+    "current_plural": "planes",
+    "suggested_plural": "planes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "phone",
+    "word": "phone",
+    "japanese": "電話",
+    "current_plural": "phones",
+    "suggested_plural": "phones",
+    "reason": "countable"
+  },
+  {
+    "word_key": "police box",
+    "word": "police box",
+    "japanese": "交番",
+    "current_plural": "police boxes",
+    "suggested_plural": "police boxes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "panda",
+    "word": "panda",
+    "japanese": "パンダ",
+    "current_plural": "pandas",
+    "suggested_plural": "pandas",
+    "reason": "countable"
+  },
+  {
+    "word_key": "player",
+    "word": "player",
+    "japanese": "選手",
+    "current_plural": "players",
+    "suggested_plural": "players",
+    "reason": "countable"
+  },
+  {
+    "word_key": "pencil",
+    "word": "pencil",
+    "japanese": "鉛筆",
+    "current_plural": "pencils",
+    "suggested_plural": "pencils",
+    "reason": "countable"
+  },
+  {
+    "word_key": "people",
+    "word": "people",
+    "japanese": "人々",
+    "current_plural": "peoples",
+    "suggested_plural": null,
+    "reason": "already plural"
+  },
+  {
+    "word_key": "park",
+    "word": "park",
+    "japanese": "公園",
+    "current_plural": "parks",
+    "suggested_plural": "parks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "pilot",
+    "word": "pilot",
+    "japanese": "パイロット",
+    "current_plural": "pilots",
+    "suggested_plural": "pilots",
+    "reason": "countable"
+  },
+  {
+    "word_key": "pen",
+    "word": "pen",
+    "japanese": "ペン",
+    "current_plural": "pens",
+    "suggested_plural": "pens",
+    "reason": "countable"
+  },
+  {
+    "word_key": "place",
+    "word": "place",
+    "japanese": "場所",
+    "current_plural": "places",
+    "suggested_plural": "places",
+    "reason": "countable"
+  },
+  {
+    "word_key": "purple",
+    "word": "purple",
+    "japanese": "紫色",
+    "current_plural": "purples",
+    "suggested_plural": null,
+    "reason": "uncountable color"
+  },
+  {
+    "word_key": "parent",
+    "word": "parent",
+    "japanese": "親",
+    "current_plural": "parents",
+    "suggested_plural": "parents",
+    "reason": "countable"
+  },
+  {
+    "word_key": "pool",
+    "word": "pool",
+    "japanese": "プール",
+    "current_plural": "pools",
+    "suggested_plural": "pools",
+    "reason": "countable"
+  },
+  {
+    "word_key": "post office",
+    "word": "post office",
+    "japanese": "郵便局",
+    "current_plural": "post offices",
+    "suggested_plural": "post offices",
+    "reason": "countable"
+  },
+  {
+    "word_key": "potato",
+    "word": "potato",
+    "japanese": "じゃがいも",
+    "current_plural": "potatoes",
+    "suggested_plural": "potatoes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "problem",
+    "word": "problem",
+    "japanese": "問題",
+    "current_plural": "problems",
+    "suggested_plural": "problems",
+    "reason": "countable"
+  },
+  {
+    "word_key": "question",
+    "word": "question",
+    "japanese": "質問",
+    "current_plural": "questions",
+    "suggested_plural": "questions",
+    "reason": "countable"
+  },
+  {
+    "word_key": "road",
+    "word": "road",
+    "japanese": "道",
+    "current_plural": "roads",
+    "suggested_plural": "roads",
+    "reason": "countable"
+  },
+  {
+    "word_key": "salad",
+    "word": "salad",
+    "japanese": "サラダ",
+    "current_plural": "salads",
+    "suggested_plural": null,
+    "reason": "uncountable food"
+  },
+  {
+    "word_key": "rock",
+    "word": "rock",
+    "japanese": "岩",
+    "current_plural": "rocks",
+    "suggested_plural": "rocks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "room",
+    "word": "room",
+    "japanese": "部屋",
+    "current_plural": "rooms",
+    "suggested_plural": "rooms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "vegetable",
+    "word": "vegetable",
+    "japanese": "野菜",
+    "current_plural": "vegetables",
+    "suggested_plural": "vegetables",
+    "reason": "countable"
+  },
+  {
+    "word_key": "party",
+    "word": "party",
+    "japanese": "パーティー",
+    "current_plural": "parties",
+    "suggested_plural": "parties",
+    "reason": "countable"
+  },
+  {
+    "word_key": "right",
+    "word": "right",
+    "japanese": "右・正しい",
+    "current_plural": "rights",
+    "suggested_plural": null,
+    "reason": "uncountable direction"
+  },
+  {
+    "word_key": "school",
+    "word": "school",
+    "japanese": "学校",
+    "current_plural": "schools",
+    "suggested_plural": "schools",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sea",
+    "word": "sea",
+    "japanese": "海",
+    "current_plural": "seas",
+    "suggested_plural": "seas",
+    "reason": "countable"
+  },
+  {
+    "word_key": "seventeen",
+    "word": "seventeen",
+    "japanese": "17",
+    "current_plural": "seventeens",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "sixty",
+    "word": "sixty",
+    "japanese": "60",
+    "current_plural": "sixties",
+    "suggested_plural": null,
+    "reason": "number"
+  },
+  {
+    "word_key": "season",
+    "word": "season",
+    "japanese": "季節",
+    "current_plural": "seasons",
+    "suggested_plural": "seasons",
+    "reason": "countable"
+  },
+  {
+    "word_key": "river",
+    "word": "river",
+    "japanese": "川",
+    "current_plural": "rivers",
+    "suggested_plural": "rivers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "soup",
+    "word": "soup",
+    "japanese": "スープ",
+    "current_plural": "soups",
+    "suggested_plural": null,
+    "reason": "uncountable liquid"
+  },
+  {
+    "word_key": "Santa Claus",
+    "word": "Santa Claus",
+    "japanese": "サンタクロース",
+    "current_plural": "Santas",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "zoo",
+    "word": "zoo",
+    "japanese": "動物園",
+    "current_plural": "zoos",
+    "suggested_plural": "zoos",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Saturday",
+    "word": "Saturday",
+    "japanese": "土曜日",
+    "current_plural": "Saturdays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "singer",
+    "word": "singer",
+    "japanese": "歌手",
+    "current_plural": "singers",
+    "suggested_plural": "singers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "science",
+    "word": "science",
+    "japanese": "理科",
+    "current_plural": "sciences",
+    "suggested_plural": null,
+    "reason": "uncountable subject"
+  },
+  {
+    "word_key": "seat",
+    "word": "seat",
+    "japanese": "席",
+    "current_plural": "seats",
+    "suggested_plural": "seats",
+    "reason": "countable"
+  },
+  {
+    "word_key": "September",
+    "word": "September",
+    "japanese": "9月",
+    "current_plural": "Septembers",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "shirt",
+    "word": "shirt",
+    "japanese": "シャツ",
+    "current_plural": "shirts",
+    "suggested_plural": "shirts",
+    "reason": "countable"
+  },
+  {
+    "word_key": "shoe",
+    "word": "shoe",
+    "japanese": "靴",
+    "current_plural": "shoes",
+    "suggested_plural": "shoes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "seven",
+    "word": "seven",
+    "japanese": "7",
+    "current_plural": "sevens",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "seventy",
+    "word": "seventy",
+    "japanese": "70",
+    "current_plural": "seventies",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "ship",
+    "word": "ship",
+    "japanese": "船",
+    "current_plural": "ships",
+    "suggested_plural": "ships",
+    "reason": "countable"
+  },
+  {
+    "word_key": "shop",
+    "word": "shop",
+    "japanese": "店",
+    "current_plural": "shops",
+    "suggested_plural": "shops",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sister",
+    "word": "sister",
+    "japanese": "姉妹",
+    "current_plural": "sisters",
+    "suggested_plural": "sisters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "snow",
+    "word": "snow",
+    "japanese": "雪",
+    "current_plural": "snows",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "soccer",
+    "word": "soccer",
+    "japanese": "サッカー",
+    "current_plural": "soccer",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "rice",
+    "word": "rice",
+    "japanese": "米・ご飯",
+    "current_plural": "rice",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "sweater",
+    "word": "sweater",
+    "japanese": "セーター",
+    "current_plural": "sweaters",
+    "suggested_plural": "sweaters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "son",
+    "word": "son",
+    "japanese": "息子",
+    "current_plural": "sons",
+    "suggested_plural": "sons",
+    "reason": "countable"
+  },
+  {
+    "word_key": "station",
+    "word": "station",
+    "japanese": "駅",
+    "current_plural": "stations",
+    "suggested_plural": "stations",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sport",
+    "word": "sport",
+    "japanese": "スポーツ",
+    "current_plural": "sports",
+    "suggested_plural": "sports",
+    "reason": "countable"
+  },
+  {
+    "word_key": "stadium",
+    "word": "stadium",
+    "japanese": "スタジアム",
+    "current_plural": "stadiums",
+    "suggested_plural": "stadiums",
+    "reason": "countable"
+  },
+  {
+    "word_key": "stamp",
+    "word": "stamp",
+    "japanese": "切手",
+    "current_plural": "stamps",
+    "suggested_plural": "stamps",
+    "reason": "countable"
+  },
+  {
+    "word_key": "star",
+    "word": "star",
+    "japanese": "星",
+    "current_plural": "stars",
+    "suggested_plural": "stars",
+    "reason": "countable"
+  },
+  {
+    "word_key": "street",
+    "word": "street",
+    "japanese": "通り",
+    "current_plural": "streets",
+    "suggested_plural": "streets",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sugar",
+    "word": "sugar",
+    "japanese": "砂糖",
+    "current_plural": "sugar",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "summer",
+    "word": "summer",
+    "japanese": "夏",
+    "current_plural": "summers",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "Sunday",
+    "word": "Sunday",
+    "japanese": "日曜日",
+    "current_plural": "Sundays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "teacher",
+    "word": "teacher",
+    "japanese": "先生",
+    "current_plural": "teachers",
+    "suggested_plural": "teachers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "table",
+    "word": "table",
+    "japanese": "テーブル",
+    "current_plural": "tables",
+    "suggested_plural": "tables",
+    "reason": "countable"
+  },
+  {
+    "word_key": "table tennis",
+    "word": "table tennis",
+    "japanese": "卓球",
+    "current_plural": "no plural form",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "temple",
+    "word": "temple",
+    "japanese": "お寺",
+    "current_plural": "temples",
+    "suggested_plural": "temples",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Tanzania",
+    "word": "Tanzania",
+    "japanese": "タンザニア",
+    "current_plural": "Tanzania",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "skirt",
+    "word": "skirt",
+    "japanese": "スカート",
+    "current_plural": "skirts",
+    "suggested_plural": "skirts",
+    "reason": "countable"
+  },
+  {
+    "word_key": "ten",
+    "word": "ten",
+    "japanese": "10",
+    "current_plural": "tens",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "test",
+    "word": "test",
+    "japanese": "テスト",
+    "current_plural": "tests",
+    "suggested_plural": "tests",
+    "reason": "countable"
+  },
+  {
+    "word_key": "store",
+    "word": "store",
+    "japanese": "店",
+    "current_plural": "stores",
+    "suggested_plural": "stores",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sofa",
+    "word": "sofa",
+    "japanese": "ソファ",
+    "current_plural": "sofas",
+    "suggested_plural": "sofas",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dinner",
+    "word": "dinner",
+    "japanese": "夕食",
+    "current_plural": "dinners",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "Friday",
+    "word": "Friday",
+    "japanese": "金曜日",
+    "current_plural": "Fridays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "dish",
+    "word": "dish",
+    "japanese": "皿・料理",
+    "current_plural": "dishes",
+    "suggested_plural": "dishes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dress",
+    "word": "dress",
+    "japanese": "ドレス",
+    "current_plural": "dresses",
+    "suggested_plural": "dresses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "fire station",
+    "word": "fire station",
+    "japanese": "消防署",
+    "current_plural": "fire stations",
+    "suggested_plural": "fire stations",
+    "reason": "countable"
+  },
+  {
+    "word_key": "tennis",
+    "word": "tennis",
+    "japanese": "テニス",
+    "current_plural": "tennis",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "ink",
+    "word": "ink",
+    "japanese": "インク",
+    "current_plural": "ink",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "jam",
+    "word": "jam",
+    "japanese": "ジャム",
+    "current_plural": "jam",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "father",
+    "word": "father",
+    "japanese": "お父さん",
+    "current_plural": "fathers",
+    "suggested_plural": "fathers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "twelve",
+    "word": "twelve",
+    "japanese": "12",
+    "current_plural": "twelves",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "three",
+    "word": "three",
+    "japanese": "3",
+    "current_plural": "threes",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "uniform",
+    "word": "uniform",
+    "japanese": "制服",
+    "current_plural": "uniforms",
+    "suggested_plural": "uniforms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "thing",
+    "word": "thing",
+    "japanese": "物・事",
+    "current_plural": "things",
+    "suggested_plural": "things",
+    "reason": "countable"
+  },
+  {
+    "word_key": "tour",
+    "word": "tour",
+    "japanese": "ツアー",
+    "current_plural": "tours",
+    "suggested_plural": "tours",
+    "reason": "countable"
+  },
+  {
+    "word_key": "team",
+    "word": "team",
+    "japanese": "チーム",
+    "current_plural": "teams",
+    "suggested_plural": "teams",
+    "reason": "countable"
+  },
+  {
+    "word_key": "thirteen",
+    "word": "thirteen",
+    "japanese": "13",
+    "current_plural": "thirteens",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "thirty",
+    "word": "thirty",
+    "japanese": "30",
+    "current_plural": "thirties",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "Thursday",
+    "word": "Thursday",
+    "japanese": "木曜日",
+    "current_plural": "Thursdays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "time",
+    "word": "time",
+    "japanese": "時間",
+    "current_plural": "times",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "tomato",
+    "word": "tomato",
+    "japanese": "トマト",
+    "current_plural": "tomatoes",
+    "suggested_plural": "tomatoes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "tourist",
+    "word": "tourist",
+    "japanese": "観光客",
+    "current_plural": "tourists",
+    "suggested_plural": "tourists",
+    "reason": "countable"
+  },
+  {
+    "word_key": "tooth",
+    "word": "tooth",
+    "japanese": "歯",
+    "current_plural": "teeth",
+    "suggested_plural": "teeth",
+    "reason": "countable"
+  },
+  {
+    "word_key": "town",
+    "word": "town",
+    "japanese": "町",
+    "current_plural": "towns",
+    "suggested_plural": "towns",
+    "reason": "countable"
+  },
+  {
+    "word_key": "train",
+    "word": "train",
+    "japanese": "電車",
+    "current_plural": "trains",
+    "suggested_plural": "trains",
+    "reason": "countable"
+  },
+  {
+    "word_key": "tree",
+    "word": "tree",
+    "japanese": "木",
+    "current_plural": "trees",
+    "suggested_plural": "trees",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Tuesday",
+    "word": "Tuesday",
+    "japanese": "火曜日",
+    "current_plural": "Tuesdays",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "uncle",
+    "word": "uncle",
+    "japanese": "おじ",
+    "current_plural": "uncles",
+    "suggested_plural": "uncles",
+    "reason": "countable"
+  },
+  {
+    "word_key": "story",
+    "word": "story",
+    "japanese": "物語",
+    "current_plural": "stories",
+    "suggested_plural": "stories",
+    "reason": "countable"
+  },
+  {
+    "word_key": "twenty",
+    "word": "twenty",
+    "japanese": "20",
+    "current_plural": "twenties",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "two",
+    "word": "two",
+    "japanese": "2",
+    "current_plural": "twos",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "trip",
+    "word": "trip",
+    "japanese": "旅行",
+    "current_plural": "trips",
+    "suggested_plural": "trips",
+    "reason": "countable"
+  },
+  {
+    "word_key": "university",
+    "word": "university",
+    "japanese": "大学",
+    "current_plural": "universities",
+    "suggested_plural": "universities",
+    "reason": "countable"
+  },
+  {
+    "word_key": "subject",
+    "word": "subject",
+    "japanese": "教科",
+    "current_plural": "subjects",
+    "suggested_plural": "subjects",
+    "reason": "countable"
+  },
+  {
+    "word_key": "way",
+    "word": "way",
+    "japanese": "道・方法",
+    "current_plural": "ways",
+    "suggested_plural": "ways",
+    "reason": "countable"
+  },
+  {
+    "word_key": "wife",
+    "word": "wife",
+    "japanese": "妻",
+    "current_plural": "wives",
+    "suggested_plural": "wives",
+    "reason": "countable"
+  },
+  {
+    "word_key": "lunch",
+    "word": "lunch",
+    "japanese": "昼食",
+    "current_plural": "lunches",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "meat",
+    "word": "meat",
+    "japanese": "肉",
+    "current_plural": "meats",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "minute",
+    "word": "minute",
+    "japanese": "分",
+    "current_plural": "minutes",
+    "suggested_plural": "minutes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "museum",
+    "word": "museum",
+    "japanese": "博物館",
+    "current_plural": "museums",
+    "suggested_plural": "museums",
+    "reason": "countable"
+  },
+  {
+    "word_key": "news",
+    "word": "news",
+    "japanese": "ニュース",
+    "current_plural": "news",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "picture",
+    "word": "picture",
+    "japanese": "写真・絵",
+    "current_plural": "pictures",
+    "suggested_plural": "pictures",
+    "reason": "countable"
+  },
+  {
+    "word_key": "nineteen",
+    "word": "nineteen",
+    "japanese": "19",
+    "current_plural": "nineteens",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "radio",
+    "word": "radio",
+    "japanese": "ラジオ",
+    "current_plural": "radios",
+    "suggested_plural": "radios",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sandwich",
+    "word": "sandwich",
+    "japanese": "サンドイッチ",
+    "current_plural": "sandwiches",
+    "suggested_plural": "sandwiches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "program",
+    "word": "program",
+    "japanese": "番組・プログラム",
+    "current_plural": "programs",
+    "suggested_plural": "programs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "size",
+    "word": "size",
+    "japanese": "サイズ",
+    "current_plural": "sizes",
+    "suggested_plural": "sizes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "mother",
+    "word": "mother",
+    "japanese": "母",
+    "current_plural": "mothers",
+    "suggested_plural": "mothers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "nose",
+    "word": "nose",
+    "japanese": "鼻",
+    "current_plural": "noses",
+    "suggested_plural": "noses",
+    "reason": "countable"
+  },
+  {
+    "word_key": "newspaper",
+    "word": "newspaper",
+    "japanese": "新聞",
+    "current_plural": "newspapers",
+    "suggested_plural": "newspapers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "social studies",
+    "word": "social studies",
+    "japanese": "社会科",
+    "current_plural": "social studies",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "toy",
+    "word": "toy",
+    "japanese": "おもちゃ",
+    "current_plural": "toys",
+    "suggested_plural": "toys",
+    "reason": "countable"
+  },
+  {
+    "word_key": "thousand",
+    "word": "thousand",
+    "japanese": "1000",
+    "current_plural": "thousands",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "world",
+    "word": "world",
+    "japanese": "世界",
+    "current_plural": "worlds",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "accordion",
+    "word": "accordion",
+    "japanese": "アコーディオン",
+    "current_plural": "accordions",
+    "suggested_plural": "accordions",
+    "reason": "countable"
+  },
+  {
+    "word_key": "blackboard",
+    "word": "blackboard",
+    "japanese": "黒板",
+    "current_plural": "blackboards",
+    "suggested_plural": "blackboards",
+    "reason": "countable"
+  },
+  {
+    "word_key": "Argentina",
+    "word": "Argentina",
+    "japanese": "アルゼンチン",
+    "current_plural": "Argentinas",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "argentina_",
+    "word": "Argentina",
+    "japanese": "アルゼンチン",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "center_",
+    "word": "center",
+    "japanese": "中心",
+    "current_plural": null,
+    "suggested_plural": "centers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "daughter_",
+    "word": "daughter",
+    "japanese": "娘",
+    "current_plural": null,
+    "suggested_plural": "daughters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "december_12",
+    "word": "December",
+    "japanese": "12月",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "dentist_",
+    "word": "dentist",
+    "japanese": "歯医者",
+    "current_plural": null,
+    "suggested_plural": "dentists",
+    "reason": "countable"
+  },
+  {
+    "word_key": "desk_",
+    "word": "desk",
+    "japanese": "机",
+    "current_plural": null,
+    "suggested_plural": "desks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dictionary_",
+    "word": "dictionary",
+    "japanese": "辞書",
+    "current_plural": null,
+    "suggested_plural": "dictionaries",
+    "reason": "countable"
+  },
+  {
+    "word_key": "doctor_",
+    "word": "doctor",
+    "japanese": "医者",
+    "current_plural": null,
+    "suggested_plural": "doctors",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dog_",
+    "word": "dog",
+    "japanese": "犬",
+    "current_plural": null,
+    "suggested_plural": "dogs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "group_",
+    "word": "group",
+    "japanese": "グループ",
+    "current_plural": null,
+    "suggested_plural": "groups",
+    "reason": "countable"
+  },
+  {
+    "word_key": "gym_",
+    "word": "gym",
+    "japanese": "体育館",
+    "current_plural": null,
+    "suggested_plural": "gyms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "internet_",
+    "word": "Internet",
+    "japanese": "インターネット",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun / uncountable"
+  },
+  {
+    "word_key": "magazine_",
+    "word": "magazine",
+    "japanese": "雑誌",
+    "current_plural": null,
+    "suggested_plural": "magazines",
+    "reason": "countable"
+  },
+  {
+    "word_key": "minute_",
+    "word": "minute",
+    "japanese": "分",
+    "current_plural": null,
+    "suggested_plural": "minutes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "museum_",
+    "word": "museum",
+    "japanese": "博物館",
+    "current_plural": null,
+    "suggested_plural": "museums",
+    "reason": "countable"
+  },
+  {
+    "word_key": "news_",
+    "word": "news",
+    "japanese": "ニュース",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "newspaper_",
+    "word": "newspaper",
+    "japanese": "新聞",
+    "current_plural": null,
+    "suggested_plural": "newspapers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "noon_",
+    "word": "noon",
+    "japanese": "正午",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "notebook_",
+    "word": "notebook",
+    "japanese": "ノート",
+    "current_plural": null,
+    "suggested_plural": "notebooks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "november_11",
+    "word": "November",
+    "japanese": "11月",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "number_",
+    "word": "number",
+    "japanese": "数",
+    "current_plural": null,
+    "suggested_plural": "numbers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "october_10",
+    "word": "October",
+    "japanese": "10月",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "rain_",
+    "word": "rain",
+    "japanese": "雨",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "shoulder_",
+    "word": "shoulder",
+    "japanese": "肩",
+    "current_plural": null,
+    "suggested_plural": "shoulders",
+    "reason": "countable"
+  },
+  {
+    "word_key": "six_6",
+    "word": "six",
+    "japanese": "6",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "sixteen_16",
+    "word": "sixteen",
+    "japanese": "16",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "speech_",
+    "word": "speech",
+    "japanese": "スピーチ",
+    "current_plural": null,
+    "suggested_plural": "speeches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "student_",
+    "word": "student",
+    "japanese": "生徒",
+    "current_plural": null,
+    "suggested_plural": "students",
+    "reason": "countable"
+  },
+  {
+    "word_key": "textbook_",
+    "word": "textbook",
+    "japanese": "教科書",
+    "current_plural": null,
+    "suggested_plural": "textbooks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "tv_",
+    "word": "TV",
+    "japanese": "テレビ",
+    "current_plural": null,
+    "suggested_plural": "TVs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "vacation_",
+    "word": "vacation",
+    "japanese": "休暇",
+    "current_plural": null,
+    "suggested_plural": "vacations",
+    "reason": "countable"
+  },
+  {
+    "word_key": "center",
+    "word": "center",
+    "japanese": "中心",
+    "current_plural": "centers",
+    "suggested_plural": "centers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dog",
+    "word": "dog",
+    "japanese": "犬",
+    "current_plural": "dogs",
+    "suggested_plural": "dogs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "desk",
+    "word": "desk",
+    "japanese": "机",
+    "current_plural": "desks",
+    "suggested_plural": "desks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dictionary",
+    "word": "dictionary",
+    "japanese": "辞書",
+    "current_plural": "dictionaries",
+    "suggested_plural": "dictionaries",
+    "reason": "countable"
+  },
+  {
+    "word_key": "notebook",
+    "word": "notebook",
+    "japanese": "ノート",
+    "current_plural": "notebooks",
+    "suggested_plural": "notebooks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "October",
+    "word": "October",
+    "japanese": "10月",
+    "current_plural": "Octobers",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "November",
+    "word": "November",
+    "japanese": "11月",
+    "current_plural": "Novembers",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "December",
+    "word": "December",
+    "japanese": "12月",
+    "current_plural": "Decembers",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "doctor",
+    "word": "doctor",
+    "japanese": "医者",
+    "current_plural": "doctors",
+    "suggested_plural": "doctors",
+    "reason": "countable"
+  },
+  {
+    "word_key": "videogame_",
+    "word": "video game",
+    "japanese": "テレビゲーム",
+    "current_plural": null,
+    "suggested_plural": "video games",
+    "reason": "countable"
+  },
+  {
+    "word_key": "village_",
+    "word": "village",
+    "japanese": "村",
+    "current_plural": null,
+    "suggested_plural": "villages",
+    "reason": "countable"
+  },
+  {
+    "word_key": "violin_",
+    "word": "violin",
+    "japanese": "バイオリン",
+    "current_plural": null,
+    "suggested_plural": "violins",
+    "reason": "countable"
+  },
+  {
+    "word_key": "volleyball_",
+    "word": "volleyball",
+    "japanese": "バレーボール",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "volunteer_",
+    "word": "volunteer",
+    "japanese": "ボランティア",
+    "current_plural": null,
+    "suggested_plural": "volunteers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "water_",
+    "word": "water",
+    "japanese": "水",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "daughter",
+    "word": "daughter",
+    "japanese": "娘",
+    "current_plural": "daughters",
+    "suggested_plural": "daughters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "dentist",
+    "word": "dentist",
+    "japanese": "歯医者",
+    "current_plural": "dentists",
+    "suggested_plural": "dentists",
+    "reason": "countable"
+  },
+  {
+    "word_key": "number",
+    "word": "number",
+    "japanese": "数",
+    "current_plural": "numbers",
+    "suggested_plural": "numbers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sun_",
+    "word": "sun",
+    "japanese": "太陽",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun / uncountable"
+  },
+  {
+    "word_key": "violet_",
+    "word": "violet",
+    "japanese": "すみれ色",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "tom_",
+    "word": "Tom",
+    "japanese": "トム（名）",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "finland_",
+    "word": "Finland",
+    "japanese": "フィンランド",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "salmon_",
+    "word": "salmon",
+    "japanese": "サケ",
+    "current_plural": null,
+    "suggested_plural": "salmon",
+    "reason": "countable"
+  },
+  {
+    "word_key": "chef_",
+    "word": "chef",
+    "japanese": "料理人",
+    "current_plural": null,
+    "suggested_plural": "chefs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "amy_",
+    "word": "Amy",
+    "japanese": "エイミー",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "policeofficer_",
+    "word": "police officer",
+    "japanese": "警察官",
+    "current_plural": null,
+    "suggested_plural": "police officers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "officeworker_",
+    "word": "office worker",
+    "japanese": "会社員",
+    "current_plural": null,
+    "suggested_plural": "office workers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "vet_",
+    "word": "vet",
+    "japanese": "獣医",
+    "current_plural": null,
+    "suggested_plural": "vets",
+    "reason": "countable"
+  },
+  {
+    "word_key": "andy_",
+    "word": "Andy",
+    "japanese": "アンディ",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "hongkong_",
+    "word": "Hong Kong",
+    "japanese": "香港",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "lunchbox_",
+    "word": "lunchbox",
+    "japanese": "弁当箱",
+    "current_plural": null,
+    "suggested_plural": "lunchboxes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "radish_",
+    "word": "radish",
+    "japanese": "大根",
+    "current_plural": null,
+    "suggested_plural": "radishes",
+    "reason": "countable"
+  },
+  {
+    "word_key": "eggplant_",
+    "word": "eggplant",
+    "japanese": "なす",
+    "current_plural": null,
+    "suggested_plural": "eggplants",
+    "reason": "countable"
+  },
+  {
+    "word_key": "maria_",
+    "word": "Maria",
+    "japanese": "マリア",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "howard_",
+    "word": "Howard",
+    "japanese": "ハワード",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "newyearsday_",
+    "word": "New Year's Day",
+    "japanese": "元日",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "janet_",
+    "word": "Janet",
+    "japanese": "ジャネット",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "wedding_",
+    "word": "wedding",
+    "japanese": "結婚式",
+    "current_plural": null,
+    "suggested_plural": "weddings",
+    "reason": "countable"
+  },
+  {
+    "word_key": "tool_",
+    "word": "tool",
+    "japanese": "道具",
+    "current_plural": null,
+    "suggested_plural": "tools",
+    "reason": "countable"
+  },
+  {
+    "word_key": "drum_",
+    "word": "drum",
+    "japanese": "ドラム",
+    "current_plural": null,
+    "suggested_plural": "drums",
+    "reason": "countable"
+  },
+  {
+    "word_key": "candy_",
+    "word": "candy",
+    "japanese": "菓子",
+    "current_plural": null,
+    "suggested_plural": "candies",
+    "reason": "countable"
+  },
+  {
+    "word_key": "photo_",
+    "word": "photo",
+    "japanese": "写真",
+    "current_plural": null,
+    "suggested_plural": "photos",
+    "reason": "countable"
+  },
+  {
+    "word_key": "susana_",
+    "word": "Susana",
+    "japanese": "スサナ",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "mexico_",
+    "word": "Mexico",
+    "japanese": "メキシコ",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "design_",
+    "word": "design",
+    "japanese": "設計",
+    "current_plural": null,
+    "suggested_plural": "designs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "john_",
+    "word": "John",
+    "japanese": "ジョン",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "bob_",
+    "word": "Bob",
+    "japanese": "ボブ",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "teammate_",
+    "word": "teammate",
+    "japanese": "チームメイト",
+    "current_plural": null,
+    "suggested_plural": "teammates",
+    "reason": "countable"
+  },
+  {
+    "word_key": "hamster_",
+    "word": "hamster",
+    "japanese": "ハムスター",
+    "current_plural": null,
+    "suggested_plural": "hamsters",
+    "reason": "countable"
+  },
+  {
+    "word_key": "pie_",
+    "word": "pie",
+    "japanese": "パイ",
+    "current_plural": null,
+    "suggested_plural": "pies",
+    "reason": "countable"
+  },
+  {
+    "word_key": "sam_",
+    "word": "Sam",
+    "japanese": "サム",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "seaweed_",
+    "word": "seaweed",
+    "japanese": "海藻",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "avocado_",
+    "word": "avocado",
+    "japanese": "アボカド",
+    "current_plural": null,
+    "suggested_plural": "avocados",
+    "reason": "countable"
+  },
+  {
+    "word_key": "crab_",
+    "word": "crab",
+    "japanese": "カニ",
+    "current_plural": null,
+    "suggested_plural": "crabs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "interview_",
+    "word": "interview",
+    "japanese": "会見",
+    "current_plural": null,
+    "suggested_plural": "interviews",
+    "reason": "countable"
+  },
+  {
+    "word_key": "california_",
+    "word": "California",
+    "japanese": "加州",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "regard_",
+    "word": "regard",
+    "japanese": "注視",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "headache_",
+    "word": "headache",
+    "japanese": "頭痛",
+    "current_plural": null,
+    "suggested_plural": "headaches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "case_",
+    "word": "case",
+    "japanese": "箱",
+    "current_plural": null,
+    "suggested_plural": "cases",
+    "reason": "countable"
+  },
+  {
+    "word_key": "group",
+    "word": "group",
+    "japanese": "グループ",
+    "current_plural": "groups",
+    "suggested_plural": "groups",
+    "reason": "countable"
+  },
+  {
+    "word_key": "gym",
+    "word": "gym",
+    "japanese": "体育館",
+    "current_plural": "gyms",
+    "suggested_plural": "gyms",
+    "reason": "countable"
+  },
+  {
+    "word_key": "ruler_",
+    "word": "ruler",
+    "japanese": "定規",
+    "current_plural": null,
+    "suggested_plural": "rulers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "stapler_",
+    "word": "stapler",
+    "japanese": "ホチキス",
+    "current_plural": null,
+    "suggested_plural": "staplers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "joggingsuit_",
+    "word": "jogging suit",
+    "japanese": "運動着",
+    "current_plural": null,
+    "suggested_plural": "jogging suits",
+    "reason": "countable"
+  },
+  {
+    "word_key": "inch_",
+    "word": "inch",
+    "japanese": "インチ",
+    "current_plural": null,
+    "suggested_plural": "inches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "mile_",
+    "word": "mile",
+    "japanese": "マイル",
+    "current_plural": null,
+    "suggested_plural": "miles",
+    "reason": "countable"
+  },
+  {
+    "word_key": "shorts_",
+    "word": "shorts",
+    "japanese": "短パン",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "plural noun"
+  },
+  {
+    "word_key": "sale_",
+    "word": "sale",
+    "japanese": "特売",
+    "current_plural": null,
+    "suggested_plural": "sales",
+    "reason": "countable"
+  },
+  {
+    "word_key": "percent_",
+    "word": "percent",
+    "japanese": "％",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "deal_",
+    "word": "deal",
+    "japanese": "取引",
+    "current_plural": null,
+    "suggested_plural": "deals",
+    "reason": "countable"
+  },
+  {
+    "word_key": "captain_",
+    "word": "captain",
+    "japanese": "主将",
+    "current_plural": null,
+    "suggested_plural": "captains",
+    "reason": "countable"
+  },
+  {
+    "word_key": "icedtea_",
+    "word": "iced tea",
+    "japanese": "冷茶",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "bali_",
+    "word": "Bali",
+    "japanese": "バリ",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "indonesia_",
+    "word": "Indonesia",
+    "japanese": "インドネシア",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "god_",
+    "word": "god",
+    "japanese": "神",
+    "current_plural": null,
+    "suggested_plural": "gods",
+    "reason": "countable"
+  },
+  {
+    "word_key": "custom_",
+    "word": "custom",
+    "japanese": "慣習",
+    "current_plural": null,
+    "suggested_plural": "customs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "others_",
+    "word": "others",
+    "japanese": "他人",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "plural noun"
+  },
+  {
+    "word_key": "brian_",
+    "word": "Brian",
+    "japanese": "ブライアン",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "batur_",
+    "word": "Batur",
+    "japanese": "バトゥール",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "ketjak_",
+    "word": "ketjak",
+    "japanese": "ケチャ",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "barong_",
+    "word": "barong",
+    "japanese": "バロン",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "battle_",
+    "word": "battle",
+    "japanese": "戦い",
+    "current_plural": null,
+    "suggested_plural": "battles",
+    "reason": "countable"
+  },
+  {
+    "word_key": "witch_",
+    "word": "witch",
+    "japanese": "魔女",
+    "current_plural": null,
+    "suggested_plural": "witches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "balihinduism_",
+    "word": "Bali-Hinduism",
+    "japanese": "バリ教",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "jean_",
+    "word": "jean",
+    "japanese": "生地",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "uncountable fabric"
+  },
+  {
+    "word_key": "jeans_",
+    "word": "jeans",
+    "japanese": "ズボン",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "already plural"
+  },
+  {
+    "word_key": "socks_",
+    "word": "socks",
+    "japanese": "靴下",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "already plural"
+  },
+  {
+    "word_key": "shoes_",
+    "word": "shoes",
+    "japanese": "靴",
+    "current_plural": null,
+    "suggested_plural": null,
+    "reason": "already plural"
+  },
+  {
+    "word_key": "Internet",
+    "word": "Internet",
+    "japanese": "インターネット",
+    "current_plural": "Internets",
+    "suggested_plural": null,
+    "reason": "proper noun"
+  },
+  {
+    "word_key": "magazine",
+    "word": "magazine",
+    "japanese": "雑誌",
+    "current_plural": "magazines",
+    "suggested_plural": "magazines",
+    "reason": "countable"
+  },
+  {
+    "word_key": "hospital",
+    "word": "hospital",
+    "japanese": "病院",
+    "current_plural": "hospitals",
+    "suggested_plural": "hospitals",
+    "reason": "countable"
+  },
+  {
+    "word_key": "light",
+    "word": "light",
+    "japanese": "光・軽い",
+    "current_plural": "lights",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "song",
+    "word": "song",
+    "japanese": "歌",
+    "current_plural": "songs",
+    "suggested_plural": "songs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "noon",
+    "word": "noon",
+    "japanese": "正午",
+    "current_plural": "noon",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "weather",
+    "word": "weather",
+    "japanese": "天気",
+    "current_plural": "weather",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "rain",
+    "word": "rain",
+    "japanese": "雨",
+    "current_plural": "rains",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "shoulder",
+    "word": "shoulder",
+    "japanese": "肩",
+    "current_plural": "shoulders",
+    "suggested_plural": "shoulders",
+    "reason": "countable"
+  },
+  {
+    "word_key": "six",
+    "word": "six",
+    "japanese": "6",
+    "current_plural": "sixes",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "sixteen",
+    "word": "sixteen",
+    "japanese": "16",
+    "current_plural": "sixteens",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "speech",
+    "word": "speech",
+    "japanese": "スピーチ",
+    "current_plural": "speeches",
+    "suggested_plural": "speeches",
+    "reason": "countable"
+  },
+  {
+    "word_key": "violin",
+    "word": "violin",
+    "japanese": "バイオリン",
+    "current_plural": "violins",
+    "suggested_plural": "violins",
+    "reason": "countable"
+  },
+  {
+    "word_key": "water",
+    "word": "water",
+    "japanese": "水",
+    "current_plural": "water",
+    "suggested_plural": null,
+    "reason": "uncountable"
+  },
+  {
+    "word_key": "vacation",
+    "word": "vacation",
+    "japanese": "休暇",
+    "current_plural": "vacations",
+    "suggested_plural": "vacations",
+    "reason": "countable"
+  },
+  {
+    "word_key": "video game",
+    "word": "video game",
+    "japanese": "テレビゲーム",
+    "current_plural": "video games",
+    "suggested_plural": "video games",
+    "reason": "countable"
+  },
+  {
+    "word_key": "village",
+    "word": "village",
+    "japanese": "村",
+    "current_plural": "villages",
+    "suggested_plural": "villages",
+    "reason": "countable"
+  },
+  {
+    "word_key": "volleyball",
+    "word": "volleyball",
+    "japanese": "バレーボール",
+    "current_plural": "volleyballs",
+    "suggested_plural": null,
+    "reason": "uncountable sport"
+  },
+  {
+    "word_key": "volunteer",
+    "word": "volunteer",
+    "japanese": "ボランティア",
+    "current_plural": "volunteers",
+    "suggested_plural": "volunteers",
+    "reason": "countable"
+  },
+  {
+    "word_key": "textbook",
+    "word": "textbook",
+    "japanese": "教科書",
+    "current_plural": "textbooks",
+    "suggested_plural": "textbooks",
+    "reason": "countable"
+  },
+  {
+    "word_key": "TV",
+    "word": "TV",
+    "japanese": "テレビ",
+    "current_plural": "TVs",
+    "suggested_plural": "TVs",
+    "reason": "countable"
+  },
+  {
+    "word_key": "student",
+    "word": "student",
+    "japanese": "生徒",
+    "current_plural": "students",
+    "suggested_plural": "students",
+    "reason": "countable"
+  }
+]
