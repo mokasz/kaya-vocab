@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1777646853">
+  <meta name="words-version" content="1777703213">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -695,7 +695,7 @@ function renderCard() {
 function checkAnswer() {
   if (isFlipped) return;
   const w = queue[qi];
-  const typed = $('ansInput').value.trim().toLowerCase();
+  const typed = $('ansInput').value.trim().replace(/\s+/g, ' ').toLowerCase();
   
   if (!typed) {
     $('ansInput').classList.add('shake');
@@ -703,12 +703,13 @@ function checkAnswer() {
     return;
   }
 
-  const correct = typed === w.english.toLowerCase();
+  const target = w.english.trim().replace(/\s+/g, ' ').toLowerCase();
+  const correct = typed === target;
   
   // 単複のミスの検知（正解ではなく、かつ単数形か複数形のいずれかと一致する）
   // w.word は単数形（ベースの単語）、w.english は出題の正解、w.plural は複数形
-  const isSingular = typed === w.word.toLowerCase();
-  const isPlural = w.plural && typed === w.plural.toLowerCase();
+  const isSingular = typed === w.word.trim().replace(/\s+/g, ' ').toLowerCase();
+  const isPlural = w.plural && typed === w.plural.trim().replace(/\s+/g, ' ').toLowerCase();
   const pluralMistake = !correct && (isSingular || isPlural);
 
   if (pluralMistake) {
