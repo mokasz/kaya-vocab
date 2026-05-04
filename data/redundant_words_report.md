@@ -10,12 +10,6 @@ Generated on: 2026-05-04
 | about_prep | 前 | about | 〜について | 前置詞 | 3034 | `{}` |
 | about_prep2 | 前 | about | 約〜・およそ〜 | 前置詞 | 3027 | `{}` |
 
-## 2. ACTIVE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| active | 形 | active | 活発な | 形容詞 | 4003 | `{}` |
-| active_ | 形 | active | 活発な |  |  | `{}` |
-
 ## 3. AFTER
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -34,12 +28,6 @@ Generated on: 2026-05-04
 | bays | 名 | bays | 湾（複数形） | 名詞 |  | `{"plural": "bays"}` |
 | bays_ | 名 | bays | 入り江 |  |  | `{"plural": "bays"}` |
 
-## 6. BETTER
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| better | 形 | better | より良い | 形容詞 |  | `{}` |
-| better_ | 形 | better | より良い |  |  | `{}` |
-
 ## 7. CANDY
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -51,18 +39,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | CD |  | CD | CD |  |  | `{}` |
 | cd_cd |  | CD | CD |  |  | `{}` |
-
-## 9. CENTER
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| center | 名 | center | 中心 | 名詞 |  | `{"plural": "centers"}` |
-| center_ | 名 | center | 中心 |  |  | `{"plural": "centers"}` |
-
-## 10. CHEAP
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| cheap | 形 | cheap | 安い | 形容詞 |  | `{}` |
-| cheap_ | 形 | cheap | 安い |  |  | `{}` |
 
 ## 11. COOKING
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -88,12 +64,6 @@ Generated on: 2026-05-04
 | decide | 動 | decide | 決める | 動詞 |  | `{"ing": "deciding", "base": "decide", "past": "decided", "third": "decides"}` |
 | decide_ | 動 | decide | 決める |  |  | `{}` |
 
-## 15. DELICIOUS
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| delicious | 形 | delicious | おいしい | 形容詞 | 1430 | `{}` |
-| delicious_ | 形 | delicious | おいしい |  | 1067 | `{}` |
-
 ## 16. DENTIST
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -118,29 +88,11 @@ Generated on: 2026-05-04
 | didn't |  | didn't | did notの短縮形 |  |  | `{}` |
 | didnt_didn |  | didn't | did notの短縮形 |  |  | `{}` |
 
-## 20. DIE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| die | 動 | die | 死ぬ | 動詞 |  | `{"ing": "dying", "base": "die", "past": "died", "third": "dies"}` |
-| die_ | 動 | die | 死ぬ |  |  | `{}` |
-
-## 21. DIFFICULT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| difficult | 形 | difficult | 難しい | 形容詞 |  | `{}` |
-| difficult_ | 形 | difficult | 難しい |  |  | `{}` |
-
 ## 22. DIRTY
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | dirty | 形 | dirty | 汚い | 形容詞 |  | `{}` |
 | dirty_ | 形 | dirty | 汚い |  |  | `{}` |
-
-## 23. DOCTOR
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| doctor | 名 | doctor | 医者 | 名詞 | 1450 | `{"plural": "doctors"}` |
-| doctor_ | 名 | doctor | 医者 |  | 1073 | `{"plural": "doctors"}` |
 
 ## 24. DOES
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -190,35 +142,11 @@ Generated on: 2026-05-04
 | feel | 動 | feel | 感じる | 動詞 |  | `{"ing": "feeling", "base": "feel", "past": "felt", "third": "feels"}` |
 | feel_ | 動 | feel | 感じる |  |  | `{}` |
 
-## 32. FEW
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| few | 形 | few | 少しの | 形容詞 |  | `{}` |
-| few_ | 形 | few | 少しの |  |  | `{}` |
-
 ## 33. GAS STATION
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | gas station |  | gas station | ガソリンスタンド |  | 11064 | `{}` |
 | gasstation_ |  | gas station | ガソリンスタンド |  |  | `{}` |
-
-## 34. GROUP
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| group | 名 | group | グループ | 名詞 |  | `{"plural": "groups"}` |
-| group_ | 名 | group | グループ |  |  | `{"plural": "groups"}` |
-
-## 35. GYM
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| gym | 名 | gym | 体育館 | 名詞 |  | `{"plural": "gyms"}` |
-| gym_ | 名 | gym | 体育館 |  |  | `{"plural": "gyms"}` |
-
-## 36. HAMSTER
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| hamster | 名 | hamster | ハムスター | 名詞 | 4086 | `{"plural": "hamsters"}` |
-| hamster_ | 名 | hamster | ハムスター |  | 4036 | `{"plural": "hamsters"}` |
 
 ## 37. HYDE PARK
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -304,29 +232,11 @@ Generated on: 2026-05-04
 | minus |  | minus | マイナス |  | 1012 | `{}` |
 | minus_ |  | minus | マイナス |  |  | `{}` |
 
-## 51. MINUTE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| minute | 名 | minute | 分 | 名詞 | 9030 | `{"plural": "minutes"}` |
-| minute_ | 名 | minute | 分 |  |  | `{"plural": "minutes"}` |
-
 ## 52. MOVIE THEATER
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | movie theater |  | movie theater | 映画館 |  | 1019 | `{}` |
 | movietheater_ |  | movie theater | 映画館 |  |  | `{}` |
-
-## 53. MUSEUM
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| museum | 名 | museum | 博物館 | 名詞 | 6019 | `{"plural": "museums"}` |
-| museum_ | 名 | museum | 博物館 |  |  | `{"plural": "museums"}` |
-
-## 54. NEWS
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| news | 名 | news | ニュース | 名詞 | 11026 | `{"plural": null}` |
-| news_ | 名 | news | ニュース |  |  | `{"plural": null}` |
 
 ## 55. NEWSPAPER
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -346,12 +256,6 @@ Generated on: 2026-05-04
 | nothing | 代 | nothing | 何も〜ない | 代名詞 |  | `{}` |
 | nothing_ | 代 | nothing | 何も〜ない |  |  | `{}` |
 
-## 58. NUMBER
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| number | 名 | number | 数 | 名詞 |  | `{"plural": "numbers"}` |
-| number_ | 名 | number | 数 |  |  | `{"plural": "numbers"}` |
-
 ## 59. OFTEN
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -370,23 +274,11 @@ Generated on: 2026-05-04
 | pardon |  | pardon | 許す |  | 1043 | `{"lesson": "Lesson 1"}` |
 | pardon_ |  | pardon | 許す |  |  | `{}` |
 
-## 63. PASS
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| pass | 動 | pass | 通り過ぎる・渡す | 動詞 | 4014 | `{"ing": "passing", "base": "pass", "past": "passed", "third": "passes"}` |
-| pass_ | 動 | pass | 通り過ぎる・渡す |  | 4055 | `{}` |
-
 ## 67. PHOTO
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | photo | 動 | photo | 写真 | 動詞 | 3042 | `{"ing": "photoing", "base": "photo", "past": "photoed", "third": "photos"}` |
 | photo_ | 名 | photo | 写真 |  | 3054 | `{"plural": "photos"}` |
-
-## 68. PHOTOGRAPH
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| photograph |  | photograph | 写真 |  |  | `{}` |
-| photograph_ |  | photograph | 写真 |  |  | `{}` |
 
 ## 69. PIANIST
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -399,12 +291,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | pick | 動 | pick | 選ぶ、摘む、拾う | 動詞 | 6065 | `{"ing": "picking", "base": "pick", "past": "picked", "third": "picks"}` |
 | pick_ |  | pick | 選ぶ |  |  | `{}` |
-
-## 71. PIECE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| piece |  | piece | 一片 |  |  | `{}` |
-| piece_ |  | piece | 一片 |  |  | `{}` |
 
 ## 72. PINK
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -424,12 +310,6 @@ Generated on: 2026-05-04
 | pocket |  | pocket | ポケット |  |  | `{}` |
 | pocket_ |  | pocket | ポケット |  |  | `{}` |
 
-## 75. POINT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| point | 名 | point | 点 |  | 5038 | `{}` |
-| point_ | 名 | point | 点 |  | 5037 | `{}` |
-
 ## 76. POLITICIAN
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -448,18 +328,6 @@ Generated on: 2026-05-04
 | pond |  | pond | 池 |  |  | `{}` |
 | pond_ |  | pond | 池 |  |  | `{}` |
 
-## 79. POOR
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| poor |  | poor | 貧しい |  |  | `{}` |
-| poor_ |  | poor | 貧しい |  |  | `{}` |
-
-## 80. POT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| pot |  | pot | 鍋 |  |  | `{}` |
-| pot_ |  | pot | 鍋 |  |  | `{}` |
-
 ## 81. POTLUCK
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -477,12 +345,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | price |  | price | 価格 |  |  | `{}` |
 | price_ |  | price | 価格 |  |  | `{}` |
-
-## 84. PUBLIC
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| public |  | public | 公共の |  |  | `{}` |
-| public_ |  | public | 公共の |  |  | `{}` |
 
 ## 85. PUSH
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -508,23 +370,11 @@ Generated on: 2026-05-04
 | racket | 名 | racket | ラケット |  | 5001 | `{}` |
 | racket_ |  | racket | ラケット |  |  | `{}` |
 
-## 89. RAIN
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| rain | 名 | rain | 雨 | 名詞 |  | `{"plural": null}` |
-| rain_ | 名 | rain | 雨 |  |  | `{"plural": null}` |
-
 ## 90. RAINBOW
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | rainbow |  | rainbow | 虹 |  |  | `{}` |
 | rainbow_ |  | rainbow | 虹 |  |  | `{}` |
-
-## 91. RAINY
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| rainy | 形 | rainy | 雨の | 形容詞 |  | `{}` |
-| rainy_ | 形 | rainy | 雨の |  |  | `{}` |
 
 ## 92. RAN
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -543,12 +393,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | receive |  | receive | 受け取る |  |  | `{}` |
 | receive_ |  | receive | 受け取る |  |  | `{}` |
-
-## 96. RESEARCH
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| research |  | research | 研究 |  |  | `{}` |
-| research_ |  | research | 研究 |  |  | `{}` |
 
 ## 97. RICH
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -580,12 +424,6 @@ Generated on: 2026-05-04
 | rose |  | rose | バラ |  |  | `{}` |
 | rose_ |  | rose | バラ |  |  | `{}` |
 
-## 102. SAFELY
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| safely |  | safely | 安全に |  |  | `{}` |
-| safely_ |  | safely | 安全に |  |  | `{}` |
-
 ## 103. SAN FRANCISCO
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -597,12 +435,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | saw |  | saw | seeの過去形 |  |  | `{}` |
 | saw_see |  | saw | seeの過去形 |  |  | `{}` |
-
-## 105. SCARED
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| scared |  | scared | 怖がって |  |  | `{}` |
-| scared_ |  | scared | 怖がって |  |  | `{}` |
 
 ## 106. SCHOOL DINING HALL
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -621,12 +453,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | scientist |  | scientist | 科学者 |  |  | `{}` |
 | scientist_ |  | scientist | 科学者 |  |  | `{}` |
-
-## 109. SCORE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| score |  | score | 得点 |  |  | `{}` |
-| score_ |  | score | 得点 |  |  | `{}` |
 
 ## 110. SCOTTISH
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -652,12 +478,6 @@ Generated on: 2026-05-04
 | seventieth | 名 | seventieth | 70番目の |  |  | `{}` |
 | seventieth_70 |  | seventieth | 70番目の |  |  | `{}` |
 
-## 119. SHOULDER
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| shoulder | 名 | shoulder | 肩 | 名詞 |  | `{"plural": "shoulders"}` |
-| shoulder_ | 名 | shoulder | 肩 |  |  | `{"plural": "shoulders"}` |
-
 ## 120. SHOVE
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -670,29 +490,11 @@ Generated on: 2026-05-04
 | show | 名 | show | 見せる、示す | 名詞 | 4075 | `{"plural": "shows"}` |
 | show_ | 動・名 | show | 見せる・ショー |  | 4063 | `{}` |
 
-## 122. SHOWER
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| shower | 名 | shower | シャワー | 名詞 | 4084 | `{"plural": "showers"}` |
-| shower_ | 名 | shower | シャワー |  |  | `{"plural": "showers"}` |
-
 ## 123. SHRINE
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | shrine |  | shrine | 神社 |  |  | `{}` |
 | shrine_ |  | shrine | 神社 |  |  | `{}` |
-
-## 124. SICK
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| sick | 形 | sick | 病気の | 形容詞 |  | `{}` |
-| sick_ | 形 | sick | 病気の |  |  | `{}` |
-
-## 125. SIGN
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| sign |  | sign | 看板 |  |  | `{}` |
-| sign_ |  | sign | 看板 |  |  | `{}` |
 
 ## 126. SIMILAR
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -706,23 +508,11 @@ Generated on: 2026-05-04
 | since |  | since | 〜以来 |  |  | `{}` |
 | since_ |  | since | 〜以来 |  |  | `{}` |
 
-## 128. SING
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| sing | 動 | sing | 歌う | 動詞 | 6035 | `{"ing": "singing", "base": "sing", "past": "sang", "third": "sings"}` |
-| sing_ | 動 | sing | 歌う |  |  | `{}` |
-
 ## 129. SIR
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | sir |  | sir | あなた（男性への敬称） |  |  | `{}` |
 | sir_ |  | sir | あなた（男性への敬称） |  |  | `{}` |
-
-## 130. SIT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| sit | 動 | sit | 座る | 動詞 | 6076 | `{"ing": "sitting", "base": "sit", "past": "sat", "third": "sits"}` |
-| sit_ | 動 | sit | 座る |  |  | `{}` |
 
 ## 131. SIX
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -765,24 +555,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | sleigh |  | sleigh | そり |  |  | `{}` |
 | sleigh_ |  | sleigh | そり |  |  | `{}` |
-
-## 138. SLICE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| slice |  | slice | 薄切り |  |  | `{}` |
-| slice_ |  | slice | 薄切り |  |  | `{}` |
-
-## 139. SMELL
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| smell |  | smell | 匂いがする |  |  | `{}` |
-| smell_ |  | smell | 匂いがする |  |  | `{}` |
-
-## 140. SOCK
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| sock | 名 | sock | 靴下 |  | 5082 | `{"plural": "socks"}` |
-| sock_ | 名 | sock | 靴下 |  | 5081 | `{}` |
 
 ## 141. SOFTBALL
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -833,12 +605,6 @@ Generated on: 2026-05-04
 | spent |  | spent | spendの過去形 |  |  | `{}` |
 | spent_spen |  | spent | spendの過去形 |  |  | `{}` |
 
-## 149. SPICY
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| spicy |  | spicy | 辛い |  |  | `{}` |
-| spicy_ |  | spicy | 辛い |  |  | `{}` |
-
 ## 150. SPOKE
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -850,12 +616,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | staff |  | staff | スタッフ |  |  | `{}` |
 | staff_ |  | staff | スタッフ |  |  | `{}` |
-
-## 152. STATE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| state |  | state | 状態 |  |  | `{}` |
-| state_ |  | state | 状態 |  |  | `{}` |
 
 ## 153. STEAK
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -886,12 +646,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | string |  | string | ひも |  |  | `{}` |
 | string_ |  | string | ひも |  |  | `{}` |
-
-## 159. SUCH
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| such |  | such | そのような |  |  | `{}` |
-| such_ |  | such | そのような |  |  | `{}` |
 
 ## 161. SURE
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -1043,23 +797,11 @@ Generated on: 2026-05-04
 | the San Francisco Giants |  | the San Francisco Giants | サンフランシスコ・ジャイアンツ |  |  | `{}` |
 | thesanfranciscogiants_ |  | the San Francisco Giants | サンフランシスコ・ジャイアンツ |  |  | `{}` |
 
-## 187. THEN
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| then | 副 | then | その時・それから | 副詞 |  | `{}` |
-| then_ | 副 | then | その時・それから |  |  | `{}` |
-
 ## 188. THIRD
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | third | 形 | third | 3番目 | 形容詞 |  | `{}` |
 | third_3 | 形 | third | 3番目 |  |  | `{}` |
-
-## 189. USEFUL
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| useful | 形 | useful | 役立つ | 形容詞 |  | `{}` |
-| useful_ | 形 | useful | 役立つ |  |  | `{}` |
 
 ## 190. USUALLY
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -1085,29 +827,11 @@ Generated on: 2026-05-04
 | vision |  | vision | 視力 |  |  | `{}` |
 | vision_ |  | vision | 視力 |  |  | `{}` |
 
-## 198. VISIT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| visit | 動 | visit | 訪れる | 動詞 | 5065 | `{"ing": "visiting", "base": "visit", "past": "visited", "third": "visits"}` |
-| visit_ | 動 | visit | 訪れる |  | 5066 | `{"third": "visits"}` |
-
 ## 199. VOLLEYBALL
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | volleyball | 動 | volleyball | バレーボール | 名詞 | 3103 | `{"ing": "volleyballing", "base": "volleyball", "past": "volleyballed", "third": "volleyballs"}` |
 | volleyball_ | 名 | volleyball | バレーボール |  |  | `{"plural": null}` |
-
-## 200. VOLUNTEER
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| volunteer | 名 | volunteer | ボランティア | 名詞 |  | `{"plural": "volunteers"}` |
-| volunteer_ | 名 | volunteer | ボランティア |  |  | `{"plural": "volunteers"}` |
-
-## 201. WAIT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| wait | 動 | wait | 待つ | 動詞 |  | `{"ing": "waiting", "base": "wait", "past": "waited", "third": "waits"}` |
-| wait_ | 動 | wait | 待つ |  |  | `{}` |
 
 ## 202. WAITRESS
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -1127,23 +851,11 @@ Generated on: 2026-05-04
 | wall | 名 | wall | 壁 | 名詞 | 4049 | `{"plural": "walls"}` |
 | wall_ |  | wall | 壁 |  | 4084 | `{}` |
 
-## 205. WANT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| want | 動 | want | 欲しい | 動詞 | 3032 | `{"ing": "wanting", "base": "want", "past": "wanted", "third": "wants"}` |
-| want_ | 動 | want | 欲しい |  | 3041 | `{}` |
-
 ## 206. WAR
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
 | war |  | war | 戦争 |  |  | `{}` |
 | war_ |  | war | 戦争 |  |  | `{}` |
-
-## 207. WARM
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| warm | 形 | warm | 暖かい | 形容詞 |  | `{}` |
-| warm_ | 形 | warm | 暖かい |  |  | `{}` |
 
 ## 208. WAS
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -1204,18 +916,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | who're |  | who're | who areの短縮形 |  |  | `{}` |
 | whore_whoa |  | who're | who areの短縮形 |  |  | `{}` |
-
-## 220. WILD
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| wild |  | wild | 野生の |  |  | `{}` |
-| wild_ |  | wild | 野生の |  |  | `{}` |
-
-## 221. WOLF
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| wolf |  | wolf | オオカミ |  |  | `{}` |
-| wolf_ |  | wolf | オオカミ |  |  | `{}` |
 
 ## 222. WOLVES
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -1285,14 +985,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | sheep | 名 | sheep | 羊 |  |  | `{}` |
 | sheep_ |  | sheep | 羊 |  |  | `{}` |
-
-## 118. SHEET
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| sheet |  | sheet | シーツ |  |  | `{}` |
-| sheet_ |  | sheet | シーツ |  |  | `{}` |
-
-# Merged / Processed Words
 
 ## 60. OR (Merged)
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -1377,4 +1069,312 @@ Generated on: 2026-05-04
 | video game | 名 | video game | テレビゲーム | 名詞 | 4082 | `{"plural": "video games"}` |
 | video_game | 名 | video game | テレビゲーム | 名詞 | 4031 | `{"plural": "video games"}` |
 | videogame_ | 名 | video game | テレビゲーム |  | 4082 | `{"plural": "video games"}` |
+
+## 2. ACTIVE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| active | 形 | active | 活発な | 形容詞 | 4003 | `{}` |
+| active_ | 形 | active | 活発な |  |  | `{}` |
+
+## 6. BETTER (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| better | 形 | better | より良い | 形容詞 |  | `{}` |
+| better_ | 形 | better | より良い |  |  | `{}` |
+
+## 9. CENTER (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| center | 名 | center | 中心 | 名詞 |  | `{"plural": "centers"}` |
+| center_ | 名 | center | 中心 |  |  | `{"plural": "centers"}` |
+
+## 10. CHEAP (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| cheap | 形 | cheap | 安い | 形容詞 |  | `{}` |
+| cheap_ | 形 | cheap | 安い |  |  | `{}` |
+
+## 15. DELICIOUS (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| delicious | 形 | delicious | おいしい | 形容詞 | 1430 | `{}` |
+| delicious_ | 形 | delicious | おいしい |  | 1067 | `{}` |
+
+## 20. DIE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| die | 動 | die | 死ぬ | 動詞 |  | `{"ing": "dying", "base": "die", "past": "died", "third": "dies"}` |
+| die_ | 動 | die | 死ぬ |  |  | `{}` |
+
+## 21. DIFFICULT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| difficult | 形 | difficult | 難しい | 形容詞 |  | `{}` |
+| difficult_ | 形 | difficult | 難しい |  |  | `{}` |
+
+## 23. DOCTOR (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| doctor | 名 | doctor | 医者 | 名詞 | 1450 | `{"plural": "doctors"}` |
+| doctor_ | 名 | doctor | 医者 |  | 1073 | `{"plural": "doctors"}` |
+
+## 32. FEW (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| few | 形 | few | 少しの | 形容詞 |  | `{}` |
+| few_ | 形 | few | 少しの |  |  | `{}` |
+
+## 34. GROUP (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| group | 名 | group | グループ | 名詞 |  | `{"plural": "groups"}` |
+| group_ | 名 | group | グループ |  |  | `{"plural": "groups"}` |
+
+## 35. GYM (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| gym | 名 | gym | 体育館 | 名詞 |  | `{"plural": "gyms"}` |
+| gym_ | 名 | gym | 体育館 |  |  | `{"plural": "gyms"}` |
+
+## 36. HAMSTER (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| hamster | 名 | hamster | ハムスター | 名詞 | 4086 | `{"plural": "hamsters"}` |
+| hamster_ | 名 | hamster | ハムスター |  | 4036 | `{"plural": "hamsters"}` |
+
+## 51. MINUTE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| minute | 名 | minute | 分 | 名詞 | 9030 | `{"plural": "minutes"}` |
+| minute_ | 名 | minute | 分 |  |  | `{"plural": "minutes"}` |
+
+## 53. MUSEUM (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| museum | 名 | museum | 博物館 | 名詞 | 6019 | `{"plural": "museums"}` |
+| museum_ | 名 | museum | 博物館 |  |  | `{"plural": "museums"}` |
+
+## 54. NEWS (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| news | 名 | news | ニュース | 名詞 | 11026 | `{"plural": null}` |
+| news_ | 名 | news | ニュース |  |  | `{"plural": null}` |
+
+## 58. NUMBER (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| number | 名 | number | 数 | 名詞 |  | `{"plural": "numbers"}` |
+| number_ | 名 | number | 数 |  |  | `{"plural": "numbers"}` |
+
+## 63. PASS (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| pass | 動 | pass | 通り過ぎる・渡す | 動詞 | 4014 | `{"ing": "passing", "base": "pass", "past": "passed", "third": "passes"}` |
+| pass_ | 動 | pass | 通り過ぎる・渡す |  | 4055 | `{}` |
+
+## 68. PHOTOGRAPH (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| photograph |  | photograph | 写真 |  |  | `{}` |
+| photograph_ |  | photograph | 写真 |  |  | `{}` |
+
+## 71. PIECE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| piece |  | piece | 一片 |  |  | `{}` |
+| piece_ |  | piece | 一片 |  |  | `{}` |
+
+## 75. POINT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| point | 名 | point | 点 |  | 5038 | `{}` |
+| point_ | 名 | point | 点 |  | 5037 | `{}` |
+
+## 79. POOR (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| poor |  | poor | 貧しい |  |  | `{}` |
+| poor_ |  | poor | 貧しい |  |  | `{}` |
+
+## 80. POT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| pot |  | pot | 鍋 |  |  | `{}` |
+| pot_ |  | pot | 鍋 |  |  | `{}` |
+
+## 84. PUBLIC (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| public |  | public | 公共の |  |  | `{}` |
+| public_ |  | public | 公共の |  |  | `{}` |
+
+## 89. RAIN (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| rain | 名 | rain | 雨 | 名詞 |  | `{"plural": null}` |
+| rain_ | 名 | rain | 雨 |  |  | `{"plural": null}` |
+
+## 91. RAINY (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| rainy | 形 | rainy | 雨の | 形容詞 |  | `{}` |
+| rainy_ | 形 | rainy | 雨の |  |  | `{}` |
+
+## 96. RESEARCH (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| research |  | research | 研究 |  |  | `{}` |
+| research_ |  | research | 研究 |  |  | `{}` |
+
+## 102. SAFELY (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| safely |  | safely | 安全に |  |  | `{}` |
+| safely_ |  | safely | 安全に |  |  | `{}` |
+
+## 105. SCARED (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| scared |  | scared | 怖がって |  |  | `{}` |
+| scared_ |  | scared | 怖がって |  |  | `{}` |
+
+## 109. SCORE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| score |  | score | 得点 |  |  | `{}` |
+| score_ |  | score | 得点 |  |  | `{}` |
+
+## 119. SHOULDER (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| shoulder | 名 | shoulder | 肩 | 名詞 |  | `{"plural": "shoulders"}` |
+| shoulder_ | 名 | shoulder | 肩 |  |  | `{"plural": "shoulders"}` |
+
+## 122. SHOWER (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| shower | 名 | shower | シャワー | 名詞 | 4084 | `{"plural": "showers"}` |
+| shower_ | 名 | shower | シャワー |  |  | `{"plural": "showers"}` |
+
+## 124. SICK (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| sick | 形 | sick | 病気の | 形容詞 |  | `{}` |
+| sick_ | 形 | sick | 病気の |  |  | `{}` |
+
+## 125. SIGN (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| sign |  | sign | 看板 |  |  | `{}` |
+| sign_ |  | sign | 看板 |  |  | `{}` |
+
+## 128. SING (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| sing | 動 | sing | 歌う | 動詞 | 6035 | `{"ing": "singing", "base": "sing", "past": "sang", "third": "sings"}` |
+| sing_ | 動 | sing | 歌う |  |  | `{}` |
+
+## 130. SIT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| sit | 動 | sit | 座る | 動詞 | 6076 | `{"ing": "sitting", "base": "sit", "past": "sat", "third": "sits"}` |
+| sit_ | 動 | sit | 座る |  |  | `{}` |
+
+## 138. SLICE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| slice |  | slice | 薄切り |  |  | `{}` |
+| slice_ |  | slice | 薄切り |  |  | `{}` |
+
+## 139. SMELL (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| smell |  | smell | 匂いがする |  |  | `{}` |
+| smell_ |  | smell | 匂いがする |  |  | `{}` |
+
+## 140. SOCK (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| sock | 名 | sock | 靴下 |  | 5082 | `{"plural": "socks"}` |
+| sock_ | 名 | sock | 靴下 |  | 5081 | `{}` |
+
+## 149. SPICY (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| spicy |  | spicy | 辛い |  |  | `{}` |
+| spicy_ |  | spicy | 辛い |  |  | `{}` |
+
+## 152. STATE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| state |  | state | 状態 |  |  | `{}` |
+| state_ |  | state | 状態 |  |  | `{}` |
+
+## 159. SUCH (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| such |  | such | そのような |  |  | `{}` |
+| such_ |  | such | そのような |  |  | `{}` |
+
+## 187. THEN (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| then | 副 | then | その時・それから | 副詞 |  | `{}` |
+| then_ | 副 | then | その時・それから |  |  | `{}` |
+
+## 189. USEFUL (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| useful | 形 | useful | 役立つ | 形容詞 |  | `{}` |
+| useful_ | 形 | useful | 役立つ |  |  | `{}` |
+
+## 198. VISIT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| visit | 動 | visit | 訪れる | 動詞 | 5065 | `{"ing": "visiting", "base": "visit", "past": "visited", "third": "visits"}` |
+| visit_ | 動 | visit | 訪れる |  | 5066 | `{"third": "visits"}` |
+
+## 200. VOLUNTEER (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| volunteer | 名 | volunteer | ボランティア | 名詞 |  | `{"plural": "volunteers"}` |
+| volunteer_ | 名 | volunteer | ボランティア |  |  | `{"plural": "volunteers"}` |
+
+## 201. WAIT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| wait | 動 | wait | 待つ | 動詞 |  | `{"ing": "waiting", "base": "wait", "past": "waited", "third": "waits"}` |
+| wait_ | 動 | wait | 待つ |  |  | `{}` |
+
+## 205. WANT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| want | 動 | want | 欲しい | 動詞 | 3032 | `{"ing": "wanting", "base": "want", "past": "wanted", "third": "wants"}` |
+| want_ | 動 | want | 欲しい |  | 3041 | `{}` |
+
+## 207. WARM (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| warm | 形 | warm | 暖かい | 形容詞 |  | `{}` |
+| warm_ | 形 | warm | 暖かい |  |  | `{}` |
+
+## 220. WILD (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| wild |  | wild | 野生の |  |  | `{}` |
+| wild_ |  | wild | 野生の |  |  | `{}` |
+
+## 221. WOLF (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| wolf |  | wolf | オオカミ |  |  | `{}` |
+| wolf_ |  | wolf | オオカミ |  |  | `{}` |
+
+## 118. SHEET (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| sheet |  | sheet | シーツ |  |  | `{}` |
+| sheet_ |  | sheet | シーツ |  |  | `{}` |
+
+# Merged / Processed Words
 
