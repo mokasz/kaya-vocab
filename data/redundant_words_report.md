@@ -544,12 +544,6 @@ Generated on: 2026-05-04
 | receive |  | receive | 受け取る |  |  | `{}` |
 | receive_ |  | receive | 受け取る |  |  | `{}` |
 
-## 95. RECIPE
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| recipe | 名 | recipe | レシピ、調理法 | 名詞 | 4034 | `{"plural": "recipes"}` |
-| recipe_ | 名 | recipe | レシピ |  |  | `{"plural": "recipes"}` |
-
 ## 96. RESEARCH
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -899,12 +893,6 @@ Generated on: 2026-05-04
 | such |  | such | そのような |  |  | `{}` |
 | such_ |  | such | そのような |  |  | `{}` |
 
-## 160. SUPERMARKET
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| supermarket | 名 | supermarket | スーパーマーケット | 名詞 | 4001 | `{"plural": "supermarkets"}` |
-| supermarket_ | 名 | supermarket | スーパーマーケット |  |  | `{"plural": "supermarkets"}` |
-
 ## 161. SURE
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -1037,12 +1025,6 @@ Generated on: 2026-05-04
 | Thanksgiving |  | Thanksgiving | 感謝祭 |  |  | `{}` |
 | thanksgiving_ |  | Thanksgiving | 感謝祭 |  |  | `{}` |
 
-## 183. THAT
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| that |  | that | あの |  |  | `{}` |
-| that_ | 名 | that | あの |  | 1040 | `{}` |
-
 ## 184. THE GOLDEN GATE BRIDGE
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
 |:---|:---|:---|:---|:---|:---|:---|
@@ -1090,25 +1072,6 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | vacation | 名 | vacation | 休暇、休み | 名詞 | 4055 | `{"plural": "vacations"}` |
 | vacation_ | 名 | vacation | 休暇 |  | 4079 | `{"plural": "vacations"}` |
-
-## 193. VIDEO
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| video | 名 | video | 動画、ビデオ | 名詞 | 4021 | `{"plural": "videos"}` |
-| video_ | 名 | video | ビデオ |  |  | `{"plural": "videos"}` |
-
-## 194. VIDEO CALL
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| video_call | 名 | video call | テレビ電話、ビデオ通話 | 名詞 | 4029 | `{"plural": "video calls"}` |
-| video_call_ | 名 | video call | ビデオ通話 |  |  | `{"plural": "video calls"}` |
-
-## 195. VIDEO GAME
-| word_key | pos | front | back_main | back_sub | sort_order | metadata |
-|:---|:---|:---|:---|:---|:---|:---|
-| video game | 名 | video game | テレビゲーム | 名詞 | 4082 | `{"plural": "video games"}` |
-| video_game | 名 | video game | テレビゲーム | 名詞 | 4031 | `{"plural": "video games"}` |
-| videogame_ | 名 | video game | テレビゲーム |  | 4082 | `{"plural": "video games"}` |
 
 ## 196. VILLAGE
 | word_key | pos | front | back_main | back_sub | sort_order | metadata |
@@ -1378,3 +1341,40 @@ Generated on: 2026-05-04
 |:---|:---|:---|:---|:---|:---|:---|
 | who's |  | who's | who isの短縮形 |  |  | `{}` |
 | whos_whoi | 名 | who's | who isの短縮形 |  | 2054 | `{}` |
+## 95. RECIPE (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| recipe | 名 | recipe | レシピ、調理法 | 名詞 | 4034 | `{"plural": "recipes"}` |
+| recipe_ | 名 | recipe | レシピ |  |  | `{"plural": "recipes"}` |
+
+## 160. SUPERMARKET (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| supermarket | 名 | supermarket | スーパーマーケット | 名詞 | 4001 | `{"plural": "supermarkets"}` |
+| supermarket_ | 名 | supermarket | スーパーマーケット |  |  | `{"plural": "supermarkets"}` |
+
+## 183. THAT (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| that |  | that | あの |  |  | `{}` |
+| that_ | 名 | that | あの |  | 1040 | `{}` |
+
+## 193. VIDEO (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| video | 名 | video | 動画、ビデオ | 名詞 | 4021 | `{"plural": "videos"}` |
+| video_ | 名 | video | ビデオ |  |  | `{"plural": "videos"}` |
+
+## 194. VIDEO CALL (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| video_call | 名 | video call | テレビ電話、ビデオ通話 | 名詞 | 4029 | `{"plural": "video calls"}` |
+| video_call_ | 名 | video call | ビデオ通話 |  |  | `{"plural": "video calls"}` |
+
+## 195. VIDEO GAME (Merged)
+| word_key | pos | front | back_main | back_sub | sort_order | metadata |
+|:---|:---|:---|:---|:---|:---|:---|
+| video game | 名 | video game | テレビゲーム | 名詞 | 4082 | `{"plural": "video games"}` |
+| video_game | 名 | video game | テレビゲーム | 名詞 | 4031 | `{"plural": "video games"}` |
+| videogame_ | 名 | video game | テレビゲーム |  | 4082 | `{"plural": "video games"}` |
+

@@ -147,7 +147,7 @@
       "image": ""
     },
     {
-      "id": "recipe_",
+      "id": "recipe",
       "word": "recipe",
       "english": "recipes",
       "japanese": "レシピ",
@@ -211,7 +211,7 @@
       "plural": null
     },
     {
-      "id": "sun_",
+      "id": "sun",
       "word": "sun",
       "english": "sun",
       "japanese": "太陽",
@@ -227,7 +227,7 @@
       "plural": null
     },
     {
-      "id": "supermarket_",
+      "id": "supermarket",
       "word": "supermarket",
       "english": "supermarkets",
       "japanese": "スーパーマーケット",
@@ -262,7 +262,7 @@
       "ing": "thanking"
     },
     {
-      "id": "that_",
+      "id": "that",
       "word": "that",
       "english": "that",
       "japanese": "あの",
@@ -326,7 +326,7 @@
       "plural": "umbrellas"
     },
     {
-      "id": "video_",
+      "id": "video",
       "word": "video",
       "english": "videos",
       "japanese": "ビデオ",
@@ -342,7 +342,7 @@
       "plural": "videos"
     },
     {
-      "id": "violet_",
+      "id": "violet",
       "word": "violet",
       "english": "violet",
       "japanese": "すみれ色",
