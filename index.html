@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1778017113">
+  <meta name="words-version" content="1778074603">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -429,7 +429,7 @@ const REVIEW_LOG_KEY = BOOK_KEY + '_review_log_pending';
 let isSyncing = false;
 const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 
-const POS_MAP = {'名':'名詞','動':'動詞','副':'副詞','形':'形容詞','前':'前置詞','副・前':'副詞・前置詞'};
+const POS_MAP = {'名':'名詞','固':'固有名詞','動':'動詞','副':'副詞','形':'形容詞','前':'前置詞','副・前':'副詞・前置詞'};
 
 let words = [], queue = [], qi = 0, storyData = null, wordsVersion = '0';
 let stats = {correct:0, incorrect:0};
@@ -461,7 +461,10 @@ const playAudio = src => {
   a.onended = () => { if (_currentAudio === a) _currentAudio = null; };
   a.play().catch(() => {});
 };
-const playWord = () => playAudio(AUDIO + 'words/' + queue[qi].word + '.mp3');
+const playWord = () => {
+  const w = queue[qi];
+  playAudio(AUDIO + 'words/' + (w.english || w.word) + '.mp3');
+};
 const playSent = () => playAudio(AUDIO + 'sentences/' + queue[qi].id + '.mp3');
 const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '.mp3');
 
@@ -665,7 +668,14 @@ function renderCard() {
   // Front（裏返し中も非表示なので即時更新して問題なし）
   txt('ctr', (qi+1) + ' / ' + words.length);
   const posLabel = POS_MAP[w.pos] || w.pos;
-  txt('fTheme', '(Hint: ' + w.japanese + ' 【' + posLabel + '】)');
+  const pb = (w.pos || '').split('・')[0];
+  let hintT = '(Hint: ' + w.japanese + ' 【' + posLabel + '】)';
+  if (pb === '動' && w.word !== w.english) {
+    if (w.english === w.past) hintT += ' ※過去形';
+    else if (w.english === w.third) hintT += ' ※3人称単数';
+    else if (w.english === w.ing) hintT += ' ※ing形';
+  }
+  txt('fTheme', hintT);
   $('fTheme').style.visibility = 'hidden';
   $('hintTheme').disabled = false;
   const img = $('cardIllust');
@@ -706,19 +716,31 @@ function checkAnswer() {
   const target = w.english.trim().replace(/\s+/g, ' ').toLowerCase();
   const correct = typed === target;
   
-  // 単複のミスの検知（正解ではなく、かつ単数形か複数形のいずれかと一致する）
-  // w.word は単数形（ベースの単語）、w.english は出題の正解、w.plural は複数形
-  const isSingular = typed === w.word.trim().replace(/\s+/g, ' ').toLowerCase();
-  const isPlural = w.plural && typed === w.plural.trim().replace(/\s+/g, ' ').toLowerCase();
-  const pluralMistake = !correct && (isSingular || isPlural);
+  const posBase = (w.pos || '').split('・')[0];
+  const isNoun = posBase === '名';
+  const isVerb = posBase === '動';
 
-  if (pluralMistake) {
-    // フリップさせずに警告を出す
-    $('ansInput').classList.add('shake');
-    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
-    const needPlural = isSingular; // 単数形を打ってしまった＝複数形が必要
-    txt('fWarning', needPlural ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
-    return; // ここで処理を中断
+  // 単複・活用のミスの検知（正解ではなく、かつ他の形態のいずれかと一致する）
+  // w.word は単数形（ベースの単語）、w.english は出題の正解
+  const typedBase = typed === w.word.trim().replace(/\s+/g, ' ').toLowerCase();
+  const typedPlural = w.plural && typed === w.plural.trim().replace(/\s+/g, ' ').toLowerCase();
+  const typedThird = w.third && typed === w.third.trim().replace(/\s+/g, ' ').toLowerCase();
+  const typedPast = w.past && typed === w.past.trim().replace(/\s+/g, ' ').toLowerCase();
+  const typedIng = w.ing && typed === w.ing.trim().replace(/\s+/g, ' ').toLowerCase();
+
+  if (!correct) {
+    if (isNoun && (typedBase || typedPlural)) {
+      $('ansInput').classList.add('shake');
+      setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+      txt('fWarning', typedBase ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
+      return;
+    }
+    if (isVerb && (typedBase || typedThird || typedPast || typedIng)) {
+      $('ansInput').classList.add('shake');
+      setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+      txt('fWarning', '惜しい！形（時制や三単現など）を確認してね');
+      return;
+    }
   }
 
   // 以降は通常の正解または完全な間違いの処理
