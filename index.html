@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1778164763">
+  <meta name="words-version" content="1778247410">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -429,7 +429,7 @@ const REVIEW_LOG_KEY = BOOK_KEY + '_review_log_pending';
 let isSyncing = false;
 const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 
-const POS_MAP = {'名':'名詞','固':'固有名詞','動':'動詞','副':'副詞','形':'形容詞','前':'前置詞','副・前':'副詞・前置詞'};
+const POS_MAP = {'名':'名詞','固':'固有名詞','動':'動詞','副':'副詞','形':'形容詞','前':'前置詞','副・前':'副詞・前置詞','短':'短縮形','熟':'熟語'};
 
 let words = [], queue = [], qi = 0, storyData = null, wordsVersion = '0';
 let stats = {correct:0, incorrect:0};
