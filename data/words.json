@@ -23,7 +23,14 @@
       "base": "be",
       "third": "is",
       "past": "was",
-      "ing": "being"
+      "ing": "being",
+      "sort_order": 10290,
+      "meta": {
+        "ing": "being",
+        "base": "be",
+        "past": "was",
+        "third": "is"
+      }
     },
     {
       "id": "aren't",
@@ -38,7 +45,9 @@
       "lastSeen": null,
       "sentence": "You aren't from Canada.",
       "sentence_ja": "あなたはカナダ出身ではありません。",
-      "image": "data/images/aren't.png"
+      "image": "data/images/aren't.png",
+      "sort_order": 10306,
+      "meta": {}
     },
     {
       "id": "boat",
@@ -54,7 +63,11 @@
       "sentence": "I saw a small boat near the shore.",
       "sentence_ja": "私は岸辺に小さなボートを見ました。",
       "image": "data/images/boat.png",
-      "plural": "boats"
+      "plural": "boats",
+      "sort_order": null,
+      "meta": {
+        "plural": "boats"
+      }
     },
     {
       "id": "call",
@@ -73,7 +86,14 @@
       "base": "call",
       "third": "calls",
       "past": "called",
-      "ing": "calling"
+      "ing": "calling",
+      "sort_order": 10293,
+      "meta": {
+        "ing": "calling",
+        "base": "call",
+        "past": "called",
+        "third": "calls"
+      }
     },
     {
       "id": "everyone",
@@ -88,7 +108,9 @@
       "lastSeen": null,
       "sentence": "Everyone in my class wants to go to the park.",
       "sentence_ja": "私のクラスのみんなが公園に行きたがっています。",
-      "image": ""
+      "image": "",
+      "sort_order": 10327,
+      "meta": {}
     },
     {
       "id": "favorite",
@@ -103,7 +125,9 @@
       "lastSeen": null,
       "sentence": "my favorite doll",
       "sentence_ja": "私のお気に入りの人形",
-      "image": ""
+      "image": "",
+      "sort_order": 10330,
+      "meta": {}
     },
     {
       "id": "food",
@@ -119,7 +143,9 @@
       "sentence": "Okonomiyaki is my favorite Japanese food.",
       "sentence_ja": "お好み焼きは私の大好きな日本料理です。",
       "image": "data/images/food.png",
-      "plural": null
+      "plural": null,
+      "sort_order": 10332,
+      "meta": {}
     },
     {
       "id": "good",
@@ -134,7 +160,9 @@
       "lastSeen": null,
       "sentence": "a good book",
       "sentence_ja": "良い本",
-      "image": ""
+      "image": "",
+      "sort_order": 10336,
+      "meta": {}
     },
     {
       "id": "here",
@@ -149,7 +177,9 @@
       "lastSeen": null,
       "sentence": "Here you are.",
       "sentence_ja": "はい、どうぞ。",
-      "image": ""
+      "image": "",
+      "sort_order": 10314,
+      "meta": {}
     },
     {
       "id": "hot",
@@ -164,7 +194,9 @@
       "lastSeen": null,
       "sentence": "I like hot food.",
       "sentence_ja": "私は辛い食べ物が好きです。",
-      "image": ""
+      "image": "",
+      "sort_order": 10335,
+      "meta": {}
     },
     {
       "id": "is",
@@ -183,7 +215,14 @@
       "base": "be",
       "third": "is",
       "past": "was",
-      "ing": "being"
+      "ing": "being",
+      "sort_order": 10304,
+      "meta": {
+        "ing": "being",
+        "base": "be",
+        "past": "was",
+        "third": "is"
+      }
     },
     {
       "id": "it",
@@ -198,7 +237,9 @@
       "lastSeen": null,
       "sentence": "It's Tom's desk.",
       "sentence_ja": "トムの机です。",
-      "image": ""
+      "image": "",
+      "sort_order": 10321,
+      "meta": {}
     },
     {
       "id": "japanese",
@@ -213,7 +254,9 @@
       "lastSeen": null,
       "sentence": "They enjoyed eating tasty Japanese curry for dinner.",
       "sentence_ja": "彼らは夕食においしい日本のカレーを楽しみました。",
-      "image": ""
+      "image": "",
+      "sort_order": 10331,
+      "meta": {}
     },
     {
       "id": "like_v",
@@ -232,7 +275,14 @@
       "base": "like",
       "third": "likes",
       "past": "liked",
-      "ing": "liking"
+      "ing": "liking",
+      "sort_order": 10334,
+      "meta": {
+        "ing": "liking",
+        "base": "like",
+        "past": "liked",
+        "third": "likes"
+      }
     },
     {
       "id": "movie theater",
@@ -248,7 +298,9 @@
       "sentence": "Let's meet at the movie theater at eight.",
       "sentence_ja": "8時に映画館で会いましょう。",
       "image": "data/images/movie theater.png",
-      "plural": null
+      "plural": null,
+      "sort_order": 111122,
+      "meta": {}
     },
     {
       "id": "next",
@@ -263,7 +315,9 @@
       "lastSeen": null,
       "sentence": "Next, please.",
       "sentence_ja": "次の方、どうぞ。",
-      "image": ""
+      "image": "",
+      "sort_order": 10333,
+      "meta": {}
     },
     {
       "id": "okay",
@@ -278,7 +332,9 @@
       "lastSeen": null,
       "sentence": "Okay.",
       "sentence_ja": "わかりました。",
-      "image": ""
+      "image": "",
+      "sort_order": 10324,
+      "meta": {}
     },
     {
       "id": "pink",
@@ -294,7 +350,9 @@
       "sentence": "a pink shirt",
       "sentence_ja": "ピンクのシャツ",
       "image": "",
-      "plural": null
+      "plural": null,
+      "sort_order": 180,
+      "meta": {}
     },
     {
       "id": "recipe",
@@ -310,7 +368,11 @@
       "sentence": "My mom has many recipe books.",
       "sentence_ja": "この料理のレシピを教えてください。",
       "image": "data/images/recipe.png",
-      "plural": "recipes"
+      "plural": "recipes",
+      "sort_order": 40583,
+      "meta": {
+        "plural": "recipes"
+      }
     },
     {
       "id": "sister",
@@ -326,7 +388,11 @@
       "sentence": "It's my sister's bike.",
       "sentence_ja": "私の姉の自転車です。",
       "image": "data/images/sister.png",
-      "plural": "sisters"
+      "plural": "sisters",
+      "sort_order": 10323,
+      "meta": {
+        "plural": "sisters"
+      }
     },
     {
       "id": "south korea",
@@ -341,7 +407,9 @@
       "lastSeen": null,
       "sentence": "Is he from South Korea?",
       "sentence_ja": "彼は韓国出身ですか？",
-      "image": ""
+      "image": "",
+      "sort_order": 10284,
+      "meta": {}
     },
     {
       "id": "spring",
@@ -357,7 +425,9 @@
       "sentence": "a spring festival",
       "sentence_ja": "春祭り",
       "image": "data/images/spring.png",
-      "plural": null
+      "plural": null,
+      "sort_order": 211,
+      "meta": {}
     },
     {
       "id": "start",
@@ -376,7 +446,14 @@
       "base": "start",
       "third": "starts",
       "past": "started",
-      "ing": "starting"
+      "ing": "starting",
+      "sort_order": 10326,
+      "meta": {
+        "ing": "starting",
+        "base": "start",
+        "past": "started",
+        "third": "starts"
+      }
     },
     {
       "id": "summer",
@@ -392,7 +469,9 @@
       "sentence": "a summer camp",
       "sentence_ja": "サマーキャンプ",
       "image": "data/images/summer.png",
-      "plural": null
+      "plural": null,
+      "sort_order": 212,
+      "meta": {}
     },
     {
       "id": "supermarket",
@@ -408,7 +487,11 @@
       "sentence": "Let's get vegetables at the supermarket.",
       "sentence_ja": "スーパーマーケットで野菜を買いましょう。",
       "image": "data/images/supermarket.png",
-      "plural": "supermarkets"
+      "plural": "supermarkets",
+      "sort_order": 40550,
+      "meta": {
+        "plural": "supermarkets"
+      }
     }
   ],
   "story": {

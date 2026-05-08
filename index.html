@@ -522,6 +522,12 @@ function buildSentWithBlank(sentence, word) {
   return container;
 }
 
+function showHint() {
+  $('fTheme').style.visibility = 'visible';
+  $('hintTheme').disabled = true;
+  hintUsed = true;
+}
+
 // --- Init ---
 async function initApp() {
   const vMeta = document.querySelector('meta[name="words-version"]')?.content || '0';
@@ -584,11 +590,7 @@ async function initApp() {
       $('ansInput').focus();
     }
   });
-  $('hintTheme').onclick = () => {
-    $('fTheme').style.visibility = 'visible';
-    $('hintTheme').disabled = true;
-    hintUsed = true;
-  };
+  $('hintTheme').onclick = showHint;
   $('hintAudio').onclick = () => { playWord(); hintUsed = true; };
   $('btnWordAudio').onclick = playWord;
   $('btnSentAudio').onclick = playSent;
@@ -679,12 +681,19 @@ function renderCard() {
   $('fTheme').style.visibility = 'hidden';
   $('hintTheme').disabled = false;
   const img = $('cardIllust');
+  img.onerror = () => {
+    img.style.display = 'none';
+    showHint();
+  };
   if (w.image) {
     img.style.display = 'none';
     img.alt = w.english;
     img.onload = () => { img.style.display = 'block'; };
     img.src = BASE + w.image.replace(/_(\.png)$/, '$1') + '?v=' + wordsVersion;
-  } else { img.style.display = 'none'; }
+  } else {
+    img.style.display = 'none';
+    showHint();
+  }
 
   clr('fSent');
   $('fSent').appendChild(buildSentWithBlank(w.sentence, w.english));
@@ -699,79 +708,104 @@ function renderCard() {
   }, 600);
 
   // Focus input after flip animation
-  setTimeout(() => $('ansInput').focus(), 100);
+  setTimeout(() => {
+    $('ansInput').focus();
+  }, 100);
+  playWord();
 }
 
 function checkAnswer() {
   if (isFlipped) return;
   const w = queue[qi];
-  const typed = $('ansInput').value.trim().replace(/\s+/g, ' ').toLowerCase();
+  const rawTyped = $('ansInput').value;
+  const target = w.english;
   
-  if (!typed) {
+  if (!rawTyped.trim()) {
     $('ansInput').classList.add('shake');
     setTimeout(() => $('ansInput').classList.remove('shake'), 400);
     return;
   }
 
-  const target = w.english.trim().replace(/\s+/g, ' ').toLowerCase();
-  const correct = typed === target;
-  
+  // 1. 完全一致
+  if (rawTyped === target) {
+    proceedToBack(true, "");
+    return;
+  }
+
+  // 2. 表記ゆれ（大文字小文字・スペース）のソフトエラー判定
+  const normalize = s => s.trim().replace(/\s+/g, ' ').toLowerCase();
+  const normTyped = normalize(rawTyped);
+  const normTarget = normalize(target);
+
+  if (normTyped === normTarget) {
+    const hasSpaceErr = (rawTyped.trim() !== rawTyped) || (rawTyped.replace(/\s+/g, ' ') !== rawTyped);
+    const hasCaseErr = (rawTyped.toLowerCase() !== target.toLowerCase());
+
+    let msg = "惜しい！";
+    if (hasSpaceErr && hasCaseErr) msg += "大文字・小文字とスペースを確認してね";
+    else if (hasSpaceErr) msg += "余分なスペースが入っているよ";
+    else msg += "大文字・小文字を確認してね";
+
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    txt('fWarning', msg);
+    return;
+  }
+
+  // 3. 既存の「単複・活用ミス」等の判定（正規化後の比較）
+  const typed = normTyped;
   const posBase = (w.pos || '').split('・')[0];
   const isNoun = posBase === '名';
   const isVerb = posBase === '動';
 
-  // 単複・活用のミスの検知（正解ではなく、かつ他の形態のいずれかと一致する）
-  // w.word は単数形（ベースの単語）、w.english は出題の正解
   const typedBase = typed === w.word.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedPlural = w.plural && typed === w.plural.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedThird = w.third && typed === w.third.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedPast = w.past && typed === w.past.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedIng = w.ing && typed === w.ing.trim().replace(/\s+/g, ' ').toLowerCase();
 
-  if (!correct) {
-    if (isNoun && (typedBase || typedPlural)) {
-      $('ansInput').classList.add('shake');
-      setTimeout(() => $('ansInput').classList.remove('shake'), 400);
-      txt('fWarning', typedBase ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
-      return;
-    }
-    if (isVerb && (typedBase || typedThird || typedPast || typedIng)) {
-      $('ansInput').classList.add('shake');
-      setTimeout(() => $('ansInput').classList.remove('shake'), 400);
-      txt('fWarning', '惜しい！形（時制や三単現など）を確認してね');
-      return;
-    }
+  if (isNoun && (typedBase || typedPlural)) {
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    txt('fWarning', typedBase ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
+    return;
+  }
+  if (isVerb && (typedBase || typedThird || typedPast || typedIng)) {
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    txt('fWarning', '惜しい！形（時制や三単現など）を確認してね');
+    return;
   }
 
-  // 以降は通常の正解または完全な間違いの処理
+  // 4. 不正解
+  const wrongMsg = '❌ 入力: "' + rawTyped + '"  →  正解: "' + target + '"';
+  proceedToBack(false, wrongMsg);
+}
+
+function proceedToBack(correct, badgeText) {
+  const w = queue[qi];
   txt('fWarning', '');
   isFlipped = true;
   $('card3d').classList.add('flipped');
   $('faceB').classList.add(correct ? 'correct' : 'wrong');
-  // 600ms未満で解答した場合に備えて裏面コンテンツを確実にセット
   if (!$('ansWord').textContent) populateBackFace(w);
 
-  const wrongMsg = correct ? '' : '❌ 入力: "' + typed + '"  →  正解: "' + w.english + '"';
-  txt('resBadge', correct ? '✅ Correct!' : wrongMsg);
+  txt('resBadge', correct ? '✅ Correct!' : badgeText);
   $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
   txt('typedWrong', '');
 
-  // Audio feedback: word → sentence (both correct and incorrect)
   setTimeout(() => playIncorrectSequence(w), 350);
 
-  // Build result buttons based on correctness + hint usage
   clr('resRow');
   const btns = document.createElement('div');
   btns.className = 'res-btns';
 
   if (!correct) {
-    // Incorrect → auto red
     const b = document.createElement('button');
     b.className = 'rb next'; b.textContent = '次へ →';
     b.onclick = () => record('red');
     btns.appendChild(b);
   } else {
-    // Correct → green by default, can downgrade (hint does not affect result)
     const bReview = document.createElement('button');
     bReview.className = 'rb review'; bReview.textContent = 'もう一回';
     bReview.onclick = () => record('yellow');
@@ -1232,5 +1266,8 @@ async function bootAuth() {
 
 bootAuth();
 </script>
+</body>
+</html>
+
 </body>
 </html>
