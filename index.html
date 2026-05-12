@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1778500860">
+  <meta name="words-version" content="1778595387">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -486,10 +486,13 @@ async function playIncorrectSequence(w) {
 }
 
 // --- Story highlight (safe DOM, matchAll) ---
+function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
 function buildHighlight(sentence) {
   const wrap = document.createElement('span');
   wrap.className = 'stxt';
-  const re = new RegExp('\\b(' + VOCAB.join('|') + ')(s?)\\b', 'gi');
+  const escapedVocab = VOCAB.map(v => escapeRegExp(v)).join('|');
+  const re = new RegExp('\\b(' + escapedVocab + ')(s?)(?!\\w)', 'gi');
   const ms = [...sentence.matchAll(re)];
   let pos = 0;
   ms.forEach(m => {
@@ -504,7 +507,7 @@ function buildHighlight(sentence) {
 
 // --- Build sentence with blank using DOM ---
 function buildSentWithBlank(sentence, word) {
-  const re = new RegExp('\\b' + word + 's?\\b', 'i');
+  const re = new RegExp('\\b' + escapeRegExp(word) + 's?(?!\\w)', 'i');
   const m = re.exec ? sentence.match(re) : null;
   const container = document.createElement('span');
   if (!m) {
@@ -627,7 +630,7 @@ function populateBackFace(w) {
     });
   }
   clr('fullSent');
-  const re2 = new RegExp('\\b' + w.english + 's?\\b', 'gi');
+  const re2 = new RegExp('\\b' + escapeRegExp(w.english) + 's?(?!\\w)', 'gi');
   const ms = [...w.sentence.matchAll(re2)];
   if (ms.length > 0) {
     let pos2 = 0;
@@ -1138,7 +1141,7 @@ function renderRefSlide() {
   const sentEl = document.createElement('div');
   sentEl.className = 'ref-sent';
   const sentP = document.createElement('p');
-  const re = new RegExp('\\b' + w.english + 's?\\b', 'gi');
+  const re = new RegExp('\\b' + escapeRegExp(w.english) + 's?(?!\\w)', 'gi');
   const ms = [...w.sentence.matchAll(re)];
   if (ms.length > 0) {
     let pos = 0;
