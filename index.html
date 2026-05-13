@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1778595387">
+  <meta name="words-version" content="1778668589">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -649,6 +649,8 @@ function populateBackFace(w) {
 
 function renderCard() {
   if (qi >= queue.length) { showDone(); return; }
+  $('doneWrap').style.display = 'none';
+  $('cardWrap').style.display = 'block';
   const w = queue[qi];
 
   // Reset flip — start animation (180° → 0°)
@@ -671,7 +673,7 @@ function renderCard() {
   txt('resBadge', '');
 
   // Front（裏返し中も非表示なので即時更新して問題なし）
-  txt('ctr', (qi+1) + ' / ' + words.length);
+  txt('ctr', (qi+1) + ' / ' + queue.length);
   const posLabel = POS_MAP[w.pos] || w.pos;
   const pb = (w.pos || '').split('・')[0];
   let hintT = '(Hint: ' + w.japanese + ' 【' + posLabel + '】)';
@@ -1211,7 +1213,7 @@ function switchTab(name, btn) {
   $('tab-'+name).classList.add('on');
   btn.classList.add('on');
   if (name === 'cards' && queue.length > 0 && qi < queue.length) {
-    txt('ctr', (qi+1) + ' / ' + words.length);
+    txt('ctr', (qi+1) + ' / ' + queue.length);
 
   }
 }
