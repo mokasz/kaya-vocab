@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1778668589">
+  <meta name="words-version" content="1778749792">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -741,6 +741,14 @@ function checkAnswer() {
   const normalize = s => s.trim().replace(/\s+/g, ' ').toLowerCase();
   const normTyped = normalize(rawTyped);
   const normTarget = normalize(target);
+
+  // 短縮形の展開形チェック
+  if (w.meta?.expanded && w.meta.expanded.includes(normTyped)) {
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    txt('fWarning', '惜しい！短縮形を入力してね');
+    return;
+  }
 
   if (normTyped === normTarget) {
     const hasSpaceErr = (rawTyped.trim() !== rawTyped) || (rawTyped.replace(/\s+/g, ' ') !== rawTyped);
