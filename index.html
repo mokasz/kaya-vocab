@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1780740059">
+  <meta name="words-version" content="1780897701">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -773,14 +773,15 @@ function checkAnswer() {
 
   const typedBase = typed === w.word.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedPlural = w.plural && typed === w.plural.trim().replace(/\s+/g, ' ').toLowerCase();
+  const typedSingular = w.singular && typed === w.singular.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedThird = w.third && typed === w.third.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedPast = w.past && typed === w.past.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedIng = w.ing && typed === w.ing.trim().replace(/\s+/g, ' ').toLowerCase();
 
-  if (isNoun && (typedBase || typedPlural)) {
+  if (isNoun && (typedBase || typedPlural || typedSingular)) {
     $('ansInput').classList.add('shake');
     setTimeout(() => $('ansInput').classList.remove('shake'), 400);
-    txt('fWarning', typedBase ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
+    txt('fWarning', (typedBase || typedSingular) ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
     return;
   }
   if (isVerb && (typedBase || typedThird || typedPast || typedIng)) {
