@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1783676987">
+  <meta name="words-version" content="1783772048">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -757,14 +757,15 @@ function checkAnswer() {
     return;
   }
 
-  // 1. 完全一致
-  if (rawTyped === target) {
+  // 1. 完全一致（またはハイフンとスペースの違いのみで一致）
+  const cleanForMatch = s => s.replace(/-/g, ' ');
+  if (cleanForMatch(rawTyped) === cleanForMatch(target)) {
     proceedToBack(true, "");
     return;
   }
 
-  // 2. 表記ゆれ（大文字小文字・スペース）のソフトエラー判定
-  const normalize = s => s.trim().replace(/\s+/g, ' ').toLowerCase();
+  // 2. 表記ゆれ（大文字小文字・スペース・ハイフン）のソフトエラー判定
+  const normalize = s => s.trim().replace(/-/g, ' ').replace(/\s+/g, ' ').toLowerCase();
   const normTyped = normalize(rawTyped);
   const normTarget = normalize(target);
 
@@ -777,8 +778,11 @@ function checkAnswer() {
   }
 
   if (normTyped === normTarget) {
+    const typedClean = rawTyped.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+    const targetClean = target.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+
     const hasSpaceErr = (rawTyped.trim() !== rawTyped) || (rawTyped.replace(/\s+/g, ' ') !== rawTyped);
-    const hasCaseErr = (rawTyped.toLowerCase() !== target.toLowerCase());
+    const hasCaseErr = (typedClean !== targetClean);
 
     let msg = "惜しい！";
     if (hasSpaceErr && hasCaseErr) msg += "大文字・小文字とスペースを確認してね";
