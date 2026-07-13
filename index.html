@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1783772048">
+  <meta name="words-version" content="1783943607">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -759,7 +759,12 @@ function checkAnswer() {
 
   // 1. 完全一致（またはハイフンとスペースの違いのみで一致）
   const cleanForMatch = s => s.replace(/-/g, ' ');
-  if (cleanForMatch(rawTyped) === cleanForMatch(target)) {
+  const rawClean = cleanForMatch(rawTyped);
+  let isMatched = (rawClean === cleanForMatch(target));
+  if (!isMatched && w.meta?.aliases && Array.isArray(w.meta.aliases)) {
+    isMatched = w.meta.aliases.some(alias => cleanForMatch(alias) === rawClean);
+  }
+  if (isMatched) {
     proceedToBack(true, "");
     return;
   }
@@ -777,9 +782,19 @@ function checkAnswer() {
     return;
   }
 
+  let matchedTarget = null;
   if (normTyped === normTarget) {
+    matchedTarget = target;
+  } else if (w.meta?.aliases && Array.isArray(w.meta.aliases)) {
+    const matchedAlias = w.meta.aliases.find(alias => normalize(alias) === normTyped);
+    if (matchedAlias) {
+      matchedTarget = matchedAlias;
+    }
+  }
+
+  if (matchedTarget) {
     const typedClean = rawTyped.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
-    const targetClean = target.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+    const targetClean = matchedTarget.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
 
     const hasSpaceErr = (rawTyped.trim() !== rawTyped) || (rawTyped.replace(/\s+/g, ' ') !== rawTyped);
     const hasCaseErr = (typedClean !== targetClean);
