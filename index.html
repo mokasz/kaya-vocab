@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1784114825">
+  <meta name="words-version" content="1784204318">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -834,6 +834,17 @@ function checkAnswer() {
     setTimeout(() => $('ansInput').classList.remove('shake'), 400);
     txt('fWarning', '惜しい！形（時制や三単現など）を確認してね');
     return;
+  }
+
+  // 3.5. 序数を基数に間違えた場合のソフトエラー判定
+  if (w.meta?.cardinal) {
+    const normCardinal = normalize(w.meta.cardinal);
+    if (typed === normCardinal) {
+      $('ansInput').classList.add('shake');
+      setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+      txt('fWarning', '惜しい！序数（〜番目の）で入力してね');
+      return;
+    }
   }
 
   // 4. 不正解
