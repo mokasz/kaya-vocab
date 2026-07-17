@@ -967,6 +967,7 @@ async function flushPending() {
 
 function sm2Update(word, quality) {
   if (quality < 2) {           // 不正解 (red)
+    word.ease = Math.max(1.3, word.ease - 0.2); // 不正解時に難易度を上げるペナルティ
     word.interval = 1;
     word.repetitions = 0;
     return;
