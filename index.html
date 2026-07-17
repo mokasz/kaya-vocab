@@ -435,6 +435,7 @@ let words = [], queue = [], qi = 0, storyData = null, wordsVersion = '0';
 let stats = {correct:0, incorrect:0};
 let isFlipped = false;
 let hintUsed = false;
+let lastTypedIncorrect = null;
 let refCards = [], refIdx = 0;
 let currentUser = null;
 
@@ -682,6 +683,7 @@ function renderCard() {
   // Reset flip — start animation (180° → 0°)
   isFlipped = false;
   hintUsed = false;
+  lastTypedIncorrect = null;
   $('card3d').classList.remove('flipped');
   $('faceB').classList.remove('correct', 'wrong');
   $('ansInput').value = '';
@@ -869,6 +871,7 @@ function checkAnswer() {
   }
 
   // 4. 不正解
+  lastTypedIncorrect = rawTyped;
   const wrongMsg = '❌ 入力: "' + rawTyped + '"  →  正解: "' + target + '"';
   proceedToBack(false, wrongMsg);
 }
@@ -1055,8 +1058,15 @@ function record(status) {
 
     // レビューログを localStorage に書き込む（flushPending() でリトライ付き送信）
     const fsrsRating = { green: 4, yellow: 2, red: 1 }[status] ?? 1;
+    const typedIncorrect = (status === 'red') ? lastTypedIncorrect : null;
     const logPending = JSON.parse(localStorage.getItem(REVIEW_LOG_KEY) || '[]');
-    logPending.push({ user_id: currentUser.id, book_key: BOOK_KEY, word_key: w.id, rating: fsrsRating });
+    logPending.push({ 
+      user_id: currentUser.id, 
+      book_key: BOOK_KEY, 
+      word_key: w.id, 
+      rating: fsrsRating,
+      typed_incorrect: typedIncorrect 
+    });
     localStorage.setItem(REVIEW_LOG_KEY, JSON.stringify(logPending));
 
     // progress_sync と review_log をまとめて Supabase に送信
