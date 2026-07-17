@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1784204318">
+  <meta name="words-version" content="1784277356">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -466,7 +466,7 @@ const playWord = () => {
   const w = queue[qi];
   playAudio(AUDIO + 'words/' + (w.english || w.word) + '.mp3');
 };
-const playSent = () => playAudio(AUDIO + 'sentences/' + queue[qi].id + '.mp3');
+const playSent = () => playAudio(BASE + queue[qi].sentence_audio);
 const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '.mp3');
 
 // Promise-based audio (for sequencing)
@@ -483,7 +483,7 @@ function playAudioP(src) {
 // Backside audio sequence: word → sentence
 async function playIncorrectSequence(w) {
   await playAudioP(AUDIO + 'words/' + (w.english || w.word) + '.mp3');
-  await playAudioP(AUDIO + 'sentences/' + w.id + '.mp3');
+  await playAudioP(BASE + w.sentence_audio);
 }
 
 // --- Story highlight (safe DOM, matchAll) ---
@@ -1280,7 +1280,7 @@ function renderRefSlide() {
   wBtn.onclick = () => playAudio(AUDIO + 'words/' + (w.english || w.word) + '.mp3');
   const sBtn = document.createElement('button');
   sBtn.className = 'audio-btn s'; sBtn.textContent = '🔊 例文';
-  sBtn.onclick = () => playAudio(AUDIO + 'sentences/' + w.id + '.mp3');
+  sBtn.onclick = () => playAudio(BASE + w.sentence_audio);
   audioRow.appendChild(wBtn); audioRow.appendChild(sBtn);
   body.appendChild(audioRow);
 
