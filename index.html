@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1784277356">
+  <meta name="words-version" content="1784379420">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -111,6 +111,7 @@
     .audio-row { display:flex; gap:8px; }
     .audio-btn { display:inline-flex; align-items:center; gap:5px; padding:7px 14px; border-radius:20px; border:none; cursor:pointer; font-size:0.8rem; font-weight:600; transition:opacity 0.2s; }
     .audio-btn.w { background:var(--primary-light); color:var(--primary); }
+    .audio-btn.sp { background:#FFFBEB; color:#9A3412; }
     .audio-btn.s { background:#F0FDF4; color:#166534; }
     .audio-btn:hover { opacity:0.75; }
 
@@ -336,6 +337,7 @@
             <p class="typed-wrong" id="typedWrong"></p>
             <div class="audio-row">
               <button class="audio-btn w" id="btnWordAudio">🔊 単語</button>
+              <button class="audio-btn sp" id="btnSpellAudio">🔊 スペル</button>
               <button class="audio-btn s" id="btnSentAudio">🔊 例文</button>
             </div>
             <div class="res-row" id="resRow"></div>
@@ -445,13 +447,60 @@ const clr = id => { const n=$(id); while(n.firstChild) n.removeChild(n.firstChil
 const today = () => new Date(Date.now() + 9*60*60*1000).toISOString().split('T')[0];
 
 // --- Audio ---
+let _currentSequenceId = 0;
 let _currentAudio = null;
 
+// --- Web Audio API (for spelling) ---
+let audioCtx = null;
+const letterBuffers = {};
+let isAudioContextInitialized = false;
+let _currentSourceNode = null;
+
+function initAudioContext() {
+  if (isAudioContextInitialized) return;
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+      isAudioContextInitialized = true;
+    }
+  } catch (e) {
+    console.warn("Web Audio API is not supported in this browser:", e);
+  }
+}
+
+async function preloadAlphabetAudio() {
+  initAudioContext();
+  if (!audioCtx) return;
+
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  await Promise.all(letters.map(async letter => {
+    try {
+      const url = AUDIO + 'alphabet-audio-trimmed/' + letter + '.mp3';
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+      const arrayBuffer = await response.arrayBuffer();
+      letterBuffers[letter] = await audioCtx.decodeAudioData(arrayBuffer);
+    } catch (e) {
+      console.warn(`Failed to preload alphabet audio for ${letter}:`, e);
+    }
+  }));
+}
+
 function stopAllAudio() {
+  _currentSequenceId++;
   if (_currentAudio) {
-    _currentAudio.onended = null;  // prevent pending sequence from continuing
+    _currentAudio.onended = null;
+    _currentAudio.onerror = null;
     _currentAudio.pause();
     _currentAudio = null;
+  }
+  if (_currentSourceNode) {
+    try {
+      _currentSourceNode.onended = null;
+      _currentSourceNode.stop();
+    } catch (e) {}
+    _currentSourceNode = null;
   }
 }
 
@@ -470,19 +519,109 @@ const playSent = () => playAudio(BASE + queue[qi].sentence_audio);
 const playStory = i => playAudio(AUDIO + 'story/s' + String(i).padStart(2,'0') + '.mp3');
 
 // Promise-based audio (for sequencing)
-function playAudioP(src) {
+function playAudioP(src, rate = 1.0) {
   return new Promise(resolve => {
-    const a = new Audio(src + '?v=' + wordsVersion);
+    const useVersion = !src.includes('alphabet-audio-trimmed/');
+    const url = useVersion ? (src + '?v=' + wordsVersion) : src;
+    const a = new Audio(url);
     _currentAudio = a;
     a.onended = resolve;
     a.onerror = resolve;
+    if (rate !== 1.0) {
+      a.addEventListener('play', () => {
+        a.playbackRate = rate;
+      });
+      a.defaultPlaybackRate = rate;
+      a.playbackRate = rate;
+    }
     a.play().catch(resolve);
   });
 }
 
-// Backside audio sequence: word → sentence
-async function playIncorrectSequence(w) {
+function playAlphabetLetterWebAudio(letter, rate = 1.1) {
+  return new Promise(resolve => {
+    const buffer = letterBuffers[letter];
+    if (!audioCtx || !buffer) {
+      // Fallback to HTMLAudioElement
+      const fallbackUrl = AUDIO + 'alphabet-audio-trimmed/' + letter + '.mp3';
+      const a = new Audio(fallbackUrl);
+      _currentAudio = a;
+      a.onended = resolve;
+      a.onerror = resolve;
+      a.play().catch(resolve);
+      return;
+    }
+
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().then(() => play());
+    } else {
+      play();
+    }
+
+    function play() {
+      try {
+        const source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.playbackRate.value = rate;
+        source.connect(audioCtx.destination);
+        
+        _currentSourceNode = source;
+        source.onended = () => {
+          if (_currentSourceNode === source) {
+            _currentSourceNode = null;
+          }
+          resolve();
+        };
+        source.start(0);
+      } catch (e) {
+        console.warn("Web Audio playback failed:", e);
+        resolve();
+      }
+    }
+  });
+}
+
+// Helper function to sequentially play alphabet letters of a word
+async function playSpellingSequence(word, seqId) {
+  const letters = word.toUpperCase().split('').filter(c => c >= 'A' && c <= 'Z');
+  for (const letter of letters) {
+    if (seqId !== _currentSequenceId) return;
+    await playAlphabetLetterWebAudio(letter, 1.1);
+  }
+}
+
+// Manual or single trigger for spelling
+async function playSpelling(word) {
+  stopAllAudio();
+  const seqId = _currentSequenceId;
+  await playSpellingSequence(word, seqId);
+}
+
+// Backside audio sequence: plays word first if incorrect, then spelling, then word, then sentence
+async function playBacksideAudioSequence(w, correct) {
+  stopAllAudio();
+  const seqId = _currentSequenceId;
+
+  // 1. If incorrect, play word and spelling first
+  if (!correct) {
+    await playAudioP(AUDIO + 'words/' + (w.english || w.word) + '.mp3');
+    if (seqId !== _currentSequenceId) return;
+    await new Promise(resolve => setTimeout(resolve, 200)); // Short pause
+    if (seqId !== _currentSequenceId) return;
+
+    await playSpellingSequence(w.english || w.word, seqId);
+    if (seqId !== _currentSequenceId) return;
+    await new Promise(resolve => setTimeout(resolve, 200)); // Short pause
+    if (seqId !== _currentSequenceId) return;
+  }
+
+  // 2. Word pronunciation (always played here — represents the second time if incorrect)
   await playAudioP(AUDIO + 'words/' + (w.english || w.word) + '.mp3');
+  if (seqId !== _currentSequenceId) return;
+
+  // 3. Sentence pronunciation
+  await new Promise(resolve => setTimeout(resolve, 200)); // Short pause
+  if (seqId !== _currentSequenceId) return;
   await playAudioP(BASE + w.sentence_audio);
 }
 
@@ -540,6 +679,9 @@ async function initApp() {
   words.forEach(w => { w.ease = 2.5; w.interval = 1; w.repetitions = 0; });
   wordsVersion = String(d.meta?.version || vMeta);
   VOCAB = [...new Set(words.map(w => w.word))];
+
+  // バックグラウンドでアルファベット音声の事前ロードを開始
+  preloadAlphabetAudio().catch(err => console.warn('Preload failed:', err));
 
   // 即座に表示（全語 new）、進捗サマリーは非表示
   $('statRow').style.visibility = 'hidden';
@@ -623,11 +765,16 @@ async function initApp() {
   $('hintTheme').onclick = showHint;
   $('hintAudio').onclick = () => { playWord(); hintUsed = true; };
   $('btnWordAudio').onclick = playWord;
+  $('btnSpellAudio').onclick = () => { const w = queue[qi]; playSpelling(w.english || w.word); };
   $('btnSentAudio').onclick = playSent;
   $('restartBtn').onclick = restart;
   $('refClose').onclick = () => $('refModal').classList.remove('open');
   $('refModal').addEventListener('click', e => { if (e.target === $('refModal')) $('refModal').classList.remove('open'); });
   document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab, b)));
+
+  // ユーザー操作による AudioContext の初期化解除
+  document.addEventListener('keydown', initAudioContext, { once: true });
+  document.addEventListener('click', initAudioContext, { once: true });
 }
 
 function buildQueue() {
@@ -747,6 +894,30 @@ function renderCard() {
   }, 100);
 }
 
+/**
+ * 2つの文字列の編集距離（Levenshtein Distance）を計算する
+ */
+function getLevenshteinDistance(a, b) {
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // 置換
+          matrix[i][j - 1] + 1,     // 挿入
+          matrix[i - 1][j] + 1      // 削除
+        );
+      }
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
 function checkAnswer() {
   if (isFlipped) return;
   const w = queue[qi];
@@ -837,6 +1008,7 @@ function checkAnswer() {
   const typed = normTyped;
   const posBase = (w.pos || '').split('・')[0];
   const isNoun = posBase === '名';
+  const isPronoun = posBase === '代';
   const isVerb = posBase === '動' || (posBase === '熟' && (w.base || w.third || w.past || w.ing));
 
   const typedBase = typed === w.word.trim().replace(/\s+/g, ' ').toLowerCase();
@@ -846,7 +1018,7 @@ function checkAnswer() {
   const typedPast = w.past && typed === w.past.trim().replace(/\s+/g, ' ').toLowerCase();
   const typedIng = w.ing && typed === w.ing.trim().replace(/\s+/g, ' ').toLowerCase();
 
-  if (isNoun && (typedBase || typedPlural || typedSingular)) {
+  if ((isNoun || isPronoun) && (typedBase || typedPlural || typedSingular)) {
     $('ansInput').classList.add('shake');
     setTimeout(() => $('ansInput').classList.remove('shake'), 400);
     txt('fWarning', (typedBase || typedSingular) ? '惜しい！複数形で入力してね' : '惜しい！単数形で入力してね');
@@ -870,6 +1042,18 @@ function checkAnswer() {
     }
   }
 
+  // 3.8. 編集距離 1 のタイポ救済（4文字以上、かつ文字数が一致する「置換」のみ）
+  if (normTarget.length >= 4 && normTyped.length === normTarget.length && getLevenshteinDistance(normTyped, normTarget) === 1) {
+    let msg = "惜しい！スペルが1文字だけ違うよ";
+    if (normTyped.charAt(0) !== normTarget.charAt(0)) {
+      msg += `（最初の文字は ${target.charAt(0)} だよ）`;
+    }
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    txt('fWarning', msg);
+    return;
+  }
+
   // 4. 不正解
   lastTypedIncorrect = rawTyped;
   const wrongMsg = '❌ 入力: "' + rawTyped + '"  →  正解: "' + target + '"';
@@ -888,7 +1072,7 @@ function proceedToBack(correct, badgeText) {
   $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
   txt('typedWrong', '');
 
-  setTimeout(() => playIncorrectSequence(w), 350);
+  setTimeout(() => playBacksideAudioSequence(w, correct), 350);
 
   clr('resRow');
   const btns = document.createElement('div');
@@ -1278,10 +1462,13 @@ function renderRefSlide() {
   const wBtn = document.createElement('button');
   wBtn.className = 'audio-btn w'; wBtn.textContent = '🔊 単語';
   wBtn.onclick = () => playAudio(AUDIO + 'words/' + (w.english || w.word) + '.mp3');
+  const spBtn = document.createElement('button');
+  spBtn.className = 'audio-btn sp'; spBtn.textContent = '🔊 スペル';
+  spBtn.onclick = () => playSpelling(w.english || w.word);
   const sBtn = document.createElement('button');
   sBtn.className = 'audio-btn s'; sBtn.textContent = '🔊 例文';
   sBtn.onclick = () => playAudio(BASE + w.sentence_audio);
-  audioRow.appendChild(wBtn); audioRow.appendChild(sBtn);
+  audioRow.appendChild(wBtn); audioRow.appendChild(spBtn); audioRow.appendChild(sBtn);
   body.appendChild(audioRow);
 
   // Nav for multi-meaning
