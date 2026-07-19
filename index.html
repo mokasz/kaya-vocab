@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1784379420">
+  <meta name="words-version" content="1784425225">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -100,7 +100,42 @@
     }
     .full-sentence .hl { color:var(--primary); font-weight:700; }
     .sent-ja { font-size:0.8rem; color:var(--text-sub); margin-top:3px; }
-    .typed-wrong { font-size:0.8rem; color:var(--danger); }
+    .typed-wrong {
+      font-size:1.1rem; color:#000; width: 100%; text-align:center;
+      font-weight:700; line-height:1.6; margin: 6px 0 12px;
+    }
+    .typed-wrong .diff-label-wrong { color: var(--danger); }
+    .typed-wrong .diff-label-correct { color: #004BFF; }
+    .typed-wrong .diff-arrow { color: #000; margin: 0 4px; }
+    .typed-wrong .diff-chars {
+      font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      letter-spacing: 1px;
+    }
+    .typed-wrong .char-match { color: #000; }
+    .typed-wrong .char-replace {
+      color: var(--danger);
+      border-bottom: 2px solid var(--danger);
+      padding: 0 1px;
+    }
+    .typed-wrong .char-replace-target {
+      color: #004BFF;
+      border-bottom: 2px solid #004BFF;
+      padding: 0 1px;
+    }
+    .typed-wrong .char-extra {
+      color: var(--danger);
+      text-decoration: line-through;
+      padding: 0 1px;
+    }
+    .typed-wrong .char-missing {
+      color: #004BFF;
+      border-bottom: 2px dashed #004BFF;
+      padding: 0 1px;
+    }
+    .typed-wrong .char-empty {
+      display: none;
+    }
+
 
     /* Meanings list (back face) */
     .meanings-list { width:100%; display:flex; flex-direction:column; gap:4px; }
@@ -327,6 +362,7 @@
           <!-- BACK -->
           <div class="face back" id="faceB">
             <span class="result-badge" id="resBadge"></span>
+            <p class="typed-wrong" id="typedWrong"></p>
             <div class="answer-word" id="ansWord"></div>
             <div class="answer-meaning" id="ansMeaning"></div>
             <div class="meanings-list" id="meaningsList"></div>
@@ -334,7 +370,6 @@
               <p id="fullSent"></p>
               <p class="sent-ja" id="fullSentJa"></p>
             </div>
-            <p class="typed-wrong" id="typedWrong"></p>
             <div class="audio-row">
               <button class="audio-btn w" id="btnWordAudio">🔊 単語</button>
               <button class="audio-btn sp" id="btnSpellAudio">🔊 スペル</button>
@@ -841,6 +876,7 @@ function renderCard() {
 
   // 裏面を即座にクリア（フリップアニメーション中に答えが見えないように）
   txt('ansWord', '');
+  $('ansWord').style.display = '';
   txt('ansMeaning', '');
   clr('meaningsList');
   clr('fullSent');
@@ -917,6 +953,128 @@ function getLevenshteinDistance(a, b) {
   }
   return matrix[b.length][a.length];
 }
+
+/**
+ * 2つの文字列の文字レベルの差分（アライメント）を求める
+ */
+function getSpellingDiff(typed, target) {
+  const m = typed.length;
+  const n = target.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (typed[i - 1].toLowerCase() === target[j - 1].toLowerCase()) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = Math.min(
+          dp[i - 1][j - 1] + 1, // 置換
+          dp[i - 1][j] + 1,     // 挿入 (余分な文字)
+          dp[i][j - 1] + 1      // 削除 (足りない文字)
+        );
+      }
+    }
+  }
+
+  let i = m;
+  let j = n;
+  const alignedTyped = [];
+  const alignedTarget = [];
+
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && typed[i - 1].toLowerCase() === target[j - 1].toLowerCase()) {
+      alignedTyped.push({ char: typed[i - 1], type: 'match' });
+      alignedTarget.push({ char: target[j - 1], type: 'match' });
+      i--;
+      j--;
+    } else if (i > 0 && j > 0 && dp[i][j] === dp[i - 1][j - 1] + 1) {
+      alignedTyped.push({ char: typed[i - 1], type: 'replace' });
+      alignedTarget.push({ char: target[j - 1], type: 'replace' });
+      i--;
+      j--;
+    } else if (i > 0 && (j === 0 || dp[i][j] === dp[i - 1][j] + 1)) {
+      alignedTyped.push({ char: typed[i - 1], type: 'extra' });
+      alignedTarget.push({ char: '_', type: 'empty' });
+      i--;
+    } else if (j > 0 && (i === 0 || dp[i][j] === dp[i][j - 1] + 1)) {
+      alignedTyped.push({ char: '_', type: 'empty' });
+      alignedTarget.push({ char: target[j - 1], type: 'missing' });
+      j--;
+    } else {
+      if (i > 0 && j > 0) {
+        alignedTyped.push({ char: typed[i - 1], type: 'replace' });
+        alignedTarget.push({ char: target[j - 1], type: 'replace' });
+        i--;
+        j--;
+      } else if (i > 0) {
+        alignedTyped.push({ char: typed[i - 1], type: 'extra' });
+        alignedTarget.push({ char: '_', type: 'empty' });
+        i--;
+      } else {
+        alignedTyped.push({ char: '_', type: 'empty' });
+        alignedTarget.push({ char: target[j - 1], type: 'missing' });
+        j--;
+      }
+    }
+  }
+
+  alignedTyped.reverse();
+  alignedTarget.reverse();
+
+  return { alignedTyped, alignedTarget };
+}
+
+function renderSpellingDiff(typed, target) {
+  const container = $('typedWrong');
+  container.textContent = '';
+
+  if (!typed) return;
+
+  // resBadge を隠して、ここに統合表示する
+  $('resBadge').style.display = 'none';
+
+  const { alignedTyped, alignedTarget } = getSpellingDiff(typed, target);
+
+  function mkText(text, cls) {
+    const s = document.createElement('span');
+    s.textContent = text;
+    if (cls) s.className = cls;
+    return s;
+  }
+
+  function appendChars(parent, aligned, typeSide) {
+    const chars = document.createElement('span');
+    chars.className = 'diff-chars';
+    aligned.forEach(item => {
+      const s = document.createElement('span');
+      s.textContent = item.char;
+      if (typeSide === 'typed') {
+        s.className = (item.type === 'replace') ? 'char-replace'
+                    : (item.type === 'extra')   ? 'char-extra'
+                    : (item.type === 'empty')   ? 'char-empty'
+                    : 'char-match';
+      } else {
+        s.className = (item.type === 'replace') ? 'char-replace-target'
+                    : (item.type === 'missing') ? 'char-missing'
+                    : (item.type === 'empty')   ? 'char-empty'
+                    : 'char-match';
+      }
+      chars.appendChild(s);
+    });
+    parent.appendChild(chars);
+  }
+
+  // ❌ 入力: [typed] → 正解: [target]
+  container.appendChild(mkText('❌ 入力: ', 'diff-label-wrong'));
+  appendChars(container, alignedTyped, 'typed');
+  container.appendChild(mkText(' → ', 'diff-arrow'));
+  container.appendChild(mkText('正解: ', 'diff-label-correct'));
+  appendChars(container, alignedTarget, 'target');
+}
+
 
 function checkAnswer() {
   if (isFlipped) return;
@@ -1056,7 +1214,7 @@ function checkAnswer() {
 
   // 4. 不正解
   lastTypedIncorrect = rawTyped;
-  const wrongMsg = '❌ 入力: "' + rawTyped + '"  →  正解: "' + target + '"';
+  const wrongMsg = '❌ 不正解';
   proceedToBack(false, wrongMsg);
 }
 
@@ -1070,7 +1228,13 @@ function proceedToBack(correct, badgeText) {
 
   txt('resBadge', correct ? '✅ Correct!' : badgeText);
   $('resBadge').className = 'result-badge ' + (correct ? 'ok' : 'ng');
-  txt('typedWrong', '');
+  $('resBadge').style.display = '';
+  
+  if (!correct && lastTypedIncorrect) {
+    renderSpellingDiff(lastTypedIncorrect, w.english);
+  } else {
+    txt('typedWrong', '');
+  }
 
   setTimeout(() => playBacksideAudioSequence(w, correct), 350);
 
