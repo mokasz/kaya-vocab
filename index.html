@@ -1115,6 +1115,28 @@ function checkAnswer() {
     return;
   }
 
+  // 展開形の短縮形チェック
+  if (w.meta?.contracted && w.meta.contracted.includes(normTyped)) {
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    txt('fWarning', '惜しい！短縮しない形で入力してね');
+    return;
+  }
+
+  // スペース有無のミスマッチ警告（例: blackboard に black board、または熟語でスペース抜け）
+  const noSpaceTyped = rawTyped.replace(/[\s\.-]/g, '').toLowerCase();
+  const noSpaceTarget = target.replace(/[\s\.-]/g, '').toLowerCase();
+  if (noSpaceTyped === noSpaceTarget && normTyped !== normTarget) {
+    $('ansInput').classList.add('shake');
+    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
+    if (!target.includes(' ') && rawTyped.includes(' ')) {
+      txt('fWarning', '惜しい！スペースを入れずに1語で入力してね');
+    } else {
+      txt('fWarning', '惜しい！単語の間にスペースを入れてね');
+    }
+    return;
+  }
+
   let matchedTarget = null;
   if (normTyped === normTarget) {
     matchedTarget = target;
