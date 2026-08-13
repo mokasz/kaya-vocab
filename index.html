@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="words-version" content="1786531103">
+  <meta name="words-version" content="1786656326">
   <title>Kaya's Vocab - NEW TREASURE Stage 1</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -666,18 +666,17 @@ function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 function buildHighlight(sentence) {
   const wrap = document.createElement('span');
   wrap.className = 'stxt';
-  const cleanSentence = (sentence || '').replace(/\*\*/g, '');
   const escapedVocab = VOCAB.map(v => escapeRegExp(v)).join('|');
   const re = new RegExp('\\b(' + escapedVocab + ')(s?)(?!\\w)', 'gi');
-  const ms = [...cleanSentence.matchAll(re)];
+  const ms = [...sentence.matchAll(re)];
   let pos = 0;
   ms.forEach(m => {
-    if (m.index > pos) wrap.appendChild(document.createTextNode(cleanSentence.slice(pos, m.index)));
+    if (m.index > pos) wrap.appendChild(document.createTextNode(sentence.slice(pos, m.index)));
     const hl = document.createElement('span'); hl.className = 'hl'; hl.textContent = m[0];
     wrap.appendChild(hl);
     pos = m.index + m[0].length;
   });
-  if (pos < cleanSentence.length) wrap.appendChild(document.createTextNode(cleanSentence.slice(pos)));
+  if (pos < sentence.length) wrap.appendChild(document.createTextNode(sentence.slice(pos)));
   return wrap;
 }
 
@@ -1112,28 +1111,6 @@ function checkAnswer() {
     $('ansInput').classList.add('shake');
     setTimeout(() => $('ansInput').classList.remove('shake'), 400);
     txt('fWarning', '惜しい！短縮形を入力してね');
-    return;
-  }
-
-  // 展開形の短縮形チェック
-  if (w.meta?.contracted && w.meta.contracted.includes(normTyped)) {
-    $('ansInput').classList.add('shake');
-    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
-    txt('fWarning', '惜しい！短縮しない形で入力してね');
-    return;
-  }
-
-  // スペース有無のミスマッチ警告（例: blackboard に black board、または熟語でスペース抜け）
-  const noSpaceTyped = rawTyped.replace(/[\s\.-]/g, '').toLowerCase();
-  const noSpaceTarget = target.replace(/[\s\.-]/g, '').toLowerCase();
-  if (noSpaceTyped === noSpaceTarget && normTyped !== normTarget) {
-    $('ansInput').classList.add('shake');
-    setTimeout(() => $('ansInput').classList.remove('shake'), 400);
-    if (!target.includes(' ') && rawTyped.includes(' ')) {
-      txt('fWarning', '惜しい！スペースを入れずに1語で入力してね');
-    } else {
-      txt('fWarning', '惜しい！単語の間にスペースを入れてね');
-    }
     return;
   }
 
