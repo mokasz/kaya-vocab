@@ -66,6 +66,44 @@
     .sent-display { font-size:1.05rem; line-height:1.9; text-align:center; color:var(--text); width:100%; }
     .blank { display:inline-block; min-width:80px; border-bottom:3px solid var(--primary); margin:0 4px; vertical-align:bottom; }
 
+    /* 選択肢リスト（数学等の複数選択肢ブロック） */
+    .sent-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
+    .sent-line { margin: 2px 0; text-align: center; width: 100%; }
+    .choice-list {
+      display: flex; flex-direction: column; gap: 7px;
+      width: 100%; max-width: 380px; margin: 10px auto; text-align: left;
+    }
+    .choice-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 12px; background: #F8F9FF;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: 0.95rem; cursor: pointer; transition: all 0.15s ease;
+      user-select: none;
+    }
+    .choice-item:hover {
+      background: var(--primary-light); border-color: var(--primary);
+    }
+    .choice-item.selected {
+      background: var(--primary-light); border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.25);
+    }
+    .choice-item.correct {
+      background: #F0FDF4; border-color: var(--success); font-weight: 700;
+    }
+    .choice-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #EAEBF5; color: var(--text); font-weight: 700;
+      font-size: 0.85rem; flex-shrink: 0;
+    }
+    .choice-item.selected .choice-badge {
+      background: var(--primary); color: white;
+    }
+    .choice-item.correct .choice-badge {
+      background: var(--success); color: white;
+    }
+    .choice-text { flex: 1; color: var(--text); }
+
     .input-row { display:flex; gap:8px; width:100%; }
     .answer-input {
       flex:1; padding:12px 16px; border:2px solid var(--border);
@@ -681,24 +719,133 @@ function buildHighlight(sentence) {
   return wrap;
 }
 
-// --- Build sentence with blank using DOM ---
-function buildSentWithBlank(sentence, word) {
-  const re = new RegExp('\\b' + escapeRegExp(word) + 's?(?!\\w)', 'i');
-  const m = re.exec ? sentence.match(re) : null;
-  const container = document.createElement('span');
-  if (!m) {
-    container.appendChild(document.createTextNode(sentence));
+// --- Build sentence with formatted choices & blank using DOM ---
+const CIRCLED_NUMS = {'①':1, '②':2, '③':3, '④':4, '⑤':5, '⑥':6, '⑦':7, '⑧':8, '⑨':9, '⑩':10};
+
+function renderSentenceBlock(sentence, word, mode = 'blank') {
+  const container = document.createElement('div');
+  container.className = 'sent-container';
+
+  // 1行の中に複数の丸数字が含まれる場合、改行に正規化する
+  let normSent = (sentence || '')
+    .replace(/[\s\u3000]*([①-⑳]|\([1-9]\))/g, '\n$1')
+    .replace(/([①-⑳][^\n]+?)[\s\u3000]*(正解の番号:)/g, '$1\n$2')
+    .trim();
+
+  const lines = normSent.split('\n');
+  const isMultiLine = lines.length > 1;
+
+  // 単一行で選択肢を含まない場合（通常の英単語カード等）
+  if (!isMultiLine && !lines[0].match(/^[①-⑳]|\([1-9]\)/)) {
+    const span = document.createElement('span');
+    span.appendChild(buildLineFragment(lines[0], word, mode === 'blank'));
+    container.appendChild(span);
     return container;
   }
-  const before = sentence.slice(0, m.index);
-  const after  = sentence.slice(m.index + m[0].length);
-  if (before) container.appendChild(document.createTextNode(before));
-  const blank = document.createElement('span');
-  blank.className = 'blank';
-  blank.textContent = '\u00A0'.repeat(Math.max(word.length, 6));
-  container.appendChild(blank);
-  if (after) container.appendChild(document.createTextNode(after));
+
+  // 複数行または選択肢を含む場合
+  let currentChoiceList = null;
+  let blankPlaced = false;
+
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return;
+
+    const choiceMatch = trimmed.match(/^([①-⑳]|\([1-9]\)|[1-9]\.)\s*(.*)$/);
+    if (choiceMatch) {
+      if (!currentChoiceList) {
+        currentChoiceList = document.createElement('div');
+        currentChoiceList.className = 'choice-list';
+        container.appendChild(currentChoiceList);
+      }
+      const badgeText = choiceMatch[1];
+      const choiceBody = choiceMatch[2];
+      const choiceNum = String(CIRCLED_NUMS[badgeText] || badgeText.replace(/[\(\)\.]/g, ''));
+
+      const item = document.createElement('div');
+      item.className = 'choice-item';
+      item.dataset.choice = choiceNum;
+
+      const badge = document.createElement('span');
+      badge.className = 'choice-badge';
+      badge.textContent = badgeText;
+      item.appendChild(badge);
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'choice-text';
+      textSpan.textContent = choiceBody;
+      item.appendChild(textSpan);
+
+      if (mode === 'blank') {
+        item.onclick = (e) => {
+          e.stopPropagation();
+          const inp = document.getElementById('ansInput');
+          if (inp) {
+            inp.value = choiceNum;
+            inp.focus();
+            container.querySelectorAll('.choice-item').forEach(el => el.classList.remove('selected'));
+            item.classList.add('selected');
+          }
+        };
+      } else if (mode === 'highlight') {
+        if (choiceNum === String(word)) {
+          item.classList.add('correct');
+        }
+      }
+
+      currentChoiceList.appendChild(item);
+    } else {
+      currentChoiceList = null;
+      const p = document.createElement('div');
+      p.className = 'sent-line';
+      if (mode === 'blank') {
+        const re = new RegExp('\\b' + escapeRegExp(word) + 's?(?!\\w)', 'i');
+        if (!blankPlaced && re.test(trimmed)) {
+          p.appendChild(buildLineFragment(trimmed, word, true));
+          blankPlaced = true;
+        } else {
+          p.textContent = trimmed;
+        }
+      } else {
+        p.appendChild(buildLineFragment(trimmed, word, false));
+      }
+      container.appendChild(p);
+    }
+  });
+
   return container;
+}
+
+function buildLineFragment(text, word, isBlank) {
+  const frag = document.createDocumentFragment();
+  const re = new RegExp('\\b' + escapeRegExp(word) + 's?(?!\\w)', 'i');
+  const m = text.match(re);
+  if (!m) {
+    frag.appendChild(document.createTextNode(text));
+    return frag;
+  }
+  const before = text.slice(0, m.index);
+  const after  = text.slice(m.index + m[0].length);
+  if (before) frag.appendChild(document.createTextNode(before));
+
+  if (isBlank) {
+    const blank = document.createElement('span');
+    blank.className = 'blank';
+    blank.textContent = '\u00A0'.repeat(Math.max(word.length, 6));
+    frag.appendChild(blank);
+  } else {
+    const hl = document.createElement('span');
+    hl.className = 'hl';
+    hl.textContent = m[0];
+    frag.appendChild(hl);
+  }
+
+  if (after) frag.appendChild(document.createTextNode(after));
+  return frag;
+}
+
+function buildSentWithBlank(sentence, word) {
+  return renderSentenceBlock(sentence, word, 'blank');
 }
 
 function showHint() {
@@ -840,20 +987,7 @@ function populateBackFace(w) {
     });
   }
   clr('fullSent');
-  const re2 = new RegExp('\\b' + escapeRegExp(w.english) + 's?(?!\\w)', 'gi');
-  const ms = [...w.sentence.matchAll(re2)];
-  if (ms.length > 0) {
-    let pos2 = 0;
-    ms.forEach(m => {
-      if (m.index > pos2) $('fullSent').appendChild(document.createTextNode(w.sentence.slice(pos2, m.index)));
-      const hl = document.createElement('span'); hl.className = 'hl'; hl.textContent = m[0];
-      $('fullSent').appendChild(hl);
-      pos2 = m.index + m[0].length;
-    });
-    if (pos2 < w.sentence.length) $('fullSent').appendChild(document.createTextNode(w.sentence.slice(pos2)));
-  } else {
-    $('fullSent').appendChild(document.createTextNode(w.sentence));
-  }
+  $('fullSent').appendChild(renderSentenceBlock(w.sentence, w.english, 'highlight'));
   txt('fullSentJa', w.sentence_ja);
 }
 
@@ -888,28 +1022,51 @@ function renderCard() {
   txt('ctr', (qi+1) + ' / ' + queue.length);
   const posLabel = POS_MAP[w.pos] || w.pos;
   const pb = (w.pos || '').split('・')[0];
-  let hintT = '(Hint: ' + w.japanese + ' 【' + posLabel + '】)';
-  if (pb === '動' && w.word !== w.english) {
-    if (w.english === w.past) hintT += ' ※過去形';
-    else if (w.english === w.third) hintT += ' ※3人称単数';
-    else if (w.english === w.ing) hintT += ' ※ing形';
-  }
-  txt('fTheme', hintT);
-  $('fTheme').style.visibility = 'hidden';
-  $('hintTheme').disabled = false;
-  const img = $('cardIllust');
-  img.onerror = () => {
+  const isMath = (w.pos === 'オイラーの公式') || (w.meta?.branch === 'geometry') || (w.meta?.branch === 'algebra') || (w.pos === 'math');
+
+  if (isMath) {
+    $('hintAudio').style.display = 'none';
+    $('ansInput').placeholder = '答えを入力…';
+    const mathHint = w.hint || w.meta?.hint;
+    if (mathHint) {
+      txt('fTheme', '(Hint: ' + mathHint + ')');
+      $('fTheme').style.visibility = 'hidden';
+      $('hintTheme').style.display = '';
+      $('hintTheme').disabled = false;
+    } else {
+      txt('fTheme', '');
+      $('fTheme').style.visibility = 'hidden';
+      $('hintTheme').style.display = 'none';
+    }
+    const img = $('cardIllust');
     img.style.display = 'none';
-    showHint();
-  };
-  if (w.image) {
-    img.style.display = 'none';
-    img.alt = w.english;
-    img.onload = () => { img.style.display = 'block'; };
-    img.src = BASE + w.image.replace(/_(\.png)$/, '$1') + '?v=' + wordsVersion;
   } else {
-    img.style.display = 'none';
-    showHint();
+    $('hintAudio').style.display = '';
+    $('hintTheme').style.display = '';
+    $('ansInput').placeholder = '英単語を入力…';
+    let hintT = '(Hint: ' + w.japanese + ' 【' + posLabel + '】)';
+    if (pb === '動' && w.word !== w.english) {
+      if (w.english === w.past) hintT += ' ※過去形';
+      else if (w.english === w.third) hintT += ' ※3人称単数';
+      else if (w.english === w.ing) hintT += ' ※ing形';
+    }
+    txt('fTheme', hintT);
+    $('fTheme').style.visibility = 'hidden';
+    $('hintTheme').disabled = false;
+    const img = $('cardIllust');
+    img.onerror = () => {
+      img.style.display = 'none';
+      showHint();
+    };
+    if (w.image) {
+      img.style.display = 'none';
+      img.alt = w.english;
+      img.onload = () => { img.style.display = 'block'; };
+      img.src = BASE + w.image.replace(/_(\.png)$/, '$1') + '?v=' + wordsVersion;
+    } else {
+      img.style.display = 'none';
+      showHint();
+    }
   }
 
   clr('fSent');
@@ -922,7 +1079,7 @@ function renderCard() {
   setTimeout(() => {
     if (queue[qi] !== cardWord) return; // カードが切り替わっていたらスキップ
     populateBackFace(cardWord);
-    playWord();
+    if (!isMath) playWord();
   }, 600);
 
   // Focus input after flip animation

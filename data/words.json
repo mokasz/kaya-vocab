@@ -1100,7 +1100,8 @@
       "meta": {
         "stage": 1,
         "topic": "オイラーの公式",
-        "branch": "geometry"
+        "branch": "geometry",
+        "hint": "点と面を足して線を引く（線だけがマイナス！）"
       },
       "status": "new",
       "ease": 2.5,
@@ -1111,10 +1112,11 @@
       "lastSeen": null,
       "nextReview": null,
       "last_session_version": null,
-      "sentence": "多面体の頂点 v (vertices)、辺 e (edges)、面 f (faces) の関係を表す正しいオイラーの公式はどれか？番号を入力せよ。 ① e - v + f = 2　② v + e - f = 2　③ v - e + f = 2　④ f + e - v = 2　⑤ e + f - v = 2　正解の番号: 3",
+      "sentence": "多面体の頂点 v (vertices)、辺 e (edges)、面 f (faces) の関係を表す正しいオイラーの公式はどれか？番号を入力せよ。\n① e - v + f = 2\n② v + e - f = 2\n③ v - e + f = 2\n④ f + e - v = 2\n⑤ e + f - v = 2\n正解の番号: 3",
       "sentence_ja": "正解は ③ v - e + f = 2。【覚え方】点 － 線 ＋ 面 ＝ 2（点と面の合計引く線、線だけがマイナス！）。迷ったらサイコロ（点8 ＋ 面6 － 線12 ＝ 2）で確認！ ※穴のない多面体で成り立ちます。",
       "sentence_audio": "",
-      "image": ""
+      "image": "",
+      "hint": "点と面を足して線を引く（線だけがマイナス！）"
     },
     {
       "id": "geo_euler_02",
@@ -1126,7 +1128,8 @@
       "meta": {
         "stage": 1,
         "topic": "オイラーの公式",
-        "branch": "geometry"
+        "branch": "geometry",
+        "hint": "vertex（頂点）の頭文字"
       },
       "status": "new",
       "ease": 2.5,
@@ -1140,7 +1143,8 @@
       "sentence": "オイラーの公式において、頂点(vertices)を表すアルファベットは v である。",
       "sentence_ja": "頂点は英語で vertex（複数形 vertices）。頭文字の v です。",
       "sentence_audio": "",
-      "image": ""
+      "image": "",
+      "hint": "vertex（頂点）の頭文字"
     },
     {
       "id": "geo_euler_03",
@@ -1152,7 +1156,8 @@
       "meta": {
         "stage": 1,
         "topic": "オイラーの公式",
-        "branch": "geometry"
+        "branch": "geometry",
+        "hint": "edge（辺・へり）の頭文字"
       },
       "status": "new",
       "ease": 2.5,
@@ -1166,7 +1171,8 @@
       "sentence": "オイラーの公式において、辺(edges)を表すアルファベットは e である。",
       "sentence_ja": "辺は英語で edge（エッジ）。頭文字の e です。公式では『線だけがマイナス』になります。",
       "sentence_audio": "",
-      "image": ""
+      "image": "",
+      "hint": "edge（辺・へり）の頭文字"
     },
     {
       "id": "geo_euler_04",
@@ -1178,7 +1184,8 @@
       "meta": {
         "stage": 1,
         "topic": "オイラーの公式",
-        "branch": "geometry"
+        "branch": "geometry",
+        "hint": "face（面・顔）の頭文字"
       },
       "status": "new",
       "ease": 2.5,
@@ -1192,7 +1199,8 @@
       "sentence": "オイラーの公式において、面の数(faces)を表すアルファベットは f である。",
       "sentence_ja": "面は英語で face（フェイス）。頭文字の f です。",
       "sentence_audio": "",
-      "image": ""
+      "image": "",
+      "hint": "face（面・顔）の頭文字"
     },
     {
       "id": "geo_euler_05",
@@ -1204,7 +1212,8 @@
       "meta": {
         "stage": 1,
         "topic": "オイラーの公式",
-        "branch": "geometry"
+        "branch": "geometry",
+        "hint": "8 - e + 6 = 2 より、14 - e = 2"
       },
       "status": "new",
       "ease": 2.5,
@@ -1218,7 +1227,8 @@
       "sentence": "立方体（頂点8、面6）の辺の数は、8 - e + 6 = 2 より 12 本である。",
       "sentence_ja": "14 - e = 2 より e = 12本。公式の符号を忘れたら、サイコロ（点8 ＋ 面6 － 線12 ＝ 2）を思い出そう！",
       "sentence_audio": "",
-      "image": ""
+      "image": "",
+      "hint": "8 - e + 6 = 2 より、14 - e = 2"
     }
   ],
   "story": {
