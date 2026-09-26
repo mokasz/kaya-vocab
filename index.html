@@ -122,6 +122,7 @@
       text-align:center; letter-spacing:1px;
     }
     .answer-input:focus { border-color:var(--primary); }
+    .answer-input[readonly] { background:#F8F9FF; cursor:default; user-select:none; }
     .check-btn {
       padding:12px 20px; background:var(--primary); color:white;
       border:none; border-radius:12px; font-size:0.9rem; font-weight:700;
@@ -793,8 +794,73 @@ function buildHighlight(sentence) {
 
 // --- Build sentence with formatted choices & blank using DOM ---
 const CIRCLED_NUMS = {'①':1, '②':2, '③':3, '④':4, '⑤':5, '⑥':6, '⑦':7, '⑧':8, '⑨':9, '⑩':10};
+const NUM_TO_CIRCLED = ['','①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩'];
 
-function renderSentenceBlock(sentence, word, mode = 'blank') {
+function prepareChoiceState(w) {
+  if (!w || !w.sentence) return null;
+  let normSent = (w.sentence || '')
+    .replace(/[\s\u3000]*([①-⑳]|\([1-9]\))/g, '\n$1')
+    .replace(/([①-⑳][^\n]+?)[\s\u3000]*(正解の番号:)/g, '$1\n$2')
+    .trim();
+  const lines = normSent.split('\n');
+  const rawChoices = [];
+  const origAnsNum = parseInt(w.english, 10);
+
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return;
+    const m = trimmed.match(/^([①-⑳]|\([1-9]\)|[1-9]\.)\s*(.*)$/);
+    if (m) {
+      const badgeText = m[1];
+      const body = m[2];
+      const num = CIRCLED_NUMS[badgeText] || parseInt(badgeText.replace(/[\(\)\.]/g, ''), 10);
+      rawChoices.push({
+        origNum: num,
+        origBadge: badgeText,
+        body: body,
+        isCorrect: (num === origAnsNum)
+      });
+    }
+  });
+
+  if (rawChoices.length < 2) {
+    w._choiceState = null;
+    return null;
+  }
+
+  // Fisher-Yates shuffle
+  const shuffled = [...rawChoices];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  const circledMap = {};
+  const numMap = {};
+  let currentAnswer = String(w.english);
+
+  shuffled.forEach((c, idx) => {
+    const newNum = idx + 1;
+    const newBadge = NUM_TO_CIRCLED[newNum] || String(newNum);
+    c.newNum = String(newNum);
+    c.newBadge = newBadge;
+    circledMap[c.origBadge] = newBadge;
+    numMap[String(c.origNum)] = String(newNum);
+    if (c.isCorrect) {
+      currentAnswer = String(newNum);
+    }
+  });
+
+  w._choiceState = {
+    shuffledChoices: shuffled,
+    currentAnswer: currentAnswer,
+    circledMap: circledMap,
+    numMap: numMap
+  };
+  return w._choiceState;
+}
+
+function renderSentenceBlock(sentence, word, mode = 'blank', w = null) {
   const container = document.createElement('div');
   container.className = 'sent-container';
 
@@ -817,8 +883,11 @@ function renderSentenceBlock(sentence, word, mode = 'blank') {
 
   // 複数行または選択肢を含む場合
   const hasAnswerLine = normSent.includes('正解の番号:');
+  const choiceState = w?._choiceState;
+  const targetAns = choiceState ? choiceState.currentAnswer : String(word);
   let currentChoiceList = null;
   let blankPlaced = false;
+  let choicesRendered = false;
 
   lines.forEach(line => {
     const trimmed = line.trim();
@@ -831,6 +900,48 @@ function renderSentenceBlock(sentence, word, mode = 'blank') {
         currentChoiceList.className = 'choice-list';
         container.appendChild(currentChoiceList);
       }
+
+      // choiceState がある場合、シャッフル済みリストを一括でレンダリング
+      if (choiceState) {
+        if (!choicesRendered) {
+          choiceState.shuffledChoices.forEach(c => {
+            const item = document.createElement('div');
+            item.className = 'choice-item';
+            item.dataset.choice = c.newNum;
+
+            const badge = document.createElement('span');
+            badge.className = 'choice-badge';
+            badge.textContent = c.newBadge;
+            item.appendChild(badge);
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'choice-text';
+            textSpan.textContent = c.body;
+            item.appendChild(textSpan);
+
+            if (mode === 'blank') {
+              item.onclick = (e) => {
+                e.stopPropagation();
+                const inp = document.getElementById('ansInput');
+                if (inp) {
+                  inp.value = c.newNum;
+                  container.querySelectorAll('.choice-item').forEach(el => el.classList.remove('selected'));
+                  item.classList.add('selected');
+                  if ($('fWarning').textContent) txt('fWarning', '');
+                }
+              };
+            } else if (mode === 'highlight') {
+              if (c.newNum === targetAns) {
+                item.classList.add('correct');
+              }
+            }
+            currentChoiceList.appendChild(item);
+          });
+          choicesRendered = true;
+        }
+        return;
+      }
+
       const badgeText = choiceMatch[1];
       const choiceBody = choiceMatch[2];
       const choiceNum = String(CIRCLED_NUMS[badgeText] || badgeText.replace(/[\(\)\.]/g, ''));
@@ -855,13 +966,13 @@ function renderSentenceBlock(sentence, word, mode = 'blank') {
           const inp = document.getElementById('ansInput');
           if (inp) {
             inp.value = choiceNum;
-            inp.focus();
             container.querySelectorAll('.choice-item').forEach(el => el.classList.remove('selected'));
             item.classList.add('selected');
+            if ($('fWarning').textContent) txt('fWarning', '');
           }
         };
       } else if (mode === 'highlight') {
-        if (choiceNum === String(word)) {
+        if (choiceNum === targetAns) {
           item.classList.add('correct');
         }
       }
@@ -884,7 +995,12 @@ function renderSentenceBlock(sentence, word, mode = 'blank') {
       } else {
         const shouldHighlight = hasAnswerLine ? isAnswerLine : true;
         if (shouldHighlight) {
-          p.appendChild(buildLineFragment(trimmed, word, false));
+          if (isAnswerLine && choiceState) {
+            const lineWithNewAns = trimmed.replace(new RegExp('\\b' + escapeRegExp(word) + '\\b', 'g'), targetAns);
+            p.appendChild(buildLineFragment(lineWithNewAns, targetAns, false));
+          } else {
+            p.appendChild(buildLineFragment(trimmed, word, false));
+          }
         } else {
           p.textContent = trimmed;
         }
@@ -924,8 +1040,8 @@ function buildLineFragment(text, word, isBlank) {
   return frag;
 }
 
-function buildSentWithBlank(sentence, word) {
-  return renderSentenceBlock(sentence, word, 'blank');
+function buildSentWithBlank(sentence, word, w = null) {
+  return renderSentenceBlock(sentence, word, 'blank', w);
 }
 
 function showHint() {
@@ -1023,7 +1139,7 @@ async function initApp() {
   });
   $('faceF').addEventListener('click', e => {
     if (!isFlipped && (e.target === $('faceF') || e.target.closest('.sent-display, .theme-reveal'))) {
-      $('ansInput').focus();
+      if (!queue[qi]?._choiceState) $('ansInput').focus();
     }
   });
   $('cardIllust').addEventListener('click', e => {
@@ -1069,8 +1185,18 @@ function buildQueue() {
 }
 
 function populateBackFace(w) {
-  txt('ansWord', w.english);
-  txt('ansMeaning', w.japanese + '  (' + (POS_MAP[w.pos] || w.pos) + ')');
+  const choiceState = w._choiceState;
+  const dispAns = (choiceState && choiceState.currentAnswer) ? choiceState.currentAnswer : w.english;
+  txt('ansWord', dispAns);
+
+  const replaceCircled = (text) => {
+    if (!text || !choiceState || !choiceState.circledMap) return text;
+    return text.replace(/[①-⑳]/g, m => choiceState.circledMap[m] || m);
+  };
+
+  const dispMeaning = replaceCircled(w.japanese);
+  txt('ansMeaning', dispMeaning + '  (' + (POS_MAP[w.pos] || w.pos) + ')');
+
   clr('meaningsList');
   if (!isMathCard(w)) {
     const sameWord = words.filter(w2 => w2.word === w.word && !isMathCard(w2));
@@ -1088,8 +1214,8 @@ function populateBackFace(w) {
     }
   }
   clr('fullSent');
-  $('fullSent').appendChild(renderSentenceBlock(w.sentence, w.english, 'highlight'));
-  txt('fullSentJa', w.sentence_ja);
+  $('fullSent').appendChild(renderSentenceBlock(w.sentence, w.english, 'highlight', w));
+  txt('fullSentJa', replaceCircled(w.sentence_ja));
 }
 
 function renderCard() {
@@ -1097,6 +1223,9 @@ function renderCard() {
   $('doneWrap').style.display = 'none';
   $('cardWrap').style.display = 'block';
   const w = queue[qi];
+
+  // 選択問題なら出題ごとに選択肢をランダムシャッフル
+  prepareChoiceState(w);
 
   // Reset flip — start animation (180° → 0°)
   isFlipped = false;
@@ -1127,9 +1256,19 @@ function renderCard() {
   const audioRow = document.querySelector('.audio-row');
   if (audioRow) audioRow.style.display = isMath ? 'none' : '';
 
+  const isChoice = !!w._choiceState;
+  $('ansInput').readOnly = isChoice;
+
+  if (isChoice) {
+    $('ansInput').placeholder = '上の選択肢をタップ…';
+  } else if (isMath) {
+    $('ansInput').placeholder = '答えを入力…';
+  } else {
+    $('ansInput').placeholder = '英単語を入力…';
+  }
+
   if (isMath) {
     $('hintAudio').style.display = 'none';
-    $('ansInput').placeholder = '答えを入力…';
     const mathHint = w.hint || w.meta?.hint;
     if (mathHint) {
       txt('fTheme', '(Hint: ' + mathHint + ')');
@@ -1154,7 +1293,6 @@ function renderCard() {
   } else {
     $('hintAudio').style.display = '';
     $('hintTheme').style.display = '';
-    $('ansInput').placeholder = '英単語を入力…';
     let hintT = '(Hint: ' + w.japanese + ' 【' + posLabel + '】)';
     if (pb === '動' && w.word !== w.english) {
       if (w.english === w.past) hintT += ' ※過去形';
@@ -1181,7 +1319,7 @@ function renderCard() {
   }
 
   clr('fSent');
-  $('fSent').appendChild(buildSentWithBlank(w.sentence, w.english));
+  $('fSent').appendChild(buildSentWithBlank(w.sentence, w.english, w));
 
   // 裏面コンテンツはアニメーション完了後に設定（答えのフラッシュ防止）
   // --flip-speed: 0.55s なので 600ms 待つ。600ms 未満で解答した場合は
@@ -1193,9 +1331,9 @@ function renderCard() {
     if (!isMath) playWord();
   }, 600);
 
-  // Focus input after flip animation
+  // Focus input after flip animation (選択問題はキーボードを開かない)
   setTimeout(() => {
-    $('ansInput').focus();
+    if (!isChoice) $('ansInput').focus();
   }, 100);
 }
 
@@ -1349,7 +1487,7 @@ function checkAnswer() {
   if (isFlipped) return;
   const w = queue[qi];
   const rawInput = $('ansInput').value;
-  const target = w.english;
+  const target = (w._choiceState && w._choiceState.currentAnswer) ? w._choiceState.currentAnswer : w.english;
   
   if (!rawInput.trim()) {
     $('ansInput').classList.add('shake');
