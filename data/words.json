@@ -560,7 +560,8 @@
       "pos": "名",
       "sort_order": 80928,
       "meta": {
-        "plural": "Greetings"
+        "plural": "Greetings",
+        "singular": "greeting"
       },
       "status": "new",
       "ease": 2.2,
@@ -576,7 +577,7 @@
       "sentence_audio": "data/audio/sentences/greetings_e8e004e2.mp3",
       "image": "",
       "plural": "Greetings",
-      "singular": null
+      "singular": "greeting"
     },
     {
       "id": "letter",
