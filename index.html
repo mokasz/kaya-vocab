@@ -1072,18 +1072,20 @@ function populateBackFace(w) {
   txt('ansWord', w.english);
   txt('ansMeaning', w.japanese + '  (' + (POS_MAP[w.pos] || w.pos) + ')');
   clr('meaningsList');
-  const sameWord = words.filter(w2 => w2.word === w.word);
-  if (sameWord.length > 1) {
-    const nums = ['①','②','③','④','⑤'];
-    sameWord.forEach((m, i) => {
-      const item = document.createElement('div');
-      item.className = 'meaning-item' + (m.id === w.id ? ' current' : '');
-      const num = document.createElement('span'); num.className = 'meaning-num'; num.textContent = nums[i];
-      const lbl = document.createElement('span');
-      lbl.textContent = m.japanese + '【' + (POS_MAP[m.pos] || m.pos) + '】';
-      item.appendChild(num); item.appendChild(lbl);
-      $('meaningsList').appendChild(item);
-    });
+  if (!isMathCard(w)) {
+    const sameWord = words.filter(w2 => w2.word === w.word && !isMathCard(w2));
+    if (sameWord.length > 1) {
+      const nums = ['①','②','③','④','⑤'];
+      sameWord.forEach((m, i) => {
+        const item = document.createElement('div');
+        item.className = 'meaning-item' + (m.id === w.id ? ' current' : '');
+        const num = document.createElement('span'); num.className = 'meaning-num'; num.textContent = nums[i];
+        const lbl = document.createElement('span');
+        lbl.textContent = m.japanese + '【' + (POS_MAP[m.pos] || m.pos) + '】';
+        item.appendChild(num); item.appendChild(lbl);
+        $('meaningsList').appendChild(item);
+      });
+    }
   }
   clr('fullSent');
   $('fullSent').appendChild(renderSentenceBlock(w.sentence, w.english, 'highlight'));
@@ -1860,9 +1862,14 @@ async function updateStreak() {
 
 // --- Reference Modal ---
 function openRef(w) {
-  refCards = words.filter(w2 => w2.word === w.word);
-  refIdx = refCards.findIndex(w2 => w2.id === w.id);
-  if (refIdx < 0) refIdx = 0;
+  if (isMathCard(w)) {
+    refCards = [w];
+    refIdx = 0;
+  } else {
+    refCards = words.filter(w2 => w2.word === w.word && !isMathCard(w2));
+    refIdx = refCards.findIndex(w2 => w2.id === w.id);
+    if (refIdx < 0) refIdx = 0;
+  }
   renderRefSlide();
   $('refModal').classList.add('open');
 }
