@@ -62,7 +62,17 @@
 
     /* Front face */
     .theme-badge { font-size:0.72rem; color:var(--primary); background:var(--primary-light); padding:3px 10px; border-radius:10px; font-weight:700; }
-    .card-illust { width:130px; height:130px; object-fit:contain; border-radius:14px; background:#F8F9FF; padding:6px; }
+    .card-illust {
+      max-width:100%; width:auto; height:auto;
+      max-height:160px; min-height:60px;
+      object-fit:contain; border-radius:14px;
+      background:#F8F9FF; padding:6px;
+      cursor:zoom-in; transition:transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card-illust:hover {
+      transform:scale(1.02);
+      box-shadow:0 4px 12px rgba(108, 99, 255, 0.15);
+    }
     .sent-display { font-size:1.05rem; line-height:1.9; text-align:center; color:var(--text); width:100%; }
     .blank { display:inline-block; min-width:80px; border-bottom:3px solid var(--primary); margin:0 4px; vertical-align:bottom; }
 
@@ -297,6 +307,42 @@
     .ref-nav-dot { width:8px; height:8px; border-radius:50%; background:var(--border); }
     .ref-nav-dot.on { background:var(--primary); }
 
+    /* ===== Image Zoom Modal (Lightbox) ===== */
+    .img-modal {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 16px;
+      cursor: zoom-out;
+    }
+    .img-modal.open { display: flex; animation: fadeIn 0.15s ease-out; }
+    .img-modal-dialog {
+      position: relative; max-width: 95vw; max-height: 90vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      cursor: default;
+    }
+    .img-modal-img {
+      max-width: 100%; max-height: 82vh; object-fit: contain;
+      border-radius: 12px; background: #FFFFFF; padding: 10px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      cursor: zoom-out;
+    }
+    .img-modal-close {
+      position: absolute; top: -14px; right: -14px;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: #FFFFFF; border: 2px solid var(--border);
+      font-size: 1.3rem; font-weight: bold; color: var(--text);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); z-index: 10;
+      transition: background 0.15s ease;
+    }
+    .img-modal-close:hover { background: #F3F4F6; }
+    .img-modal-caption {
+      margin-top: 12px; color: #FFFFFF; font-size: 0.88rem;
+      background: rgba(0, 0, 0, 0.5); padding: 4px 14px; border-radius: 20px;
+      pointer-events: none;
+    }
+
     /* ===== iPad styles (min-width: 768px) ===== */
     @media (min-width: 768px) {
       /* Header */
@@ -310,7 +356,7 @@
 
       /* Card front */
       .ctr { font-size: 1rem; }
-      .card-illust { width: 180px; height: 180px; }
+      .card-illust { max-height: 220px; }
       .sent-display { font-size: 1.35rem; }
       #ansInput { font-size: 1.2rem; padding: 14px 18px; }
       #checkBtn { font-size: 1.05rem; padding: 14px 24px; }
@@ -383,7 +429,7 @@
 
           <!-- FRONT -->
           <div class="face front" id="faceF">
-            <img class="card-illust" id="cardIllust" src="" alt="">
+            <img class="card-illust" id="cardIllust" src="" alt="" title="タップして拡大">
             <p class="sent-display" id="fSent"></p>
             <span class="theme-reveal" id="fTheme" style="visibility:hidden"></span>
             <div class="input-row">
@@ -479,6 +525,15 @@
     </div>
     <div class="ref-body" id="refBody"></div>
     <div class="ref-nav" id="refNav"></div>
+  </div>
+</div>
+
+<!-- Image Zoom Modal (Lightbox) -->
+<div class="img-modal" id="imgModal">
+  <div class="img-modal-dialog" id="imgModalDialog">
+    <button class="img-modal-close" id="imgModalClose" aria-label="閉じる">✕</button>
+    <img class="img-modal-img" id="imgModalImg" src="" alt="拡大図">
+    <div class="img-modal-caption">タップして閉じる</div>
   </div>
 </div>
 
@@ -761,6 +816,7 @@ function renderSentenceBlock(sentence, word, mode = 'blank') {
   }
 
   // 複数行または選択肢を含む場合
+  const hasAnswerLine = normSent.includes('正解の番号:');
   let currentChoiceList = null;
   let blankPlaced = false;
 
@@ -815,16 +871,23 @@ function renderSentenceBlock(sentence, word, mode = 'blank') {
       currentChoiceList = null;
       const p = document.createElement('div');
       p.className = 'sent-line';
+      const isAnswerLine = trimmed.includes('正解の番号:');
       if (mode === 'blank') {
+        const shouldBlank = hasAnswerLine ? isAnswerLine : (!blankPlaced);
         const re = new RegExp('\\b' + escapeRegExp(word) + 's?(?!\\w)', 'i');
-        if (!blankPlaced && re.test(trimmed)) {
+        if (shouldBlank && !blankPlaced && re.test(trimmed)) {
           p.appendChild(buildLineFragment(trimmed, word, true));
           blankPlaced = true;
         } else {
           p.textContent = trimmed;
         }
       } else {
-        p.appendChild(buildLineFragment(trimmed, word, false));
+        const shouldHighlight = hasAnswerLine ? isAnswerLine : true;
+        if (shouldHighlight) {
+          p.appendChild(buildLineFragment(trimmed, word, false));
+        } else {
+          p.textContent = trimmed;
+        }
       }
       container.appendChild(p);
     }
@@ -959,8 +1022,26 @@ async function initApp() {
     }
   });
   $('faceF').addEventListener('click', e => {
-    if (!isFlipped && e.target === $('faceF') || e.target.closest('.sent-display, .card-illust, .theme-reveal')) {
+    if (!isFlipped && (e.target === $('faceF') || e.target.closest('.sent-display, .theme-reveal'))) {
       $('ansInput').focus();
+    }
+  });
+  $('cardIllust').addEventListener('click', e => {
+    e.stopPropagation();
+    if ($('cardIllust').src && $('cardIllust').style.display !== 'none') {
+      $('imgModalImg').src = $('cardIllust').src;
+      $('imgModal').classList.add('open');
+    }
+  });
+  $('imgModalClose').onclick = () => $('imgModal').classList.remove('open');
+  $('imgModal').addEventListener('click', e => {
+    if (e.target === $('imgModal') || e.target === $('imgModalImg') || e.target.closest('.img-modal-close')) {
+      $('imgModal').classList.remove('open');
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && $('imgModal').classList.contains('open')) {
+      $('imgModal').classList.remove('open');
     }
   });
   $('hintTheme').onclick = showHint;
