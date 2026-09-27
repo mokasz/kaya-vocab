@@ -1,0 +1,130 @@
+{
+  "geo_euler_02": {
+    "status": "green",
+    "interval_days": 17,
+    "next_review": "2026-10-13",
+    "last_studied": "2026-09-26",
+    "ease_factor": 2.8,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_03": {
+    "status": "green",
+    "interval_days": 17,
+    "next_review": "2026-10-13",
+    "last_studied": "2026-09-26",
+    "ease_factor": 2.8,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_04": {
+    "status": "green",
+    "interval_days": 6,
+    "next_review": "2026-10-02",
+    "last_studied": "2026-09-26",
+    "ease_factor": 2.5,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_05": {
+    "status": "green",
+    "interval_days": 17,
+    "next_review": "2026-10-13",
+    "last_studied": "2026-09-26",
+    "ease_factor": 2.8,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_09": {
+    "status": "green",
+    "interval_days": 6,
+    "next_review": "2026-10-02",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.5,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_07": {
+    "status": "green",
+    "interval_days": 6,
+    "next_review": "2026-10-02",
+    "last_studied": "2026-09-26",
+    "ease_factor": 2.7,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_08": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 1.9,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_11": {
+    "status": "green",
+    "interval_days": 6,
+    "next_review": "2026-10-02",
+    "last_studied": "2026-09-26",
+    "ease_factor": 2.7,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_10": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.2,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_06": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.3,
+    "book_key": "kaya-stage1"
+  },
+  "geo_euler_01": {
+    "status": "green",
+    "interval_days": 6,
+    "next_review": "2026-10-02",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.7,
+    "book_key": "kaya-stage1"
+  },
+  "geo_inscribed_01": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.4,
+    "book_key": "kaya-stage1"
+  },
+  "geo_inscribed_02": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.6,
+    "book_key": "kaya-stage1"
+  },
+  "geo_inscribed_05": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.6,
+    "book_key": "kaya-stage1"
+  },
+  "geo_inscribed_06": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.6,
+    "book_key": "kaya-stage1"
+  },
+  "geo_inscribed_03": {
+    "status": "green",
+    "interval_days": 1,
+    "next_review": "2026-09-27",
+    "last_studied": "2026-09-27",
+    "ease_factor": 2.3,
+    "book_key": "kaya-stage1"
+  }
+}

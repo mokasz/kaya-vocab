@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Kaya's Math - 洗足中1幾何・代数特訓</title>
+  <!-- MathJax for rendering math formulas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --primary: #2563EB;
+      --primary-hover: #1D4ED8;
+      --primary-light: #EFF6FF;
+      --success: #16A34A;
+      --success-light: #DCFCE7;
+      --warning: #D97706;
+      --warning-light: #FEF3C7;
+      --danger: #DC2626;
+      --danger-light: #FEE2E2;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #0F172A;
+      --text-sub: #475569;
+      --border: #E2E8F0;
+      --radius: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== Login screen ===== */
+    .login-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .login-screen.show { display: flex; }
+    .login-logo { font-size: 2.6rem; font-weight: 900; color: var(--primary); letter-spacing: -1px; }
+    .login-tagline { font-size: 0.95rem; color: var(--text-sub); line-height: 1.7; }
+    .login-google-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s;
+    }
+    .login-google-btn:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+    .login-guest-btn {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-size: 0.85rem;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    /* User chip in header */
+    .user-chip {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .user-chip .uname {
+      font-size: 0.78rem;
+      font-weight: 600;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: white;
+    }
+    .logout-btn {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .logout-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+    /* ===== Global Navigation Header ===== */
+    header {
+      background: #1E293B;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .header-brand .sub {
+      font-size: 0.75rem;
+      color: #94A3B8;
+    }
+
+    .header-switch-btn {
+      background: rgba(255, 255, 255, 0.18);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .header-switch-btn:hover {
+      background: white;
+      color: #0F172A;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* Main Container */
+    main {
+      padding: 20px 16px 40px;
+      max-width: 640px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+    }
+
+    .counter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+      padding: 0 4px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* ===== Card Container ===== */
+    .math-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .card-prompt {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+    .blank-box {
+      display: inline-block;
+      min-width: 60px;
+      padding: 2px 8px;
+      background: #F1F5F9;
+      border-bottom: 2px solid var(--primary);
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    /* ===== Choice Buttons ===== */
+    .choice-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .choice-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #F8FAFC;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.98rem;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .choice-btn:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+    .choice-btn.selected {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+    .choice-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      color: #1E293B;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .choice-btn.selected .choice-badge {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ===== Fill Input ===== */
+    .fill-group {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      align-items: center;
+    }
+    .fill-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      text-align: center;
+    }
+    .fill-input:focus {
+      border-color: var(--primary);
+    }
+
+    /* ===== Drawing Canvas Area ===== */
+    .drawing-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      align-items: center;
+    }
+    .drawing-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 500px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tool-group {
+      display: flex;
+      gap: 4px;
+    }
+    .tool-btn {
+      padding: 6px 12px;
+      background: #F1F5F9;
+      color: #334155;
+      border: 1px solid #CBD5E1;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tool-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-hover);
+    }
+    .canvas-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 480px;
+      background: #FFFFFF;
+      border: 1.5px solid #94A3B8;
+      border-radius: 8px;
+      overflow: hidden;
+      touch-action: none;
+    }
+    #draw-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+
+    /* Action Buttons */
+    .btn-submit {
+      padding: 14px 28px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      width: 100%;
+    }
+    .btn-submit:hover {
+      background: var(--primary-hover);
+    }
+    .btn-submit:active {
+      transform: scale(0.99);
+    }
+
+    /* ===== Back Face / Explanation Area ===== */
+    .back-area {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 16px;
+      border-top: 2px dashed var(--border);
+    }
+    .result-banner {
+      padding: 14px 18px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .result-banner.correct {
+      background: var(--success-light);
+      color: #166534;
+      border: 1.5px solid #86EFAC;
+    }
+    .result-banner.wrong {
+      background: var(--danger-light);
+      color: #991B1B;
+      border: 1.5px solid #FCA5A5;
+    }
+    .result-banner.warning {
+      background: var(--warning-light);
+      color: #92400E;
+      border: 1.5px solid #FDE68A;
+    }
+    .banner-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+    .banner-desc {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .explanation-box {
+      background: #F8FAFC;
+      border-left: 4px solid var(--primary);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #1E293B;
+    }
+    .schedule-info {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      text-align: right;
+    }
+    .btn-next {
+      padding: 14px 28px;
+      background: #0F172A;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-next:hover {
+      background: #1E293B;
+    }
+
+    /* ===== Toast Notification ===== */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(15, 23, 42, 0.92);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      z-index: 1000;
+      pointer-events: none;
+      text-align: center;
+      max-width: 90%;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Summary Screen */
+    .summary-card {
+      text-align: center;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .summary-icon {
+      font-size: 3.5rem;
+    }
+    .summary-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+    .summary-stats {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-brand">
+      <span style="font-size: 1.5rem;">📐</span>
+      <div>
+        <h1>Kaya's Math</h1>
+        <div class="sub">洗足中1幾何・代数特訓</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="header-switch-btn" id="headerSwitchBtn" onclick="navigateToVocab(event)">🔤 英語学習へ →</button>
+      <div class="user-chip" id="userChip">
+        <span class="uname" id="userName"></span>
+        <button class="logout-btn" id="logoutBtn">ログアウト</button>
+      </div>
+    </div>
+  </header>
+  <script>
+    function navigateToVocab(e) {
+      if (e) e.preventDefault();
+      const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+      window.location.href = isLocal ? '../kaya-vocab/' : '../';
+    }
+  </script>
+
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-logo">📐 Kaya's Math</div>
+    <p class="login-tagline">洗足中1幾何・代数の学習記録をクラウドで管理。<br>iPadでもPCでも進捗を自動同期。</p>
+    <button class="login-google-btn" id="loginBtn">
+      <svg width="22" height="22" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.8 2.5 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.8 6c1.8-5.4 6.9-9.8 13.5-9.8z"/>
+        <path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.4c-.5 2.8-2.1 5.2-4.5 6.8l7 5.4c4.1-3.8 6.2-9.4 6.2-16.2z"/>
+        <path fill="#FBBC05" d="M10.5 28.5c-.5-1.5-.8-3.2-.8-4.8s.3-3.3.8-4.8l-7.8-6C1 15.8 0 19.8 0 24s1 8.2 2.7 11.3l7.8-5.8z"/>
+        <path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7-5.4c-2 1.4-4.6 2.2-8.2 2.2-6.5 0-12-4.4-14-10.3l-7.8 5.9C6.6 42.6 14.6 48 24 48z"/>
+      </svg>
+      Googleでログイン
+    </button>
+    <button class="login-guest-btn" id="guestBtn">ログインせずにローカルで試す</button>
+  </div>
+
+  <!-- Main Workspace -->
+  <main>
+    <div class="counter-bar">
+      <span id="category-badge" class="badge">幾何マスター</span>
+      <span id="counter-text">残り 0 問</span>
+    </div>
+
+    <!-- Active Card Display -->
+    <div id="card-view" class="math-card">
+      <div class="card-header">
+        <h2 id="card-title" class="card-title">読み込み中...</h2>
+        <div id="card-prompt" class="card-prompt"></div>
+      </div>
+
+      <!-- Choice Section -->
+      <div id="choice-container" class="choice-group" style="display: none;"></div>
+
+      <!-- Fill Section -->
+      <div id="fill-container" class="fill-group" style="display: none;">
+        <input type="text" id="fill-input" class="fill-input" placeholder="答えを入力" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+
+      <!-- Drawing Section -->
+      <div id="drawing-container" class="drawing-container" style="display: none;">
+        <div class="drawing-toolbar">
+          <div class="tool-group">
+            <button id="tool-guide" class="tool-btn active">📏 垂直補助線</button>
+            <button id="tool-solid" class="tool-btn">✏️ 実線</button>
+            <button id="tool-dashed" class="tool-btn">┈ 点線</button>
+          </div>
+          <div class="tool-group">
+            <button id="btn-undo" class="tool-btn">↩ 1本消す</button>
+            <button id="btn-clear" class="tool-btn" style="color: var(--danger); background: var(--danger-light);">全消去</button>
+          </div>
+        </div>
+        <div class="canvas-wrapper">
+          <svg id="draw-canvas" viewBox="0 0 500 480"></svg>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button id="btn-submit" class="btn-submit">回答する</button>
+
+      <!-- Back Face / Feedback Area -->
+      <div id="back-area" class="back-area">
+        <div id="result-banner" class="result-banner">
+          <div id="banner-title" class="banner-title"></div>
+          <div id="banner-desc" class="banner-desc"></div>
+        </div>
+        <div id="explanation-box" class="explanation-box"></div>
+        <div id="schedule-info" class="schedule-info"></div>
+        <button id="btn-next" class="btn-next">次へ進む →</button>
+      </div>
+    </div>
+
+    <!-- Session Completion Screen -->
+    <div id="summary-view" class="math-card summary-card" style="display: none;">
+      <div class="summary-icon">🎉</div>
+      <h2 class="summary-title">本日の学習完了！</h2>
+      <div id="summary-stats" class="summary-stats"></div>
+      <button id="btn-restart" class="btn-submit" style="max-width: 280px;">もう一度練習する</button>
+    </div>
+  </main>
+
+  <!-- Toast Alert -->
+  <div id="toast"></div>
+
+  <!-- Include Engines -->
+  <script src="js/validator.js"></script>
+  <script src="js/sm2.js"></script>
+  <script src="js/draw_engine.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // === Supabase Configuration ===
+      const SUPA_URL = 'https://uzpmpjkkwapaohleejtt.supabase.co';
+      const SUPA_KEY = 'sb_publishable_YCsV4Wpn8tb8gwLrgsPf2g_xAX0Q4gt';
+      const BOOK_KEY = 'kaya-math';
+      const PENDING_KEY = BOOK_KEY + '_sync_pending';
+      const REVIEW_LOG_KEY = BOOK_KEY + '_review_log_pending';
+      let isSyncing = false;
+      let currentUser = null;
+      const sb = (window.supabase && window.supabase.createClient)
+        ? window.supabase.createClient(SUPA_URL, SUPA_KEY)
+        : null;
+
+      // === Auth UI Control ===
+      function showLogin() {
+        const el = document.getElementById('loginScreen');
+        if (el) el.classList.add('show');
+      }
+      function showApp() {
+        const el = document.getElementById('loginScreen');
+        if (el) el.classList.remove('show');
+      }
+
+      function setUserChip(user) {
+        const chip = document.getElementById('userChip');
+        if (chip) chip.style.display = 'flex';
+        const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email;
+        const nameEl = document.getElementById('userName');
+        if (nameEl) nameEl.textContent = name;
+      }
+
+      async function signIn() {
+        if (!sb) return;
+        await sb.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: location.origin + location.pathname }
+        });
+      }
+
+      async function signOut() {
+        if (!sb) return;
+        await sb.auth.signOut();
+      }
+
+      // === Supabase Sync Engine ===
+      async function flushPending() {
+        if (!currentUser || isSyncing || !sb) return;
+
+        const pending = JSON.parse(localStorage.getItem(PENDING_KEY) || '{}');
+        const progressEntries = Object.values(pending);
+        const logPending = JSON.parse(localStorage.getItem(REVIEW_LOG_KEY) || '[]');
+        const logEntries = [...logPending];
+
+        if (progressEntries.length === 0 && logEntries.length === 0) return;
+
+        isSyncing = true;
+
+        // 1. progress_sync upsert
+        const succeededKeys = [];
+        try {
+          for (const payload of progressEntries) {
+            const { error } = await sb.from('progress_sync').upsert(
+              payload, { onConflict: 'user_id,book_key,word_key' }
+            );
+            if (error) {
+              console.warn('[flushPending] progress_sync upsert error:', error);
+              break;
+            }
+            succeededKeys.push(payload.word_key);
+          }
+        } catch (e) {
+          console.warn('[flushPending] progress_sync error:', e);
+        }
+
+        if (succeededKeys.length > 0) {
+          const curPending = JSON.parse(localStorage.getItem(PENDING_KEY) || '{}');
+          for (const k of succeededKeys) {
+            delete curPending[k];
+          }
+          if (Object.keys(curPending).length === 0) {
+            localStorage.removeItem(PENDING_KEY);
+          } else {
+            localStorage.setItem(PENDING_KEY, JSON.stringify(curPending));
+          }
+        }
+
+        // 2. review_log insert
+        try {
+          let succeededCount = 0;
+          for (let i = 0; i < logEntries.length; i++) {
+            const { error } = await sb.from('review_log').insert(logEntries[i]);
+            if (error) {
+              console.warn('[flushPending] review_log insert error:', error);
+              break;
+            }
+            succeededCount++;
+          }
+          const currentLogs = JSON.parse(localStorage.getItem(REVIEW_LOG_KEY) || '[]');
+          const remainingLogs = currentLogs.slice(succeededCount);
+          if (remainingLogs.length === 0) {
+            localStorage.removeItem(REVIEW_LOG_KEY);
+          } else {
+            localStorage.setItem(REVIEW_LOG_KEY, JSON.stringify(remainingLogs));
+          }
+        } catch (e) {
+          console.warn('[flushPending] review_log error:', e);
+        }
+
+        isSyncing = false;
+        const remP = JSON.parse(localStorage.getItem(PENDING_KEY) || '{}');
+        const remL = JSON.parse(localStorage.getItem(REVIEW_LOG_KEY) || '[]');
+        if (Object.keys(remP).length > 0 || remL.length > 0) {
+          flushPending();
+        }
+      }
+
+      // Application State
+      let allCards = [];
+      let queue = [];
+      let currentIndex = 0;
+      let selectedChoice = null;
+      let shuffledChoices = [];
+      let drawingController = null;
+      let currentSessionStats = { total: 0, correct: 0, incorrect: 0 };
+
+      // DOM Elements
+      const cardView = document.getElementById('card-view');
+      const summaryView = document.getElementById('summary-view');
+      const counterText = document.getElementById('counter-text');
+      const categoryBadge = document.getElementById('category-badge');
+      const cardTitle = document.getElementById('card-title');
+      const cardPrompt = document.getElementById('card-prompt');
+      const choiceContainer = document.getElementById('choice-container');
+      const fillContainer = document.getElementById('fill-container');
+      const fillInput = document.getElementById('fill-input');
+      const drawingContainer = document.getElementById('drawing-container');
+      const drawCanvas = document.getElementById('draw-canvas');
+      const btnSubmit = document.getElementById('btn-submit');
+      const backArea = document.getElementById('back-area');
+      const resultBanner = document.getElementById('result-banner');
+      const bannerTitle = document.getElementById('banner-title');
+      const bannerDesc = document.getElementById('banner-desc');
+      const explanationBox = document.getElementById('explanation-box');
+      const scheduleInfo = document.getElementById('schedule-info');
+      const btnNext = document.getElementById('btn-next');
+      const btnRestart = document.getElementById('btn-restart');
+      const summaryStats = document.getElementById('summary-stats');
+      const toastEl = document.getElementById('toast');
+
+      // Toast Alert
+      let toastTimer = null;
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove('show');
+        }, 2600);
+      }
+
+      // Drawing Controller Initialization
+      if (window.MathDrawEngine && drawCanvas) {
+        drawingController = new MathDrawEngine.DrawingController(drawCanvas);
+        
+        document.getElementById('tool-guide').onclick = () => setDrawingTool('guide');
+        document.getElementById('tool-solid').onclick = () => setDrawingTool('solid');
+        document.getElementById('tool-dashed').onclick = () => setDrawingTool('dashed');
+        document.getElementById('btn-undo').onclick = () => drawingController.undo();
+        document.getElementById('btn-clear').onclick = () => drawingController.clear();
+      }
+
+      function setDrawingTool(tool) {
+        if (!drawingController) return;
+        drawingController.setTool(tool);
+        document.querySelectorAll('.drawing-toolbar .tool-btn').forEach(b => {
+          if (b.id.startsWith('tool-')) b.classList.remove('active');
+        });
+        const activeBtn = document.getElementById(`tool-${tool}`);
+        if (activeBtn) activeBtn.classList.add('active');
+      }
+
+      // Load Cards (Priority: pre-generated data/math_today.json -> fallback: math_cards.json)
+      async function init() {
+        try {
+          let res = await fetch('data/math_today.json');
+          if (res.ok) {
+            const data = await res.json();
+            allCards = data.cards || data;
+            const meta = data.meta || {};
+            if (meta.date) {
+              const subEl = document.querySelector('.header-brand .sub');
+              if (subEl) subEl.textContent = `洗足中1幾何・代数特訓 (${meta.date})`;
+            }
+          } else {
+            res = await fetch('math_cards.json');
+            allCards = await res.json();
+          }
+          startSession();
+        } catch (e) {
+          try {
+            const res = await fetch('math_cards.json');
+            allCards = await res.json();
+            startSession();
+          } catch (err) {
+            console.error('Failed to load math cards:', err);
+            cardTitle.textContent = 'データの読み込みに失敗しました';
+          }
+        }
+      }
+
+      function startSession() {
+        // 事前生成されたカードをそのまま出題キューとして使用
+        queue = [...allCards];
+        currentIndex = 0;
+        currentSessionStats = { total: queue.length, correct: 0, incorrect: 0 };
+        cardView.style.display = 'flex';
+        summaryView.style.display = 'none';
+        renderCurrentCard();
+      }
+
+      function renderCurrentCard() {
+        if (currentIndex >= queue.length) {
+          showSummary();
+          return;
+        }
+
+        const card = queue[currentIndex];
+        selectedChoice = null;
+        backArea.style.display = 'none';
+        btnSubmit.style.display = 'block';
+
+        // Update counter & badge
+        counterText.textContent = `問 ${currentIndex + 1} / ${queue.length}`;
+        if (card.id.startsWith('geo_proj_')) {
+          categoryBadge.textContent = '📐 投影図マスター';
+        } else if (card.id.startsWith('geo_euler_')) {
+          categoryBadge.textContent = '🔷 オイラーの多面体定理';
+        } else {
+          categoryBadge.textContent = '⚾ 内接球の半径公式';
+        }
+
+        cardTitle.textContent = card.title;
+        
+        // Format prompt blank
+        let formattedPrompt = card.prompt.replace(/\[\s*___\s*\]/g, '<span class="blank-box">？</span>');
+        cardPrompt.innerHTML = formattedPrompt;
+
+        // Render card by Type
+        choiceContainer.style.display = 'none';
+        fillContainer.style.display = 'none';
+        drawingContainer.style.display = 'none';
+
+        if (card.type === 'choice') {
+          renderChoiceCard(card);
+        } else if (card.type === 'fill') {
+          renderFillCard(card);
+        } else if (card.type === 'drawing') {
+          renderDrawingCard(card);
+        }
+
+        // Render MathJax if available
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([cardPrompt, choiceContainer, explanationBox]);
+        }
+      }
+
+      // 1. Choice Card (with random shuffle)
+      function renderChoiceCard(card) {
+        choiceContainer.innerHTML = '';
+        choiceContainer.style.display = 'flex';
+        btnSubmit.textContent = '選択肢を選んで回答する';
+
+        // Fisher-Yates Shuffle
+        const originalChoices = card.choices.map((text, idx) => ({ text, isCorrect: idx === card.answer }));
+        shuffledChoices = [...originalChoices];
+        for (let i = shuffledChoices.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledChoices[i], shuffledChoices[j]] = [shuffledChoices[j], shuffledChoices[i]];
+        }
+
+        const circledDigits = ['①', '②', '③', '④', '⑤'];
+        shuffledChoices.forEach((choice, index) => {
+          const btn = document.createElement('div');
+          btn.className = 'choice-btn';
+          btn.innerHTML = `
+            <span class="choice-badge">${circledDigits[index] || (index + 1)}</span>
+            <span class="choice-text">${choice.text}</span>
+          `;
+          btn.onclick = () => {
+            document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedChoice = index;
+            btnSubmit.textContent = '✅ 回答を確定する';
+          };
+          choiceContainer.appendChild(btn);
+        });
+
+        MathValidator.configureInputAttributes(fillInput, 'choice');
+      }
+
+      // 2. Fill Card
+      function renderFillCard(card) {
+        fillContainer.style.display = 'flex';
+        fillInput.value = '';
+        btnSubmit.textContent = '回答する';
+        MathValidator.configureInputAttributes(fillInput, 'fill', card.sub_type);
+        setTimeout(() => fillInput.focus(), 100);
+      }
+
+      // 3. Drawing Card
+      function renderDrawingCard(card) {
+        drawingContainer.style.display = 'flex';
+        btnSubmit.textContent = '✅ 作図を採点する';
+        if (drawingController) {
+          drawingController.setProblem(card);
+          setDrawingTool('guide');
+        }
+        MathValidator.configureInputAttributes(fillInput, 'drawing');
+      }
+
+      // Submit & Verification
+      btnSubmit.onclick = () => {
+        const card = queue[currentIndex];
+        let isCorrect = false;
+        let gradeResult = null;
+
+        if (card.type === 'choice') {
+          const valid = MathValidator.validateInput(selectedChoice, 'choice');
+          if (!valid.valid) {
+            showToast(valid.error);
+            return;
+          }
+          isCorrect = shuffledChoices[selectedChoice].isCorrect;
+          gradeResult = {
+            title: isCorrect ? '🎉 完璧！正解です！' : '❌ 惜しい！不正解です',
+            message: isCorrect ? '選択肢の内容を正しく理解できています！' : 'もう一度解説を確認して理解を深めよう！'
+          };
+        } else if (card.type === 'fill') {
+          const valid = MathValidator.validateInput(fillInput.value, 'fill', card.sub_type);
+          if (!valid.valid) {
+            showToast(valid.error);
+            fillInput.focus();
+            return;
+          }
+          isCorrect = (valid.normalizedValue === String(card.answer).toLowerCase().trim());
+          gradeResult = {
+            title: isCorrect ? '🎉 完璧！正解です！' : '❌ 惜しい！不正解です',
+            message: isCorrect ? `正解：${card.answer}` : `あなたの回答: ${valid.normalizedValue} / 正解: ${card.answer}`
+          };
+        } else if (card.type === 'drawing') {
+          const lines = drawingController.drawnLines;
+          const valid = MathValidator.validateInput(lines, 'drawing');
+          if (!valid.valid) {
+            showToast(valid.error);
+            return;
+          }
+          gradeResult = drawingController.grade();
+          isCorrect = gradeResult.isCorrect;
+        }
+
+        // Record in SM-2 (localStorage)
+        const updatedProgress = MathSM2.recordCardResult(card.id, isCorrect);
+
+        // Supabase 同期キューへ追加（ログイン中のみ）
+        if (currentUser && sb) {
+          const pending = JSON.parse(localStorage.getItem(PENDING_KEY) || '{}');
+          pending[card.id] = {
+            user_id: currentUser.id,
+            book_key: BOOK_KEY,
+            word_key: card.id,
+            status: isCorrect ? 'learned' : 'review',
+            correct: updatedProgress.correct,
+            incorrect: updatedProgress.incorrect,
+            last_studied: updatedProgress.last_studied,
+            ease_factor: updatedProgress.ease_factor,
+            interval_days: updatedProgress.interval_days,
+            repetitions: updatedProgress.repetitions,
+            next_review: updatedProgress.next_review,
+            updated_at: new Date().toISOString()
+          };
+          localStorage.setItem(PENDING_KEY, JSON.stringify(pending));
+
+          const logPending = JSON.parse(localStorage.getItem(REVIEW_LOG_KEY) || '[]');
+          logPending.push({
+            user_id: currentUser.id,
+            book_key: BOOK_KEY,
+            word_key: card.id,
+            rating: isCorrect ? 4 : 1,
+            typed_incorrect: isCorrect ? null : String(gradeResult?.message || '')
+          });
+          localStorage.setItem(REVIEW_LOG_KEY, JSON.stringify(logPending));
+
+          flushPending();
+        }
+
+        // Update session stats
+        if (isCorrect) {
+          currentSessionStats.correct++;
+        } else {
+          currentSessionStats.incorrect++;
+          // 不正解時はセッション末尾に再キューイング（解き直し）
+          queue.push(card);
+        }
+
+        // Show Back Area
+        btnSubmit.style.display = 'none';
+        backArea.style.display = 'flex';
+
+        resultBanner.className = 'result-banner ' + (isCorrect ? 'correct' : (gradeResult.score > 0 ? 'warning' : 'wrong'));
+        bannerTitle.textContent = gradeResult.title;
+        bannerDesc.textContent = gradeResult.message;
+
+        explanationBox.innerHTML = `<strong>【解説】</strong><br>${card.explanation}` + (card.hint ? `<br><small style="color:#64748b;">💡ヒント: ${card.hint}</small>` : '');
+        scheduleInfo.textContent = `SM-2 学習間隔: ${updatedProgress.interval_days}日後 (次回: ${updatedProgress.next_review})`;
+
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([explanationBox]);
+        }
+      };
+
+      // Next Card
+      btnNext.onclick = () => {
+        currentIndex++;
+        renderCurrentCard();
+      };
+
+      // Summary
+      function showSummary() {
+        cardView.style.display = 'none';
+        summaryView.style.display = 'flex';
+        counterText.textContent = '完了';
+        summaryStats.innerHTML = `
+          本日の出題数: <strong>${currentSessionStats.total}</strong> 問<br>
+          正答数: <strong style="color:var(--success);">${currentSessionStats.correct}</strong> 問 / 
+          誤答数: <strong style="color:var(--danger);">${currentSessionStats.incorrect}</strong> 問
+        `;
+      }
+
+      btnRestart.onclick = () => {
+        startSession();
+      };
+
+      // Keyboard Shortcut (Enter key on fill)
+      fillInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          btnSubmit.click();
+        }
+      });
+
+      // === Auth & Application Bootstrapping ===
+      async function bootAuth() {
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const guestBtn = document.getElementById('guestBtn');
+
+        if (loginBtn) loginBtn.onclick = signIn;
+        if (logoutBtn) logoutBtn.onclick = signOut;
+        if (guestBtn) guestBtn.onclick = () => {
+          showApp();
+          init();
+        };
+
+        if (!sb) {
+          showApp();
+          init();
+          return;
+        }
+
+        sb.auth.onAuthStateChange(async (event, session) => {
+          if (session) {
+            if (!currentUser) {
+              currentUser = session.user;
+              setUserChip(currentUser);
+              showApp();
+              init();
+              flushPending();
+            }
+          } else {
+            if (currentUser) {
+              currentUser = null;
+              const chip = document.getElementById('userChip');
+              if (chip) chip.style.display = 'none';
+              showLogin();
+            } else if (event === 'INITIAL_SESSION') {
+              showLogin();
+            }
+          }
+        });
+      }
+
+      // Start on DOM ready
+      document.addEventListener('DOMContentLoaded', bootAuth);
+    })();
+  </script>
+</body>
+</html>
+
