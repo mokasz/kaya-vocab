@@ -804,12 +804,42 @@
             res = await fetch('math_cards.json');
             allCards = await res.json();
           }
-          startSession();
+
+          // Supabase から最新の進捗を取得してローカルとマージ
+          if (currentUser && sb) {
+            try {
+              const { data: remoteData, error } = await sb.from('progress_sync')
+                .select('word_key, status, correct, incorrect, last_studied, ease_factor, interval_days, repetitions, next_review')
+                .eq('user_id', currentUser.id)
+                .eq('book_key', BOOK_KEY);
+              if (!error && remoteData) {
+                const localProgress = MathSM2.loadProgress();
+                remoteData.forEach(r => {
+                  localProgress[r.word_key] = {
+                    card_id: r.word_key,
+                    status: r.status,
+                    repetitions: r.repetitions,
+                    interval_days: r.interval_days,
+                    ease_factor: r.ease_factor,
+                    next_review: r.next_review,
+                    last_studied: r.last_studied,
+                    correct: r.correct,
+                    incorrect: r.incorrect
+                  };
+                });
+                MathSM2.saveProgress(localProgress);
+              }
+            } catch (err) {
+              console.warn('Failed to load progress from Supabase:', err);
+            }
+          }
+
+          startSession(false);
         } catch (e) {
           try {
             const res = await fetch('math_cards.json');
             allCards = await res.json();
-            startSession();
+            startSession(false);
           } catch (err) {
             console.error('Failed to load math cards:', err);
             cardTitle.textContent = 'データの読み込みに失敗しました';
@@ -817,8 +847,40 @@
         }
       }
 
-      function startSession() {
-        // 事前生成されたカードをそのまま出題キューとして使用
+      function startSession(forceRestart = false) {
+        const todayStr = MathSM2.getTodayString();
+        const progress = MathSM2.loadProgress();
+
+        if (!forceRestart && allCards.length > 0) {
+          const doneCards = allCards.filter(c => {
+            const p = progress[c.id];
+            return p && p.last_studied === todayStr && p.status === 'learned';
+          });
+
+          if (doneCards.length === allCards.length) {
+            // 本日の全カードが完了済み
+            currentSessionStats = { total: allCards.length, correct: allCards.length, incorrect: 0 };
+            showSummary(true);
+            return;
+          }
+
+          // 本日未完了のカードのみを出題キューにセット
+          const remaining = allCards.filter(c => {
+            const p = progress[c.id];
+            return !(p && p.last_studied === todayStr && p.status === 'learned');
+          });
+          if (remaining.length > 0) {
+            queue = [...remaining];
+            currentIndex = 0;
+            currentSessionStats = { total: allCards.length, correct: doneCards.length, incorrect: 0 };
+            cardView.style.display = 'flex';
+            summaryView.style.display = 'none';
+            renderCurrentCard();
+            return;
+          }
+        }
+
+        // 初回または強制リスタート時
         queue = [...allCards];
         currentIndex = 0;
         currentSessionStats = { total: queue.length, correct: 0, incorrect: 0 };
@@ -839,7 +901,8 @@
         btnSubmit.style.display = 'block';
 
         // Update counter & badge
-        counterText.textContent = `問 ${currentIndex + 1} / ${queue.length}`;
+        const doneCount = Math.max(0, currentSessionStats.total - queue.length);
+        counterText.textContent = `問 ${doneCount + currentIndex + 1} / ${currentSessionStats.total}`;
         if (card.id.startsWith('geo_proj_')) {
           categoryBadge.textContent = '📐 投影図マスター';
         } else if (card.id.startsWith('geo_euler_')) {
@@ -1034,19 +1097,28 @@
       };
 
       // Summary
-      function showSummary() {
+      function showSummary(alreadyDone = false) {
         cardView.style.display = 'none';
         summaryView.style.display = 'flex';
         counterText.textContent = '完了';
-        summaryStats.innerHTML = `
-          本日の出題数: <strong>${currentSessionStats.total}</strong> 問<br>
-          正答数: <strong style="color:var(--success);">${currentSessionStats.correct}</strong> 問 / 
-          誤答数: <strong style="color:var(--danger);">${currentSessionStats.incorrect}</strong> 問
-        `;
+        if (alreadyDone) {
+          summaryStats.innerHTML = `
+            本日の出題数: <strong>${currentSessionStats.total}</strong> 問<br>
+            <div style="margin-top: 8px; color: var(--success); font-weight: 700; font-size: 1.05rem;">
+              🎉 本日の学習はすべて完了しています！
+            </div>
+          `;
+        } else {
+          summaryStats.innerHTML = `
+            本日の出題数: <strong>${currentSessionStats.total}</strong> 問<br>
+            正答数: <strong style="color:var(--success);">${currentSessionStats.correct}</strong> 問 / 
+            誤答数: <strong style="color:var(--danger);">${currentSessionStats.incorrect}</strong> 問
+          `;
+        }
       }
 
       btnRestart.onclick = () => {
-        startSession();
+        startSession(true);
       };
 
       // Keyboard Shortcut (Enter key on fill)

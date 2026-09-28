@@ -79,6 +79,7 @@
   function calculateSM2(item, quality, todayStr) {
     const record = { ...item };
     const today = todayStr || getTodayString();
+    const isSameDay = record.last_studied === today;
 
     if (quality < 3) {
       // 不正解
@@ -89,24 +90,36 @@
       record.incorrect = (record.incorrect || 0) + 1;
     } else {
       // 正解
-      const reps = (record.repetitions || 0) + 1;
-      record.repetitions = reps;
-
-      if (reps === 1) {
-        record.interval_days = 1;
-      } else if (reps === 2) {
-        record.interval_days = 6;
+      if (isSameDay) {
+        // 同日内の重複回答: すでに今日学習済みの場合は repetitions / interval は進めない
+        if (record.status !== 'learned') {
+          // 不正解からの当日リカバリの場合のみ learned に復帰
+          record.status = 'learned';
+          record.repetitions = Math.max(1, record.repetitions || 1);
+          record.interval_days = record.interval_days || 1;
+        }
+        record.correct = (record.correct || 0) + 1;
       } else {
-        const prevInterval = record.interval_days || 6;
-        const ef = record.ease_factor || 2.5;
-        record.interval_days = Math.round(prevInterval * ef);
-      }
+        // 通常の正解（別日）
+        const reps = (record.repetitions || 0) + 1;
+        record.repetitions = reps;
 
-      // ease_factor 更新
-      const prevEf = record.ease_factor || 2.5;
-      record.ease_factor = Math.max(1.3, prevEf + 0.1 - (4 - quality) * 0.08);
-      record.status = 'learned';
-      record.correct = (record.correct || 0) + 1;
+        if (reps === 1) {
+          record.interval_days = 1;
+        } else if (reps === 2) {
+          record.interval_days = 6;
+        } else {
+          const prevInterval = record.interval_days || 6;
+          const ef = record.ease_factor || 2.5;
+          record.interval_days = Math.round(prevInterval * ef);
+        }
+
+        // ease_factor 更新
+        const prevEf = record.ease_factor || 2.5;
+        record.ease_factor = Math.max(1.3, prevEf + 0.1 - (4 - quality) * 0.08);
+        record.status = 'learned';
+        record.correct = (record.correct || 0) + 1;
+      }
     }
 
     record.last_studied = today;

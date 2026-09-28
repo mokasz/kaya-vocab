@@ -48,12 +48,12 @@
     "book_key": "kaya-stage1"
   },
   "geo_euler_08": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
-    "ease_factor": 1.9,
-    "book_key": "kaya-stage1"
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 1.4,
+    "book_key": "kaya-math"
   },
   "geo_euler_11": {
     "status": "green",
@@ -64,20 +64,20 @@
     "book_key": "kaya-stage1"
   },
   "geo_euler_10": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
-    "ease_factor": 2.2,
-    "book_key": "kaya-stage1"
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 2.3,
+    "book_key": "kaya-math"
   },
   "geo_euler_06": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
-    "ease_factor": 2.3,
-    "book_key": "kaya-stage1"
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 2.7,
+    "book_key": "kaya-math"
   },
   "geo_euler_01": {
     "status": "green",
@@ -88,43 +88,59 @@
     "book_key": "kaya-stage1"
   },
   "geo_inscribed_01": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
-    "ease_factor": 2.4,
-    "book_key": "kaya-stage1"
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 2.7,
+    "book_key": "kaya-math"
   },
   "geo_inscribed_02": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
-    "ease_factor": 2.6,
-    "book_key": "kaya-stage1"
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 2.5,
+    "book_key": "kaya-math"
   },
   "geo_inscribed_05": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
-    "ease_factor": 2.6,
-    "book_key": "kaya-stage1"
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 2.7,
+    "book_key": "kaya-math"
   },
   "geo_inscribed_06": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
-    "ease_factor": 2.6,
-    "book_key": "kaya-stage1"
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 2.5,
+    "book_key": "kaya-math"
   },
   "geo_inscribed_03": {
-    "status": "green",
+    "status": "learned",
     "interval_days": 1,
-    "next_review": "2026-09-27",
-    "last_studied": "2026-09-27",
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 1.5,
+    "book_key": "kaya-math"
+  },
+  "geo_proj_01": {
+    "status": "learned",
+    "interval_days": 1,
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
+    "ease_factor": 2.1,
+    "book_key": "kaya-math"
+  },
+  "geo_proj_02": {
+    "status": "learned",
+    "interval_days": 1,
+    "next_review": "2026-09-29",
+    "last_studied": "2026-09-28",
     "ease_factor": 2.3,
-    "book_key": "kaya-stage1"
+    "book_key": "kaya-math"
   }
 }
