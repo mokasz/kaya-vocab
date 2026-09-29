@@ -127,6 +127,14 @@
     "ease_factor": 1.5,
     "book_key": "kaya-math"
   },
+  "geo_proj_03": {
+    "status": "learned",
+    "interval_days": 1,
+    "next_review": "2026-09-30",
+    "last_studied": "2026-09-29",
+    "ease_factor": 2.6,
+    "book_key": "kaya-math"
+  },
   "geo_proj_01": {
     "status": "learned",
     "interval_days": 1,
@@ -141,6 +149,14 @@
     "next_review": "2026-09-29",
     "last_studied": "2026-09-28",
     "ease_factor": 2.3,
+    "book_key": "kaya-math"
+  },
+  "geo_proj_04": {
+    "status": "learned",
+    "interval_days": 1,
+    "next_review": "2026-09-30",
+    "last_studied": "2026-09-29",
+    "ease_factor": 2.6,
     "book_key": "kaya-math"
   }
 }
