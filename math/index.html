@@ -600,9 +600,9 @@
   <div id="toast"></div>
 
   <!-- Include Engines -->
-  <script src="js/validator.js"></script>
-  <script src="js/sm2.js"></script>
-  <script src="js/draw_engine.js"></script>
+  <script src="js/validator.js?v=20260929_2"></script>
+  <script src="js/sm2.js?v=20260929_2"></script>
+  <script src="js/draw_engine.js?v=20260929_2"></script>
 
   <script>
     (function () {
@@ -791,7 +791,7 @@
       // Load Cards (Priority: pre-generated data/math_today.json -> fallback: math_cards.json)
       async function init() {
         try {
-          let res = await fetch('data/math_today.json');
+          let res = await fetch('data/math_today.json?t=' + Date.now(), { cache: 'no-store' });
           if (res.ok) {
             const data = await res.json();
             allCards = data.cards || data;
@@ -801,7 +801,7 @@
               if (subEl) subEl.textContent = `洗足中1幾何・代数特訓 (${meta.date})`;
             }
           } else {
-            res = await fetch('math_cards.json');
+            res = await fetch('math_cards.json?t=' + Date.now(), { cache: 'no-store' });
             allCards = await res.json();
           }
 
@@ -837,7 +837,7 @@
           startSession(false);
         } catch (e) {
           try {
-            const res = await fetch('math_cards.json');
+            const res = await fetch('math_cards.json?t=' + Date.now(), { cache: 'no-store' });
             allCards = await res.json();
             startSession(false);
           } catch (err) {
