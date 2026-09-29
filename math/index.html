@@ -6,6 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <meta name="math-version" content="1790690143">
   <title>Kaya's Math - 洗足中1幾何・代数特訓</title>
   <!-- MathJax for rendering math formulas -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -699,9 +700,9 @@
   <div id="toast"></div>
 
   <!-- Include Engines -->
-  <script src="js/validator.js?v=20260929_2"></script>
-  <script src="js/sm2.js?v=20260929_2"></script>
-  <script src="js/draw_engine.js?v=20260929_2"></script>
+  <script src="js/validator.js?v=1790690143"></script>
+  <script src="js/sm2.js?v=1790690143"></script>
+  <script src="js/draw_engine.js?v=1790690143"></script>
 
   <script>
     (function () {
@@ -899,7 +900,9 @@
             const meta = data.meta || {};
             if (meta.date) {
               const subEl = document.querySelector('.header-brand .sub');
-              if (subEl) subEl.textContent = `洗足中1幾何・代数特訓 (${meta.date})`;
+              const vText = meta.version ? ` [v${meta.version}]` : '';
+              if (subEl) subEl.textContent = `洗足中1幾何・代数特訓 (${meta.date}${vText})`;
+              console.log('Kaya Math Loaded:', meta);
             }
           } else {
             res = await fetch('math_cards.json?t=' + Date.now(), { cache: 'no-store' });
