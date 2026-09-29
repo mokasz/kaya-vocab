@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="160" height="192">
+  <rect width="200" height="240" fill="#FFFFFF"/>
+  <!-- 基準線 GL -->
+  <line x1="10" y1="120" x2="190" y2="120" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- 垂直対応線（破線） -->
+  <line x1="55" y1="105" x2="55" y2="135" stroke="#64748B" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="145" y1="105" x2="145" y2="135" stroke="#64748B" stroke-width="2" stroke-dasharray="4,4"/>
+  <!-- 立面図（正方形 90x90） -->
+  <rect x="55" y="15" width="90" height="90" fill="#FFFFFF" stroke="#0F172A" stroke-width="2.5"/>
+  <!-- 平面図（正方形 90x90） -->
+  <rect x="55" y="135" width="90" height="90" fill="#FFFFFF" stroke="#0F172A" stroke-width="2.5"/>
+</svg>

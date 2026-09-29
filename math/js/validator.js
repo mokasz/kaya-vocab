@@ -51,6 +51,15 @@
    */
   function validateInput(value, cardType, subType) {
     if (cardType === 'choice') {
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          return {
+            valid: false,
+            error: subType === 'multi' ? '当てはまる選択肢を1つ以上選んでください（すべて選択）' : '上の選択肢をタップして選んでください'
+          };
+        }
+        return { valid: true, normalizedValue: value };
+      }
       if (value === null || value === undefined || String(value).trim() === '') {
         return {
           valid: false,

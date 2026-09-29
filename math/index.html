@@ -227,12 +227,47 @@
       text-align: center;
     }
 
+    /* ===== Card Image ===== */
+    .card-image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      margin: 2px 0 8px;
+    }
+    .card-image {
+      max-width: 220px;
+      max-height: 220px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .card-prompt img {
+      max-width: 220px;
+      max-height: 220px;
+      display: block;
+      margin: 8px auto;
+    }
+
     /* ===== Choice Buttons ===== */
     .choice-group {
       display: flex;
       flex-direction: column;
       gap: 10px;
       width: 100%;
+    }
+    .choice-hint-guide {
+      font-size: 0.85rem;
+      color: #64748B;
+      margin-bottom: 2px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
     .choice-btn {
       display: flex;
@@ -274,6 +309,65 @@
     .choice-btn.selected .choice-badge {
       background: var(--primary);
       color: white;
+    }
+    .choice-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid #CBD5E1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      color: transparent;
+      font-size: 13px;
+      font-weight: 900;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .choice-btn.selected .choice-check {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    /* 正解・誤答ハイライト表示（裏面解説時） */
+    .choice-btn.correct-choice {
+      background: #ECFDF5 !important;
+      border-color: #10B981 !important;
+    }
+    .choice-btn.correct-choice .choice-badge {
+      background: #10B981 !important;
+      color: white !important;
+    }
+    .choice-btn.correct-choice .choice-check {
+      background: #10B981 !important;
+      border-color: #10B981 !important;
+      color: white !important;
+    }
+    .choice-btn.wrong-choice {
+      background: #FEF2F2 !important;
+      border-color: #EF4444 !important;
+    }
+    .choice-btn.wrong-choice .choice-badge {
+      background: #EF4444 !important;
+      color: white !important;
+    }
+    .choice-btn.wrong-choice .choice-check {
+      background: #EF4444 !important;
+      border-color: #EF4444 !important;
+      color: white !important;
+    }
+    .choice-btn.missed-choice {
+      background: #F0FDF4 !important;
+      border: 2px dashed #10B981 !important;
+    }
+    .choice-btn.missed-choice .choice-badge {
+      border: 2px solid #10B981;
+      color: #10B981;
+      background: white;
+    }
+    .choice-btn.disabled {
+      pointer-events: none;
     }
 
     /* ===== Fill Input ===== */
@@ -546,6 +640,11 @@
         <div id="card-prompt" class="card-prompt"></div>
       </div>
 
+      <!-- Problem Image -->
+      <div id="card-image-container" class="card-image-container" style="display: none;">
+        <img id="card-image" class="card-image" src="" alt="問題の図">
+      </div>
+
       <!-- Choice Section -->
       <div id="choice-container" class="choice-group" style="display: none;"></div>
 
@@ -727,7 +826,7 @@
       let allCards = [];
       let queue = [];
       let currentIndex = 0;
-      let selectedChoice = null;
+      let selectedChoices = [];
       let shuffledChoices = [];
       let drawingController = null;
       let currentSessionStats = { total: 0, correct: 0, incorrect: 0 };
@@ -739,6 +838,8 @@
       const categoryBadge = document.getElementById('category-badge');
       const cardTitle = document.getElementById('card-title');
       const cardPrompt = document.getElementById('card-prompt');
+      const cardImageContainer = document.getElementById('card-image-container');
+      const cardImage = document.getElementById('card-image');
       const choiceContainer = document.getElementById('choice-container');
       const fillContainer = document.getElementById('fill-container');
       const fillInput = document.getElementById('fill-input');
@@ -896,7 +997,7 @@
         }
 
         const card = queue[currentIndex];
-        selectedChoice = null;
+        selectedChoices = [];
         backArea.style.display = 'none';
         btnSubmit.style.display = 'block';
 
@@ -917,6 +1018,15 @@
         let formattedPrompt = card.prompt.replace(/\[\s*___\s*\]/g, '<span class="blank-box">？</span>');
         cardPrompt.innerHTML = formattedPrompt;
 
+        // Render card image if available
+        if (card.image) {
+          cardImage.src = card.image;
+          cardImageContainer.style.display = 'flex';
+        } else {
+          cardImageContainer.style.display = 'none';
+          cardImage.src = '';
+        }
+
         // Render card by Type
         choiceContainer.style.display = 'none';
         fillContainer.style.display = 'none';
@@ -936,34 +1046,84 @@
         }
       }
 
-      // 1. Choice Card (with random shuffle)
+      // 1. Choice Card (with random shuffle & multi-select support)
       function renderChoiceCard(card) {
         choiceContainer.innerHTML = '';
         choiceContainer.style.display = 'flex';
-        btnSubmit.textContent = '選択肢を選んで回答する';
+
+        const isMulti = !!card.multi_select || Array.isArray(card.answers);
+        selectedChoices = [];
+
+        if (isMulti) {
+          btnSubmit.textContent = '当てはまるものをすべて選んで回答する';
+          const guide = document.createElement('div');
+          guide.className = 'choice-hint-guide';
+          guide.innerHTML = '<span>☑</span> 当てはまるものをすべてタップして選択してください（複数選択可）';
+          choiceContainer.appendChild(guide);
+        } else {
+          btnSubmit.textContent = '選択肢を選んで回答する';
+        }
+
+        // 正解インデックス集合の準備
+        const correctIndices = isMulti
+          ? (Array.isArray(card.answers) ? card.answers : (card.answer !== undefined ? [card.answer] : []))
+          : (card.answer !== undefined ? [card.answer] : []);
+        const correctSet = new Set(correctIndices);
 
         // Fisher-Yates Shuffle
-        const originalChoices = card.choices.map((text, idx) => ({ text, isCorrect: idx === card.answer }));
+        const originalChoices = card.choices.map((text, idx) => ({
+          text,
+          origIndex: idx,
+          isCorrect: correctSet.has(idx)
+        }));
         shuffledChoices = [...originalChoices];
         for (let i = shuffledChoices.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [shuffledChoices[i], shuffledChoices[j]] = [shuffledChoices[j], shuffledChoices[i]];
         }
 
-        const circledDigits = ['①', '②', '③', '④', '⑤'];
+        const circledDigits = ['①', '②', '③', '④', '⑤', '⑥'];
         shuffledChoices.forEach((choice, index) => {
           const btn = document.createElement('div');
-          btn.className = 'choice-btn';
-          btn.innerHTML = `
-            <span class="choice-badge">${circledDigits[index] || (index + 1)}</span>
-            <span class="choice-text">${choice.text}</span>
-          `;
-          btn.onclick = () => {
-            document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            selectedChoice = index;
-            btnSubmit.textContent = '✅ 回答を確定する';
-          };
+          btn.className = 'choice-btn' + (isMulti ? ' multi' : '');
+          btn.dataset.index = index;
+
+          if (isMulti) {
+            btn.innerHTML = `
+              <span class="choice-check">✓</span>
+              <span class="choice-badge">${circledDigits[index] || (index + 1)}</span>
+              <span class="choice-text">${choice.text}</span>
+            `;
+            btn.onclick = () => {
+              if (btn.classList.contains('disabled')) return;
+              const pos = selectedChoices.indexOf(index);
+              if (pos > -1) {
+                selectedChoices.splice(pos, 1);
+                btn.classList.remove('selected');
+              } else {
+                selectedChoices.push(index);
+                btn.classList.add('selected');
+              }
+              if (selectedChoices.length === 0) {
+                btnSubmit.textContent = '当てはまるものをすべて選んで回答する';
+              } else {
+                btnSubmit.textContent = `✅ 回答を確定する (${selectedChoices.length}個選択中)`;
+              }
+            };
+          } else {
+            btn.innerHTML = `
+              <span class="choice-badge">${circledDigits[index] || (index + 1)}</span>
+              <span class="choice-text">${choice.text}</span>
+            `;
+            btn.onclick = () => {
+              if (btn.classList.contains('disabled')) return;
+              document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+              btn.classList.add('selected');
+              selectedChoices = [index];
+              btnSubmit.textContent = '✅ 回答を確定する';
+            };
+          }
+
           choiceContainer.appendChild(btn);
         });
 
@@ -997,16 +1157,58 @@
         let gradeResult = null;
 
         if (card.type === 'choice') {
-          const valid = MathValidator.validateInput(selectedChoice, 'choice');
+          const isMulti = !!card.multi_select || Array.isArray(card.answers);
+          const valid = MathValidator.validateInput(selectedChoices, 'choice', isMulti ? 'multi' : undefined);
           if (!valid.valid) {
             showToast(valid.error);
             return;
           }
-          isCorrect = shuffledChoices[selectedChoice].isCorrect;
-          gradeResult = {
-            title: isCorrect ? '🎉 完璧！正解です！' : '❌ 惜しい！不正解です',
-            message: isCorrect ? '選択肢の内容を正しく理解できています！' : 'もう一度解説を確認して理解を深めよう！'
-          };
+
+          const expectedIndices = shuffledChoices
+            .map((c, i) => c.isCorrect ? i : -1)
+            .filter(i => i !== -1)
+            .sort((a, b) => a - b);
+          const actualIndices = [...selectedChoices].sort((a, b) => a - b);
+
+          isCorrect = (expectedIndices.length === actualIndices.length &&
+                       expectedIndices.every((val, idx) => val === actualIndices[idx]));
+
+          const correctTexts = shuffledChoices
+            .filter(c => c.isCorrect)
+            .map(c => c.text)
+            .join('、');
+
+          if (isMulti) {
+            gradeResult = {
+              title: isCorrect ? '🎉 完璧！すべて正しく選択できました！' : '❌ 惜しい！不正解です',
+              message: isCorrect
+                ? 'すべての正解立体を正しく見抜くことができました！'
+                : `正解の立体: ${correctTexts}`
+            };
+          } else {
+            gradeResult = {
+              title: isCorrect ? '🎉 完璧！正解です！' : '❌ 惜しい！不正解です',
+              message: isCorrect
+                ? '選択肢の内容を正しく理解できています！'
+                : `正解: ${correctTexts}`
+            };
+          }
+
+          // 選択肢ボタンのハイライト & 操作無効化
+          const choiceButtons = choiceContainer.querySelectorAll('.choice-btn');
+          choiceButtons.forEach((btn, idx) => {
+            btn.classList.add('disabled');
+            const isChoiceCorrect = shuffledChoices[idx]?.isCorrect;
+            const isChoiceSelected = selectedChoices.includes(idx);
+
+            if (isChoiceCorrect && isChoiceSelected) {
+              btn.classList.add('correct-choice');
+            } else if (!isChoiceCorrect && isChoiceSelected) {
+              btn.classList.add('wrong-choice');
+            } else if (isChoiceCorrect && !isChoiceSelected) {
+              btn.classList.add('missed-choice');
+            }
+          });
         } else if (card.type === 'fill') {
           const valid = MathValidator.validateInput(fillInput.value, 'fill', card.sub_type);
           if (!valid.valid) {
