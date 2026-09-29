@@ -88,8 +88,8 @@
           maxScore,
           title: '🎉 完璧！満点正解です！（4点 / 4点満点）',
           message:
-            '・基準線GLと重ならず、適切な余白（y=180）に底辺が引けています！\n' +
-            '・平面図の左端A(140)から右端C(380)までの対角線幅が完璧に一致しています！\n' +
+            '・2本のグレーの横線を使い、底辺と頂点Vの位置を正確に捉えられています！\n' +
+            '・平面図の左端Aから右端Cまでの対角線幅が完璧に一致しています！\n' +
             '・手前の稜線VB（実線）と奥の稜線VD（点線）が見事に描き分けられています！'
         };
       }
@@ -99,10 +99,10 @@
           isCorrect: false,
           score: 1,
           maxScore,
-          title: '⚠️ 基準線GLの上に底辺を重ねてしまっています',
+          title: '⚠️ 底辺は下のグレーの横線の上に引きましょう',
           message:
-            '基準線GL(y=220)は立面図と平面図の「間」を通る線です。\n' +
-            '立面図の底辺は、基準線GLから2マス上の y=180 に描きましょう！'
+            '底辺は「下のグレーの横線」の上に描きます（基準線GLは平面図との区切りです）。\n' +
+            '下のグレーの横線の上に底辺を引き直してみましょう！'
         };
       }
 
@@ -113,7 +113,7 @@
           maxScore,
           title: '⚠️ 線の種類（実線 vs 点線）が惜しいです！',
           message:
-            '頂点D(340)への稜線VDを実線で描いていますが、Dは奥側にあります。\n' +
+            '頂点Dへの稜線VDを実線で描いていますが、Dは奥側にあります。\n' +
             '手前の面（△VABや△VBC）に隠れて見えないため、「点線（破線）」で描くのが正解です！'
         };
       }
@@ -124,9 +124,9 @@
         maxScore,
         title: '作図が未完成または幅がズレています',
         message:
-          '① 「📏 垂直補助線」で平面図の頂点（A, B, D, C）から真上にGLを横切って補助線を伸ばそう。\n' +
-          '② 立面図の底辺(y=180)を引こう。（※基準線GL y=220とは重ねないように注意）\n' +
-          '③ 頂点V(260, 40)へ向けて、輪郭線と稜線（VBは実線、VDは点線）を結ぼう！'
+          '① 「📏 垂直補助線」で平面図の頂点（A, B, V, D, C）から真上に補助線を伸ばそう。\n' +
+          '② 頂点Vの補助線と「上のグレーの線」の交点が立面図の頂点になります。\n' +
+          '③ 底辺は「下のグレーの線」の上にAからCまで引き、頂点Vと各頂点を結ぼう！'
       };
     }
 
@@ -237,8 +237,8 @@
         <text x="15" y="${GL_Y - 7}" font-size="11" fill="#475569" font-weight="bold" font-family="sans-serif">GL (基準線)</text>
 
         <!-- 領域ラベル -->
-        <text x="15" y="25" font-size="11" fill="#64748b" font-family="sans-serif">【立面図】(底辺は y=180)</text>
-        <text x="15" y="465" font-size="11" fill="#64748b" font-family="sans-serif">【平面図】(上端は y=260)</text>
+        <text x="15" y="25" font-size="11" fill="#64748b" font-weight="bold" font-family="sans-serif">【立面図】</text>
+        <text x="15" y="465" font-size="11" fill="#64748b" font-weight="bold" font-family="sans-serif">【平面図】</text>
 
         <g id="base-layer"></g>
         <g id="guides-layer"></g>
@@ -272,6 +272,12 @@
 
       if (card.id === 'geo_proj_04' || config.base_type === 'pyramid_tilted') {
         this.baseLayer.innerHTML = `
+          <!-- 立面図の高さを示す2本のグレー横線 (頂点: y=40, 底辺: y=180) -->
+          <line x1="0" y1="40" x2="${CANVAS_WIDTH}" y2="40" stroke="#94a3b8" stroke-width="2"/>
+          <line x1="0" y1="180" x2="${CANVAS_WIDTH}" y2="180" stroke="#94a3b8" stroke-width="2"/>
+          <text x="435" y="35" font-size="11" fill="#94a3b8" font-family="sans-serif">（頂点）</text>
+          <text x="435" y="175" font-size="11" fill="#94a3b8" font-family="sans-serif">（底辺）</text>
+
           <!-- 平面図 ABCD -->
           <polygon points="140,300 180,420 380,380 340,260" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
           <line x1="140" y1="300" x2="380" y2="380" stroke="#0f172a" stroke-width="1.5"/>
@@ -283,10 +289,6 @@
           <text x="390" y="390" font-size="13" font-weight="bold" fill="#0f172a">C</text>
           <text x="345" y="250" font-size="13" font-weight="bold" fill="#0f172a">D</text>
           <text x="268" y="345" font-size="12" font-weight="bold" fill="#0f172a">V</text>
-
-          <!-- 立面図の頂点V (260, 40) -->
-          <circle cx="260" cy="40" r="4" fill="#0f172a"/>
-          <text x="268" y="45" font-size="13" font-weight="bold" fill="#0f172a">V</text>
         `;
       } else if (card.id === 'geo_proj_05' || config.base_type === 'frustum') {
         this.baseLayer.innerHTML = `
