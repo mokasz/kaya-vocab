@@ -1,15 +1,41 @@
 {
   "meta": {
-    "total": 29,
+    "total": 36,
     "theme": "NEW TREASURE Stage 1",
-    "created": "2026-11-19",
-    "version": 1795006064,
+    "created": "2026-11-20",
+    "version": 1795179166,
     "config": {
       "daily_limit": 30,
       "book_key": "kaya-stage1"
     }
   },
   "words": [
+    {
+      "id": "school trip",
+      "word": "school trip",
+      "english": "school trip",
+      "japanese": "修学旅行、遠足",
+      "pos": "名",
+      "sort_order": 28,
+      "meta": {
+        "plural": "school trips"
+      },
+      "status": "new",
+      "ease": 2.8,
+      "interval": 17,
+      "repetitions": 3,
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": "2026-11-04",
+      "nextReview": "2026-11-20",
+      "last_session_version": 1793660709,
+      "sentence": "a school trip to Hokkaido",
+      "sentence_ja": "北海道への修学旅行",
+      "sentence_audio": "data/audio/sentences/school trip_099f8210.mp3",
+      "image": "",
+      "plural": "school trips",
+      "singular": null
+    },
     {
       "id": "they'll",
       "word": "they'll",
@@ -256,6 +282,58 @@
       "singular": null
     },
     {
+      "id": "airplane",
+      "word": "airplane",
+      "english": "airplane",
+      "japanese": "飛行機",
+      "pos": "名",
+      "sort_order": 82,
+      "meta": {
+        "plural": "airplanes"
+      },
+      "status": "new",
+      "ease": 2.8,
+      "interval": 17,
+      "repetitions": 3,
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": "2026-11-04",
+      "nextReview": "2026-11-20",
+      "last_session_version": 1793660709,
+      "sentence": "an airplane pilot",
+      "sentence_ja": "飛行機のパイロット",
+      "sentence_audio": "data/audio/sentences/airplane_5c7d83d1.mp3",
+      "image": "data/images/airplane.png",
+      "plural": "airplanes",
+      "singular": null
+    },
+    {
+      "id": "fox",
+      "word": "fox",
+      "english": "fox",
+      "japanese": "キツネ",
+      "pos": "名",
+      "sort_order": 92,
+      "meta": {
+        "plural": "foxes"
+      },
+      "status": "new",
+      "ease": 2.8,
+      "interval": 17,
+      "repetitions": 3,
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": "2026-11-04",
+      "nextReview": "2026-11-20",
+      "last_session_version": 1793660709,
+      "sentence": "A little fox.",
+      "sentence_ja": "小さなキツネ。",
+      "sentence_audio": "data/audio/sentences/fox_6cd1f906.mp3",
+      "image": "data/images/fox.png",
+      "plural": "foxes",
+      "singular": null
+    },
+    {
       "id": "koala",
       "word": "koala",
       "english": "Koalas",
@@ -279,6 +357,32 @@
       "sentence_audio": "data/audio/sentences/koala_dd4d0a0c.mp3",
       "image": "",
       "plural": "koalas",
+      "singular": null
+    },
+    {
+      "id": "mouse",
+      "word": "mouse",
+      "english": "mouse",
+      "japanese": "ネズミ",
+      "pos": "名",
+      "sort_order": 95,
+      "meta": {
+        "plural": "mice"
+      },
+      "status": "new",
+      "ease": 2.8,
+      "interval": 17,
+      "repetitions": 3,
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": "2026-11-04",
+      "nextReview": "2026-11-20",
+      "last_session_version": 1793660709,
+      "sentence": "There is a mouse over there.",
+      "sentence_ja": "あそこにネズミがいます。",
+      "sentence_audio": "data/audio/sentences/mouse_3559d53d.mp3",
+      "image": "",
+      "plural": "mice",
       "singular": null
     },
     {
@@ -504,6 +608,28 @@
       "image": ""
     },
     {
+      "id": "cloudy",
+      "word": "cloudy",
+      "english": "cloudy",
+      "japanese": "曇りの",
+      "pos": "形",
+      "sort_order": 90972,
+      "meta": {},
+      "status": "new",
+      "ease": 2.6,
+      "interval": 16,
+      "repetitions": 3,
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": "2026-11-05",
+      "nextReview": "2026-11-20",
+      "last_session_version": 1793800780,
+      "sentence": "It's cloudy in Osaka.",
+      "sentence_ja": "大阪は曇りです。",
+      "sentence_audio": "data/audio/sentences/cloudy_9dbaea52.mp3",
+      "image": ""
+    },
+    {
       "id": "you'll",
       "word": "you'll",
       "english": "You'll",
@@ -704,6 +830,52 @@
       "ing": "borrowing"
     },
     {
+      "id": "important",
+      "word": "important",
+      "english": "important",
+      "japanese": "重要な",
+      "pos": "形",
+      "sort_order": 90979,
+      "meta": {},
+      "status": "new",
+      "ease": 1.6,
+      "interval": 10,
+      "repetitions": 3,
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": "2026-11-10",
+      "nextReview": "2026-11-20",
+      "last_session_version": 1794313667,
+      "sentence": "Her life was short, but it was an important one.",
+      "sentence_ja": "彼女の人生は短かったですが、重要なものでした。",
+      "sentence_audio": "data/audio/sentences/important_b9f353fc.mp3",
+      "image": ""
+    },
+    {
+      "id": "neighbor",
+      "word": "neighbor",
+      "english": "neighbor",
+      "japanese": "近所の人",
+      "pos": "名",
+      "sort_order": 90992,
+      "meta": {},
+      "status": "new",
+      "ease": 1.7,
+      "interval": 17,
+      "repetitions": 4,
+      "correct": 0,
+      "incorrect": 0,
+      "lastSeen": "2026-11-04",
+      "nextReview": "2026-11-20",
+      "last_session_version": 1793660709,
+      "sentence": "The neighbor thought. Alex is only a little girl.",
+      "sentence_ja": "近所の人は思いました。アレックスはただの小さな女の子だ。",
+      "sentence_audio": "data/audio/sentences/neighbor_89c7cde7.mp3",
+      "image": "",
+      "plural": null,
+      "singular": null
+    },
+    {
       "id": "rainy",
       "word": "rainy",
       "english": "rainy",
@@ -728,20 +900,20 @@
   ],
   "story": {
     "day": 170,
-    "title": "Kaya's Rainy Day Dream",
+    "title": "Kaya's School Trip Plans",
     "sentences": [
-      "It was a quite rainy Saturday.",
-      "Kaya was quietly reading her book.",
-      "She certainly dreamed of a monkey dancing and running.",
-      "It loved to climb high in the trees.",
-      "She also saw a zebra, a koala, and big sheep.",
-      "A dolphin swam forward, past a giant octopus.",
-      "\"We'll have curry and spaghetti tonight,\" Mom said.",
-      "\"You'll help heat the corn and cabbage,\" she added.",
-      "They won't go skating today, Kaya knew.",
-      "\"She'll play rugby tomorrow,\" Kaya thought happily.",
-      "Her phone's ring made her jump.",
-      "\"They'll come to borrow my pen! You mustn't forget it!\""
+      "It was a rainy, quite cloudy day.",
+      "Kaya was reading an important animal book.",
+      "Suddenly, her neighbor Hana called; her phone began to ring.",
+      "\"Let's talk about our school trip!\" Hana said happily.",
+      "\"We'll certainly fly by airplane,\" Kaya replied.",
+      "\"They'll see a monkey and a zebra running forward.\"",
+      "\"You'll climb to spot a koala or a clever fox.\"",
+      "\"Maybe a small mouse, a sheep, or even a dolphin!\"",
+      "\"She'll try dancing, not rugby or skating,\" Kaya added.",
+      "\"We'll eat yummy curry, spaghetti, and corn,\" Hana exclaimed.",
+      "\"They won't heat the octopus or raw cabbage,\" Kaya giggled.",
+      "\"We mustn't forget to borrow warm hats,\" Hana added."
     ]
   }
 }
